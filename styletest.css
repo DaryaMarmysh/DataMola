@@ -1,0 +1,13 @@
+div
+{
+    width: 80px;
+    height: 80px;
+    background-color: blue;
+    word-wrap: break-word; 
+    position: absolute;
+    left:0px;
+    bottom: 0px;
+    right: 0px;
+    top: 0px;
+    margin: auto;
+}
