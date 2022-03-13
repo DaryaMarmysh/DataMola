@@ -1,15 +1,15 @@
-.modal-window {
+.modal-window:target {
 
   display: none;
-  pointer-events: none;
+
   height: 100vh;
 
 
 }
 
-.modal-window:target {
+.modal-window{
   display: flex;
-  pointer-events: auto;
+ 
   justify-content: center;
 }
 

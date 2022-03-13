@@ -335,3 +335,12 @@ span {
 .icons svg:hover path {
     fill: rgb(12, 115, 254);
 }
+.msq:hover  svg> path,.msq{
+   fill:crimson; 
+   
+ 
+}
+.msq:hover
+{
+     color: crimson;
+}
