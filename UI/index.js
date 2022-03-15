@@ -6,7 +6,7 @@ window.onload = function () {
     let current_user=document.getElementsByClassName('name')[0];
     current_user.innerHTML=user;
     let list = document.getElementsByClassName('twit-list')[0];
-    getTweets(5).forEach(twit => {
+    getTweets().forEach(twit => {
         var div = document.createElement('div');
         div.className = "twit-item big-shadow border ";
         div.innerHTML = '<div class="twit-header"><p class="author-name bold-text">' + twit.author + '</p><p class="date grey-text text-small">' + getDate(twit.createdAt) + '</p></div><p class="twit-text">' + addHashtags(twit.text) + '</p><div class="twit-footer"><p class="comm grey-text text-small">Комментарии: ' + commentsCount(twit.comments) + '</p><div class="edit  grey-text text-small"><p> Ред.</p><object type="image/svg+xml" data="img/edit.svg"></object></div></div><div class="del"><object type="image/svg+xml" data="img/close_twit.svg" ></object></div>';

@@ -2,14 +2,16 @@
     --main-color: #86E8B9;
     --lite-color: #D0FFB7;
     --dark-color: #94FF97;
-
     --dark: #212227;
     --dark-white: #F2F6DF;
     --grey: #9E9E9E;
+    --linear-gradient-background:linear-gradient(92.66deg, #FFFFFF -5.5%, #FAFAFA 47.66%, #FAFAFA 99.23%);
+    --liner-gradient-body:linear-gradient(168.35deg, #E9EDF0 8.1%, #F2F6DF 91.46%);
+    --body-grid:linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(to right, #ffffff 1px, #e5e5f7 1px);
 
 }
 
-#page-container {
+.page-container {
     position: relative;
     min-height: 100vh;
     display: flex;
@@ -20,8 +22,8 @@
 
 * {
     text-decoration: none;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     font-family: 'Gilroy';
     cursor: inherit;
@@ -41,12 +43,12 @@ a {
 }
 
 body {
-    background: linear-gradient(168.35deg, #E9EDF0 8.1%, #F2F6DF 91.46%);
+    background: var(--liner-gradient-body);
     cursor: url(img/cursor.svg), auto;
     position: relative;
     color: var(--dark);
     font-size: 14px;
-    background-image: linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(to right, #ffffff 1px, #e5e5f7 1px);
+    background-image:var(--body-grid);
     background-size: 25px 25px;
     min-height: 100vh;
 }
@@ -101,7 +103,7 @@ footer {
     display: flex;
     background-color: var(--main-color);
     flex:0;
-    padding: 0.5rem 0px 1.2rem;
+    padding: 0.5rem 0 1.2rem;
     width: 100%;
 }
 .twit-page.container {
@@ -133,11 +135,11 @@ footer {
    
 }
 .shadow {
-    filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.25));
 }
 
 .big-shadow {
-    filter: drop-shadow(8px 8px 0px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(8px 8px 0 rgba(0, 0, 0, 0.25));
 }
 
 .container {
@@ -160,7 +162,7 @@ header .container {
 
 .new-twit {
     border-radius: 1rem;
-    background: linear-gradient(92.66deg, #FFFFFF -5.5%, #FAFAFA 47.66%, #FAFAFA 99.23%);
+    background: var( --linear-gradient-background);
     padding: 1.8rem 2rem 2.2rem;
     display: flex;
     flex-direction: column;
@@ -187,7 +189,7 @@ textarea {
     display: flex;
     gap: 2.5rem;
     flex-direction: column;
-    margin: 1.2rem 0px 1rem;
+    margin: 1.2rem 0 1rem;
 }
 
 .twit-list>button {
@@ -196,7 +198,7 @@ textarea {
 
 .twit-item {
     border-radius: 0.8rem;
-    background: linear-gradient(92.66deg, #FFFFFF -5.5%, #FAFAFA 47.66%, #FAFAFA 99.23%);
+    background: var( --linear-gradient-background);
     padding: 1.2rem 1.4rem 2.2rem;
     display: flex;
     flex-direction: column;
@@ -208,7 +210,7 @@ textarea {
 
 .main-twit {
     border-radius: 0.8rem;
-    background: linear-gradient(92.66deg, #FFFFFF -5.5%, #FAFAFA 47.66%, #FAFAFA 99.23%);
+    background: var( --linear-gradient-background);
     padding: 1.2rem 1.4rem 1.2rem;
     display: flex;
     flex-direction: column;
@@ -301,7 +303,7 @@ footer .logo {
 }
 
 .cop {
-    color: var(--dark-white) !important;
+    color: var(--dark-white) ;
 }
 
 .filter {
@@ -330,7 +332,7 @@ footer .logo {
 [type=text] {
     border-radius: 0.5rem;
     border: 1px solid var(--dark);
-    padding: 0.5rem 0px 0.5rem 0.7rem;
+    padding: 0.5rem 0 0.5rem 0.7rem;
     font-size: 0.9rem;
 }
 
@@ -413,7 +415,7 @@ h3 {
 
 .comment-item {
     border-radius: 0.8rem;
-    background: linear-gradient(92.66deg, #FFFFFF -5.5%, #FAFAFA 47.66%, #FAFAFA 99.23%);
+    background: var( --linear-gradient-background);
     padding: 0.8rem 0.8rem 1.1rem;
     display: flex;
     flex-direction: column;
@@ -451,12 +453,12 @@ h3 {
 }
 
 .new-comm textarea {
-    margin: 0.9rem 0px;
+    margin: 0.9rem 0;
 }
 
 .new-comm {
     border-radius: 0.8rem;
-    background: linear-gradient(92.66deg, #FFFFFF -5.5%, #FAFAFA 47.66%, #FAFAFA 99.23%);
+    background: var( --linear-gradient-background);
     padding: 0.8rem 1.6rem 0.8rem;
     display: flex;
     flex-direction: column;
@@ -504,7 +506,7 @@ h3 {
     }
 
     .new-comm {
-        margin-left: 0px;
+        margin-left: 0;
     }
 
     .comment-list-wrapper {

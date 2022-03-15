@@ -99,7 +99,7 @@ let tweets = [
     {
         id: '11',
         text: 'Лишь многие известные личности указаны как претенденты на роль ключевых факторов. В частности, постоянный количественный рост и сфера нашей активности в #значительной степени обусловливает важность форм воздействия.',
-        createdAt: new Date('2022-02-19T23:00:01'),
+        createdAt: new Date('2022-02-17T23:00:01'),
         author: 'Петров Петр',
         comments: [],
     },
@@ -185,7 +185,7 @@ const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 10);
 const filterConfig_default =
 {
-    author: '.',
+    author: '',
     dateFrom: new Date(2010, 1, 1),
     dateTo: tomorrow,
     hashtags: [],
@@ -196,7 +196,7 @@ const filterConfig_with_params =
     author: 'Даша',
     dateFrom: new Date(2000, 1, 1),
     dateTo: (new Date()).setDate((new Date()).getDate() + 1),
-    hashtags: ['дела', 'hi'],
+    hashtags: ['js', 'hi'],
     text: 'какие'
 }
 const my_interface = {
@@ -324,8 +324,8 @@ const my_interface = {
         else return false;
     },
     addComment: function (id, text) {
-        const new_id=setId();
-        const tw_new_comm=tweets.filter(tw => {
+        const new_id = setId();
+        const tw_new_comm = tweets.filter(tw => {
             if (tw.id === id && checkLength(text.length, 280)) {
                 tw.comments.push(
                     {
@@ -337,10 +337,9 @@ const my_interface = {
                 )
                 return tw;
             }
-           
+
         })
-        if(tw_new_comm.length>0)
-        {if(tw_new_comm[0].id===id && tw_new_comm[0].comments[tw_new_comm[0].comments.length-1].text==text) return true;}
+        if (tw_new_comm.length > 0) { if (tw_new_comm[0].id === id && tw_new_comm[0].comments[tw_new_comm[0].comments.length - 1].text == text) return true; }
         else return false;
 
     },
@@ -356,21 +355,26 @@ const my_interface = {
 function tweets_filter(tweetsToFilter, filterParams) {
     const reg_author = new RegExp(`${filterParams.author}`, "gi");
     let reg_hashtags_array;
+
     if (filterParams.hashtags.length > 0) {
         reg_hashtags_array = filterParams.hashtags.map(h => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, "gi"));
     }
     else {
-        reg_hashtags_array = [new RegExp(`.*`, "gi")];
+        reg_hashtags_array = [new RegExp(`.`, "gi")];
+
     }
     const reg_txt = new RegExp(`${filterParams.text}`, "gi");
     let filtered_tweets = [];
+
     tweetsToFilter.forEach(element => {
+       
 
         if (reg_author.test(element.author) &&
             element.createdAt >= filterParams.dateFrom &&
             element.createdAt <= filterParams.dateTo &&
             reg_hashtags_array.every(r => { return r.test(element.text) }) &&
             reg_txt.test(element.text)) {
+
             filtered_tweets.push(element);
         }
     });
@@ -428,16 +432,16 @@ export const addTweet = my_interface.addTweet
 export const removeTweet = my_interface.removeTweet;
 export const changeUser = my_interface.changeUser;
 export const validateComment = my_interface.validateComment;
-export const addComment=my_interface.addComment;
+export const addComment = my_interface.addComment;
 export const user = my_interface.user;
 
 
-//console.log(getTweets()) //+ /- пропускает некоторые твиты
-//console.log(getTweets(0,25)) //-/- пропускает некоторые твиты
-//console.log(getTweets(10,50)) //+/- пропускает некоторые твиты
-//console.log(getTweets(5,6)) //+/- пропускает некоторые твиты
-//console.log(getTweets(50,50)) //+/- пропускает некоторые твиты
-//console.log(getTweets(0,10,filterConfig_with_params)) //+
+//console.log(getTweets()) //+ 
+//console.log(getTweets(0,25)) //+
+//console.log(getTweets(10,50)) //+
+//console.log(getTweets(5,6)) //+
+//console.log(getTweets(50,50)) //+
+console.log(getTweets(0,10,filterConfig_with_params)) //+
 //console.log(getTweets(0,filterConfig_with_params)) //+
 //console.log(getTweets(0,filterConfig_default)) //+
 //console.log(getTweets(filterConfig_with_params)) //+
