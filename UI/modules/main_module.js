@@ -22,7 +22,7 @@ let tweets = [
     },
     {
         id: '3',
-        text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра, #которыми я наслаждаюсь от всего сердца. Я совсем один и блаженствую в #здешнем краю, словно созданном для таких, как я. Я так счастлив, мой друг, так упоен ощущением покоя, что искусс',
+        text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра, #которыми я наслаждаюсь от всего сердца.',
         createdAt: new Date('2022-02-10T23:00:01'),
         author: 'Даша Мармыш',
         comments: [{
@@ -39,7 +39,7 @@ let tweets = [
     },
     {
         id: '4',
-        text: 'Проснувшись однажды утром после беспокойного сна, Грегор Замза обнаружил, что он у себя в постели превратился в страшное насекомое. Лежа на панцирнотвердой спине, он видел, стоило ему приподнять голову',
+        text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра, #которыми я наслаждаюсь от всего сердца.',
         createdAt: new Date('2022-02-11T23:00:01'),
         author: 'Петров Петр',
         comments: [],
@@ -72,14 +72,14 @@ let tweets = [
     },
     {
         id: '8',
-        text: 'Задача организации, в особенности же постоянный количественный рост и сфера нашей активности предполагает независимые способы реализации направлений прогрессивного развития. ',
+        text: 'Лишь независимые государства являются только методом  и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
         createdAt: new Date('2022-02-14T23:00:01'),
         author: 'Петров Петр',
         comments: [],
     },
     {
         id: '9',
-        text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
+        text: 'Лишь независимые государства являются только методом  и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
         createdAt: new Date('2022-02-15T23:00:01'),
         author: 'Петров Петр',
         comments: [{
@@ -98,8 +98,8 @@ let tweets = [
     },
     {
         id: '11',
-        text: 'Проснувшись #однажды утром после беспокойного сна, Грегор Замза обнаружил, что он у себя в постели превратился в страшное насекомое. Лежа на панцирнотвердой спине, он видел',
-        createdAt: new Date('2022-02-17T23:00:01'),
+        text: 'Лишь многие известные личности указаны как претенденты на роль ключевых факторов. В частности, постоянный количественный рост и сфера нашей активности в #значительной степени обусловливает важность форм воздействия.',
+        createdAt: new Date('2022-02-19T23:00:01'),
         author: 'Петров Петр',
         comments: [],
     },
@@ -188,7 +188,7 @@ const filterConfig_default =
     author: '.',
     dateFrom: new Date(2010, 1, 1),
     dateTo: tomorrow,
-    hashtags: ['.'],
+    hashtags: [],
     text: '.'
 }
 const filterConfig_with_params =
@@ -358,15 +358,13 @@ function tweets_filter(tweetsToFilter, filterParams) {
     let reg_hashtags_array;
     if (filterParams.hashtags.length > 0) {
         reg_hashtags_array = filterParams.hashtags.map(h => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, "gi"));
-        //console.log(reg_hashtags_array);
-        //tweetsToFilter.map(element => {console.log(reg_hashtags_array.map(r=>r.test(element.text)))}); 
     }
     else {
         reg_hashtags_array = [new RegExp(`.*`, "gi")];
     }
     const reg_txt = new RegExp(`${filterParams.text}`, "gi");
     let filtered_tweets = [];
-    tweetsToFilter.map(element => {
+    tweetsToFilter.forEach(element => {
 
         if (reg_author.test(element.author) &&
             element.createdAt >= filterParams.dateFrom &&
@@ -375,10 +373,6 @@ function tweets_filter(tweetsToFilter, filterParams) {
             reg_txt.test(element.text)) {
             filtered_tweets.push(element);
         }
-
-
-
-
     });
 
     return filtered_tweets;
@@ -438,19 +432,19 @@ export const addComment=my_interface.addComment;
 export const user = my_interface.user;
 
 
-//console.log(getTweets()) //+
-//console.log(getTweets(10)) //+
-//console.log(getTweets(10,5)) //+
-//console.log(getTweets(5,6)) //+
-//console.log(getTweets(50,50)) //+
+//console.log(getTweets()) //+ /- пропускает некоторые твиты
+//console.log(getTweets(0,25)) //-/- пропускает некоторые твиты
+//console.log(getTweets(10,50)) //+/- пропускает некоторые твиты
+//console.log(getTweets(5,6)) //+/- пропускает некоторые твиты
+//console.log(getTweets(50,50)) //+/- пропускает некоторые твиты
 //console.log(getTweets(0,10,filterConfig_with_params)) //+
 //console.log(getTweets(0,filterConfig_with_params)) //+
 //console.log(getTweets(0,filterConfig_default)) //+
 //console.log(getTweets(filterConfig_with_params)) //+
 //console.log(getTweets(0,'t'))//+-
-//console.log(getTweets(0,10, {hashtags: ['hi']})) //  -находит только первый твит
+//console.log(getTweets(0,10, {hashtags: ['hi']})) //  +
 //console.log(getTweets(0, 10, { hashtags: [] })) // +
-//console.log(getTweets(0, 10, { hashtags: ['js','hi','datamola'] })) //-находит только первый твит
+//console.log(getTweets(0, 10, { hashtags: ['js','hi'] })) //+
 
 //console.log(getTweet(50))//+
 //console.log(getTweet(6))//+
