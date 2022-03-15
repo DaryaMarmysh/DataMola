@@ -1,8 +1,10 @@
 
 import {getTweets,getTweet,validateTweet,editTweet,user} from './modules/main_module.js'
-
+let filter=document.getElementsByClassName('filter')[0];
  
 window.onload = function () {
+    let show_filter = document.getElementsByClassName('show-filter')[0];
+    show_filter.addEventListener('click',myFunction,false);
     let current_user=document.getElementsByClassName('name')[0];
     current_user.innerHTML=user;
     let list = document.getElementsByClassName('twit-list')[0];
@@ -32,6 +34,12 @@ function getDate(date) {
     ];
     
     return date.getDate() + ' ' + month[date.getMonth() - 1] + ' ' + date.getFullYear() + ' ' + date.toLocaleTimeString().substring(0, 5);
+}
+function myFunction()
+{
+   
+    filter.classList.toggle('close');
+
 }
 function addHashtags(text) {
     let span = document.createElement('span');

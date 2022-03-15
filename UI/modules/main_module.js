@@ -164,7 +164,7 @@ let tweets = [
         id: '20',
         text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
         createdAt: new Date('2022-02-26T23:00:01'),
-        author: 'Петров Петр',
+        author: 'Даша Мармыш',
         comments: [],
     },
     {
@@ -441,7 +441,7 @@ export const user = my_interface.user;
 //console.log(getTweets(10,50)) //+
 //console.log(getTweets(5,6)) //+
 //console.log(getTweets(50,50)) //+
-console.log(getTweets(0,10,filterConfig_with_params)) //+
+//console.log(getTweets(0,10,filterConfig_with_params)) //+
 //console.log(getTweets(0,filterConfig_with_params)) //+
 //console.log(getTweets(0,filterConfig_default)) //+
 //console.log(getTweets(filterConfig_with_params)) //+
@@ -459,21 +459,9 @@ console.log(getTweets(0,10,filterConfig_with_params)) //+
     text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра, #которыми я наслаждаюсь от всего сердца.',
     createdAt: new Date('2022-03-08T23:00:01'),
     author: 'Петров Петр',
-    comments: [
-        {
-            id: '548',
-            text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра.',
-            createdAt: new Date('2022-03-09T23:00:05'),
-            author: 'Иванов Иван',
-        },
-        {
-            id: '547',
-            text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра.',
-            createdAt: new Date('2022-03-09T23:00:05'),
-            author: 'Иванов Иван',
-        }],
-}));*/
-
+    comments: [],
+}));
+*/
 
 //console.log(addTweet('NEW TWIT')); //+
 //console.log(addTweet('')); //+
@@ -501,8 +489,7 @@ console.log(validateComment({
     text: 'Mew comment',
     createdAt: new Date('2022-03-09T23:00:05'),
     author: 'Иванов Иван',
-}));*/ ///+
-
+})); *////+
 //console.log(addComment('2','this is new comment')) //+
 //console.log(addComment('28954','this is new comment')) //+
 //console.log(addComment('2','')) //+

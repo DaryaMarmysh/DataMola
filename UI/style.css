@@ -85,6 +85,7 @@ header {
     width: 100%;
     background-color: var(--main-color);
     flex:0;
+    z-index: 3;
    
 
 }
@@ -96,8 +97,12 @@ main{
     flex-grow: 2;
     height: 100%;
     flex-grow: 2;
+    margin-top: 2vh;
     
    
+}
+.show-filter{
+
 }
 footer {
     display: flex;
@@ -314,12 +319,20 @@ footer .logo {
     border-radius: 0.8rem;
     padding: 1vh 7vh 2.2vh 11vh;
     margin-bottom: 1.6rem;
+    position:absolute;
+    top:10vh;
+    transition: top 0.5s ease-in-out;
+    z-index: 2;
+    left:0;
+    right:0;
+    margin-left: auto;
 
 }
 
 .filter-header {
     display: flex;
     justify-content: space-between;
+  
 }
 
 .filter-body {
@@ -568,3 +581,7 @@ h3 {
     background: transparent;
     border: none;
 }
+.close{
+    top:-20vh;
+}
+.open{display:flex}
