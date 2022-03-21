@@ -1,3 +1,6 @@
+import { setId, validateParams } from './helpFunctions.js';
+import TweetCollection from './TweetCollection.js';
+
 const tweets = [
   {
     id: '1',
@@ -179,232 +182,33 @@ const tweets = [
     }],
   },
 ];
-const user = 'Петров Петр';
-const tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 10);
-const filterConfigDefault = {
-  author: '',
-  dateFrom: new Date(2010, 1, 1),
-  dateTo: tomorrow,
-  hashtags: [],
-  text: '.',
-};
+class Comment {
+  constructor(newText) {
+    this._id = setId();
+    this._author = TweetCollection.user;
+    this.text = newText;
+    this._createdAt = new Date();
+  }
 
+  get id() { return this._id; }
 
+  set id(value) { }
 
+  get author() { return this._author; }
 
-/* const filterConfigWithParams = {
-  author: 'Даша',
-  dateFrom: new Date(2000, 1, 1),
-  dateTo: (new Date()).setDate((new Date()).getDate() + 1),
-  hashtags: ['js', 'hi'],
-  text: 'какие'
-} */
-const myInterface = {
-  //user: 'Петров Петр',
+  set author(value) { }
+
+  get createdAt() { return this._createdAt }
+
+  set createdAt(value) { }
 
   
-  validateTweet: function (tw) {
-    if (validateParams(tw.id, tw.text, tw.createdAt, tw.author)) {
-      if (validateType(tw.comments, 'array')) {
-        return true;
-      }
+
+  static validate(com) {
+    if (com !== undefined && com instanceof Comment) {
+      return (validateParams(com.id, com.text, com.createdAt, com.author, tweets));
     }
-    else return false;
-  },
-  editTweet: function (id, text) {
-    //const new_id=setId();
-    tweets.map(t => {
-      if (t.id == id && t.author == user) {
-        if (checkLength(text.length, 280)) {
-          t.text = text;
-
-          return true;
-        }
-        else
-          return false;
-      }
-      else {
-        return false;
-      }
-    })
-    return tweets.filter(t => t.id = id)[0].text === text;
-
-
-  },
-  
-
-  removeTweet: function (id) {
-    const index = tweets.findIndex(t => t.id === id.toString());
-    if (index !== -1) {
-      tweets.splice(index, 1);
-      if (tweets.findIndex(t => t.id === id) === -1) return true;
-    }
-    else return false;
-
-  },
-  validateComment: function (comm) {
-    return (validateParams(comm.id, comm.text, comm.createdAt, comm.author));
-
-  },
-
-  changeUser: function (user) {
-    if (user != undefined && user != '') {
-      myInterface.user = user;
-
-    }
-
+    return false;
   }
 }
-//    /([#])([\w*|А-я]*)/ ([#])*да* //(?:^|\s)(?:#)([a-zA-ZА-я\w]+) (?:#)\w*(.)[A-zА-я_]*
-function tweets_filter(tweetsToFilter, filterParams) {
-  const reg_author = new RegExp(`${filterParams.author}`, "gi");
-  let reg_hashtags_array;
-
-  if (filterParams.hashtags.length > 0) {
-    reg_hashtags_array = filterParams.hashtags.map(h => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, "gi"));
-  }
-  else {
-    reg_hashtags_array = [new RegExp(`.`, "gi")];
-
-  }
-  const reg_txt = new RegExp(`${filterParams.text}`, "gi");
-  let filtered_tweets = [];
-
-  tweetsToFilter.forEach(element => {
-
-
-    if (reg_author.test(element.author) &&
-      element.createdAt >= filterParams.dateFrom &&
-      element.createdAt <= filterParams.dateTo &&
-      reg_hashtags_array.every(r => { return r.test(element.text) }) &&
-      reg_txt.test(element.text)) {
-
-      filtered_tweets.push(element);
-    }
-  });
-
-  return filtered_tweets;
-
-}
-function sortByDate(arr) {
-  return arr.sort((a, b) => { return b.createdAt - a.createdAt });
-}
-function checkLength(l, max_l) {
-  return l < max_l ? l : false;
-}
-function validateType(obj, type) {
-  if (obj !== undefined) {
-    if (type === 'date') {
-      return !isNaN(obj.getTime());
-    }
-    if (type === 'array') {
-      return Array.isArray(obj);
-    }
-    return typeof obj == type;
-  }
-
-  else { console.log('error in validateType ' + obj + ' ' + type); return false; }
-}
-function validateParams(id, text, createdAt, author) {
-  if (validateType(id, 'string') && (tweets.filter(twit => twit.id == id)).length == 0 &&
-    tweets.filter(tw => tw.comments.filter(comm => comm.id == id).length == 0).length == tweets.length &&
-    validateType(text, 'string') && text.length <= 280 && text.length > 0 &&
-    validateType(createdAt, 'date') &&
-    validateType(author, 'string') && author.length > 0
-  ) {
-
-    return true;
-  }
-  else return false;
-
-}
-
-function checkFilterObject(obj) {
-  Object.keys(filterConfigDefault).map(prop => {
-
-    if (obj[prop] === undefined) { obj[prop] = filterConfigDefault[prop] }
-  })
-  return obj;
-}
-export const getTweets = myInterface.getTweets;
-export const getTweet = myInterface.getTweet;
-export const validateTweet = myInterface.validateTweet;
-export const editTweet = myInterface.editTweet;
-export const addTweet = myInterface.addTweet
-export const removeTweet = myInterface.removeTweet;
-export const changeUser = myInterface.changeUser;
-export const validateComment = myInterface.validateComment;
-export const addComment = myInterface.addComment;
-//export const user = myInterface.user;
-
-
-//console.log(getTweets()) //+
-//console.log(getTweets(0,25)) //+
-//console.log(getTweets(10,50)) //+
-//console.log(getTweets(5,6)) //+
-//console.log(getTweets(50,50)) //+
-//console.log(getTweets(0,10,filterConfigWithParams)) //+
-//console.log(getTweets(0,filterConfigWithParams)) //+
-//console.log(getTweets(0,filterConfigDefault)) //+
-//console.log(getTweets(filterConfigWithParams)) //+
-//console.log(getTweets(0,'t'))//+-
-//console.log(getTweets(0,10, {hashtags: ['hi']})) //  +
-//console.log(getTweets(0, 10, { hashtags: [] })) // +
-//console.log(getTweets(0, 10, { hashtags: ['js','hi'] })) //+
-
-//console.log(getTweet(50))//+
-//console.log(getTweet(6))//+
-//console.log(getTweet('l'))//+
-
-/*console.log(validateTweet({
-    id: '378',
-    text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра, #которыми я наслаждаюсь от всего сердца.',
-    createdAt: new Date('2022-03-08T23:00:01'),
-    author: 'Петров Петр',
-    comments: [],
-}));
-*/
-
-//console.log(addTweet('NEW TWIT')); //+
-//console.log(addTweet('')); //+
-//console.log(addTweet()); //+
-
-
-//console.log(editTweet('1', "NEW TEXT")) //+;
-//console.log(editTweet('1', "")) //+;
-//console.log(editTweet('100', "NEW TEXT")) //+;
-//console.log(tweets);
-
-//console.log(getTweet(4),removeTweet(4),getTweet(4)) //+
-//console.log(getTweet(400),removeTweet(400),getTweet(400)) //+
-//console.log(myInterface.user);
-//changeUser('NEW USER');
-
-/*console.log(validateComment({
-    id: '981',
-    text: 'Mew comment',
-    createdAt: new Date('2022-03-09T23:00:05'),
-    author: 'Иванов Иван',
-}));
-console.log(validateComment({
-    id: '201',
-    text: 'Mew comment',
-    createdAt: new Date('2022-03-09T23:00:05'),
-    author: 'Иванов Иван',
-})); *////+
-//console.log(addComment('2','this is new comment')) //+
-//console.log(addComment('28954','this is new comment')) //+
-//console.log(addComment('2','')) //+
-
-/*const tw = new Tweet('Душа моя озарена неземной радостью, как эти чудесные весенние утра, #которыми я наслаждаюсь от всего сердца.');
-console.log(Tweet.validate(tw));
-console.log(tw.addComment('1','hhhh'));
-console.log(tw);
-const com= new Comment('new comment');
-console.log(com)
-console.log(Comment.validate(com));
-console.log(TweetCollection.getPage(10,5))
-console.log(TweetCollection.get(50))//+
-console.log(TweetCollection.get(6))//+
-console.log(TweetCollection.get({}))//+*/
+export default Comment;
