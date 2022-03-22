@@ -1,4 +1,4 @@
-var arr1 = [-2,1,-3,4,-1,2,1,-5,4];
+var arr1 = [-1];
 function maxSubArray(arr) {
     var max_sum = Number.MIN_VALUE;
     var current_sum = 0;
