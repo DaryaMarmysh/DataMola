@@ -290,9 +290,7 @@ function tweets_filter(tweetsToFilter, filterParams) {
 function sortByDate(arr) {
   return arr.sort((a, b) => { return b.createdAt - a.createdAt });
 }
-function checkLength(l, max_l) {
-  return l < max_l ? l : false;
-}
+
 function validateType(obj, type) {
   if (obj !== undefined) {
     if (type === 'date') {

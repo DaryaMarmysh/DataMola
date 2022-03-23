@@ -1,7 +1,7 @@
-import { sortByDate, setId, validateParams, checkFilterObject } from './helpFunctions.js';
+import { sortByDate, setId, validateParams, checkFilterObject,checkLength } from './helpFunctions.js';
 import Tweet from './Tweet.js';
 
-let tweets = [
+/*let tweets = [
   {
     id: '1',
     text: 'Привет!#hi  #datamola  #js',
@@ -181,7 +181,7 @@ let tweets = [
       author: 'Иванов Иван',
     }],
   },
-];
+];*/
 const filterConfigDefault = {
   author: '',
   dateFrom: new Date(2010, 1, 1),
@@ -234,7 +234,7 @@ class TweetCollection {
     let filterSearch = {};
     let skipDefault = 0;
     let topDefault = 10;
-
+    /////!!!!!!!!!
     switch (arguments.length) {
       case 0:
         Object.assign(filterSearch, filterConfigDefault);
@@ -272,10 +272,11 @@ class TweetCollection {
     return viewTweets;
   }
 
-  static get(id) {
-    const tw = tweets.find((t) => t.id === id);
-    return tw !== undefined ? tw : 'Id not found';
+  get(id) {
+    const tw = this._tweets.find((t) => t.id === id);
+    return tw !== undefined ? tw : false;
   }
+
   add(newTwitText = '') {
     if (newTwitText.length > 0) {
       const newTweet = new Tweet(newTwitText);
@@ -287,25 +288,38 @@ class TweetCollection {
     }
     return false;
   }
-
+  /////// сохранить ид
   edit(id, text) {
-    const editTweet = new Tweet(text);
-    const indx = this._tweets.findIndex(t => t.id === id && t.author === TweetCollection.user);
-    if (indx !== -1 && Tweet.validate(editTweet))
-    {
-      this._tweets[indx] = editTweet;
+    const editTweet = this.get(id);
+    if (editTweet && editTweet.author === TweetCollection.user && checkLength(text)) {
+      editTweet.text = text;
+        return true;
+      }
+      return false;
+    }
+  
+  remove(id) {
+    const removeTweet = this.get(id);
+    if (removeTweet && removeTweet.author === TweetCollection.user) {
+      const index = this._tweets.findIndex(t => t === removeTweet);
+      if (index !== -1) {
+        this._tweets.splice(index, 1);
+        if (this._tweets.findIndex(t => t.id === id) === -1) {
+          return true;
+        } return false;
+      } return false;
+    }return false;
+  }
+  addComment(id,text) {
+    
+    const twNewComm = new Comment(text);
+    const tweetToAddComm=this.get(id);
+    if (Comment.validate(twNewComm)) {
+      tweetToAddComm.comments.push(twNewComm);
       return true;
     }
     return false;
   }
-  remove(id) {
-    const index = this._tweets.findIndex(t => t.id === id.toString() && t.author === TweetCollection.user);
-    if (index !== -1) {
-      this._tweets.splice(index, 1);
-      if (this._tweets.findIndex(t => t.id === id) === -1) {
-        return true;
-      } return false;
-    } return false;
-  }
+
 }
 export default TweetCollection;

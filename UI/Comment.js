@@ -202,8 +202,6 @@ class Comment {
 
   set createdAt(value) { }
 
-  
-
   static validate(com) {
     if (com !== undefined && com instanceof Comment) {
       return (validateParams(com.id, com.text, com.createdAt, com.author, tweets));

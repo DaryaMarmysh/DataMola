@@ -25,17 +25,9 @@ class Tweet {
 
   set createdAt(value) { }
 
-  addComment(text) {
-    const twNewComm = new Comment(text);
-    if (Comment.validate(twNewComm)) {
-      this.comments.push(twNewComm);
-      return true;
-    }
-    return false;
-  }
-
+  
   static validate(tw) {
-    if (tw !== undefined && tw instanceof Tweet) {
+    if (tw !== undefined /*&& tw instanceof Tweet*/) {
       if (validateParams(tw.id, tw.text, tw.createdAt, tw.author)) {
         if (Array.isArray(tw.comments)) {
           return true;

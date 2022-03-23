@@ -275,8 +275,13 @@ console.log(TweetCollection.getPage(0,50,{
 }));
  //-- должен найти твит с id=4*/
 
-console.log(tweetsCollection.add('new tweet!'));
-console.log(tweetsCollection.tweets)
-console.log(tweetsCollection.edit('1', 'edit tweet'));
-console.log(tweetsCollection.remove('4'));
+//console.log(tweetsCollection.add('new tweet!'));
+//console.log(tweetsCollection.tweets)
+
+//console.log(tweetsCollection.edit('1', ' ')); //+
+//console.log(tweetsCollection.edit('1', 'edit tweet')); //+
+console.log(tweetsCollection.edit('1', ' '));//+
+//console.log(tweetsCollection.remove('40')); /+
+//console.log(tweetsCollection.remove('4')); /+
 console.log(tweetsCollection.tweets);
+console.log(' '.trim() !== '');

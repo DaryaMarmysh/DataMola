@@ -5,6 +5,7 @@ const filterConfigDefault = {
   hashtags: [],
   text: '.',
 };
+const max_l = 280;
 function sortByDate(arr) {
   return arr.sort((a, b) => b.createdAt - a.createdAt);
 }
@@ -34,17 +35,25 @@ function validateType(obj, type) {
 }
 function validateParams(id, text, createdAt, author) {
   if (validateType(id, 'string')
-  && validateType(text, 'string')
-  && text.length <= 280 && text.length > 0
-  && validateType(createdAt, 'date')
-  && validateType(author, 'string') && author.length > 0) {
+    && validateType(text, 'string')
+    && text.length <= 280 && text.length > 0
+    && validateType(createdAt, 'date')
+    && validateType(author, 'string') && author.length > 0) {
     return true;
   }
   return false;
+}
+function checkLength(text) {
+  if (text !== undefined && text.trim() !== '') {
+    return text.length < max_l ? true : false;
+  }
+  return false;
+
 }
 export {
   sortByDate,
   checkFilterObject,
   setId,
   validateParams,
+  checkLength
 };
