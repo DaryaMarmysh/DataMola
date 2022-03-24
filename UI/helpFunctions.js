@@ -5,9 +5,9 @@ const filterConfigDefault = {
   hashtags: [],
   text: '.',
 };
-const max_l = 280;
+const maxL = 280;
 function sortByDate(arr) {
-  return arr.sort((a, b) => b.createdAt - a.createdAt);
+  return new Set(Array.from(arr).sort((a, b) => a.createdAt - b.createdAt));
 }
 function checkFilterObject(obj) {
   Object.keys(filterConfigDefault).forEach((prop) => {
@@ -33,23 +33,23 @@ function validateType(obj, type) {
   console.log(`error in validateType ${obj} ${type}`);
   return false;
 }
+function checkLength(text) {
+  if (text !== undefined && text.trim() !== '') {
+    return text.length < maxL;
+  }
+  return false;
+}
 function validateParams(id, text, createdAt, author) {
   if (validateType(id, 'string')
     && validateType(text, 'string')
-    && text.length <= 280 && text.length > 0
+    && checkLength(text)
     && validateType(createdAt, 'date')
     && validateType(author, 'string') && author.length > 0) {
     return true;
   }
   return false;
 }
-function checkLength(text) {
-  if (text !== undefined && text.trim() !== '') {
-    return text.length < max_l ? true : false;
-  }
-  return false;
 
-}
 export {
   sortByDate,
   checkFilterObject,
@@ -57,3 +57,4 @@ export {
   validateParams,
   checkLength
 };
+
