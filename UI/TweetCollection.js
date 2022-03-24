@@ -1,9 +1,8 @@
-import { sortByDate, setId, validateParams, checkLength } from './helpFunctions.js';
+import { validateText } from './helpFunctions.js';
 import Tweet from './Tweet.js';
 import Comment from './Comment.js';
 
-
-function tweetsFilter(tweetsToFilter, filterParams) {
+function tweetsFilter(tweetsToFilter, filterParams = {}) {
   const {
     author: filterAuthor = '.',
     text: filterText = '.',
@@ -11,23 +10,17 @@ function tweetsFilter(tweetsToFilter, filterParams) {
     dateTo: filterDateTo = new Date(),
     hashtags: filterHashtags = []
   } = filterParams;
-
   const regAuthor = new RegExp(`${filterAuthor}`, "gi");
   let regHashtagsArray;
-
   if (filterHashtags.length > 0) {
     regHashtagsArray = filterHashtags.map(h => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, "gi"));
   }
   else {
     regHashtagsArray = [new RegExp(`.`, "gi")];
-
   }
   const regTxt = new RegExp(`${filterText}`, "gi");
   let filteredTweets = [];
-
   tweetsToFilter.forEach(element => {
-
-
     if (regAuthor.test(element.author) &&
       element.createdAt >= filterDateFrom &&
       element.createdAt <= filterDateTo &&
@@ -40,67 +33,60 @@ function tweetsFilter(tweetsToFilter, filterParams) {
 }
 class TweetCollection {
   static _user = 'Петров Петр';
+  _sortByDate=function() {
+  return new Set(Array.from(this.tweets).sort((a, b) => a.createdAt - b.createdAt));
+  }
+  get sortByDate() {
+    return this._sortByDate;
+  }
   static get user() {
     return this._user;
   }
+
   set user(newUser) {
-    this._user = newUser
+    this._user = newUser;
   }
+
   constructor(twts) {
     this._tweets = new Set(twts);
   }
+
   get tweets() {
-    return sortByDate(this._tweets);
+    return this._tweets;
   }
+
   set tweets(newTweets) {
     this._tweets = newTweets;
   }
-  addAll(twts) {
 
-    let errorTweets = [];
-    twts.forEach((tw) => Tweet.validate(tw) ? this._tweets.add(tw) : errorTweets.push(tw))
+  addAll(twts) {
+    const errorTweets = [];
+    twts.forEach((tw) => { Tweet.validate(tw, this.tweets) ? this._tweets.add(tw) : errorTweets.push(tw) });
     return errorTweets;
   }
+
   clear() {
     this._tweets.clear();
   }
-  getPage(arg1 = 0, arg2 = 10, arg3 = {}) {
+
+  getPage(...args) {
     let skip = 0;
     let top = 10;
     let filter = {};
-    switch (arguments.length) {
-      case 1:
-        if (typeof arguments[0] === 'object') {
-          filter = arg1;
-        } else if (typeof arguments[0] === 'number') {
-          skip = Math.abs(arg1)
-        } else (
-          console.log('error/input params getTweets')
-        )
-        break;
-      case 2:
-        if (typeof arguments[0] === 'number' && typeof arguments[1] === 'number') {
-          skip = Math.abs(arg1);
-          top = Math.abs(arg2);
+    if (typeof args[0] === 'number') {
+      [skip] = args;
+      if (typeof args[1] === 'number') {
+        [, top] = args;
+        if (typeof args[2] === 'object') {
+          [, , filter] = args;
         }
-        else if (typeof arguments[0] === 'number' && typeof arguments[1] === 'object') {
-          skip = Math.abs(arg1);
-          filter = arg2
-        }
-        else (
-          console.log('error/input params getTweets')
-        )
-        break;
-      case 3: if (typeof arguments[0] === 'number' && typeof arguments[1] === 'number' && typeof arguments[2] === 'object') {
-        skip = Math.abs(arg1);
-        top = Math.abs(arg2);
-        filter = arg3;
+      } else if (typeof args[1] === 'object') {
+        [, filter] = args;
       }
-      default:
-        break;
+    } else if (typeof args[0] === 'object') {
+      [filter] = args;
     }
-    const viewTweets = tweetsFilter(sortByDate(this.tweets), filter).splice(skip, top);
-    return viewTweets;
+    return tweetsFilter(this.sortByDate(this.tweets), filter).splice(skip, top);
   }
 
   get(id) {
@@ -112,7 +98,7 @@ class TweetCollection {
   add(newTwitText = '') {
     if (newTwitText.length > 0) {
       const newTweet = new Tweet(newTwitText);
-      if (Tweet.validate(newTweet)) {
+      if (Tweet.validate(newTweet, this.tweets)) {
         this._tweets.add(newTweet);
         return true;
       }
@@ -123,7 +109,7 @@ class TweetCollection {
 
   edit(id, text) {
     const editTweet = this.get(id);
-    if (editTweet && editTweet.author === TweetCollection.user && checkLength(text)) {
+    if (editTweet && editTweet.author === TweetCollection.user && validateText(text)) {
       editTweet.text = text;
       return true;
     }
@@ -136,16 +122,15 @@ class TweetCollection {
       this._tweets.delete(removeTweet); return true;
     } return false;
   }
-  addComment(id, text) {
 
+  addComment(id, text) {
     const twNewComm = new Comment(text);
     const tweetToAddComm = this.get(id);
-    if (tweetToAddComm && Comment.validate(twNewComm)) {
+    if (tweetToAddComm && Comment.validate(twNewComm, this.tweets)) {
       tweetToAddComm.comments.push(twNewComm);
       return true;
     }
     return false;
   }
-
 }
 export default TweetCollection;

@@ -1,6 +1,4 @@
-import { getTweets } from './modules/main_module.js';
 import TweetCollection from './TweetCollection.js';
-import Comment from './Comment.js';
 import Tweet from './Tweet.js';
 
 const tweets = [
@@ -184,6 +182,7 @@ const tweets = [
     }],
   },
 ];
+/*
 const myWindow = window;
 const myDocument = document;
 const filter = myDocument.getElementsByClassName('filter')[0];
@@ -213,10 +212,10 @@ function replacer(match) {
 function addHashtags(text) {
   const span = myDocument.createElement('span');
   span.className = 'hash';
-  const regexp = /([#])\w*[А-я]*/g;
+  //const regexp = /([#])\w*[А-я]*'/g;
   return text.replace(regexp, replacer);
 }
-/* function clickTwit(e) {
+ function clickTwit(e) {
   const mytTarget = e.target;
    if (target.classList.contains('edit')|| target.tagName=='OBJECT') {
       alert('edit')
@@ -224,9 +223,8 @@ function addHashtags(text) {
   if (target.classList.contains('del')) {
       alert('del')
   }
-} */
-
-/* myWindow.onload = function () {
+} 
+ myWindow.onload = function () {
   const showFilter = myDocument.getElementsByClassName('show-filter')[0];
   showFilter.addEventListener('click', myFunction, false);
   const currentUser = myDocument.getElementsByClassName('name')[0];
@@ -241,62 +239,48 @@ function addHashtags(text) {
     list.appendChild(div);
   });
 }; */
-const tweetsCollection = new TweetCollection(tweets);
-//console.log(tweetsCollection.addComment('2','new comment'));
-//console.log(tweetsCollection.tweets);
-//console.log(tweetsCollection.get('1'));
-//console.log(tweetsCollection.get('50'));
-//console.log(tweetsCollection.getPage());
-//console.log(tweetsCollection.getPage('12'));
-//console.log(tweetsCollection.getPage(10, 8));
-console.log(tweetsCollection.getPage(0,50,{
-  author: '',
-  dateFrom: new Date(2000, 1, 1),
-  dateTo: new Date(),
-  hashtags: ['js'],
-  text: '',
-}));
- //-- должен найти твит с id=4
 
-//console.log(tweetsCollection.add(' '));
-
-
-//console.log(tweetsCollection.edit('1', 'tttt')); //+
-//console.log(tweetsCollection.edit('1', 'edit tweet')); //+
-//console.log(tweetsCollection.edit('1', ' '));//+
-//console.log(tweetsCollection.remove('4')); /+
-//console.log(tweetsCollection.tweets);
-
-//console.log(tweetsCollection.getPage());
-//console.log(tweetsCollection.getPage(15));
-//console.log(tweetsCollection.getPage(10, 8));
-/*console.log(tweetsCollection.getPage(1,{
-  author: '',
-  dateFrom: new Date(2000, 1, 1),
-  dateTo: new Date(),
-  hashtags: ['js'],
-  text: '',
-}));*/
-/*console.log(tweetsCollection.addAll([{
-  id: '1589',
-  text: '',
+const twee = {
+  id: '201',
+  text: 'Привет!#hi  #datamola  #js',
   createdAt: new Date('2022-02-09T19:25:00'),
   author: 'Петров Петр',
   comments: [],
 
-},
-{
-  id: '5698742',
-  text: 'Какие #дела? #hi  #datamola  #js',
-  createdAt: new Date('2022-02-10T23:00:01'),
-  author: 'Даша Мармыш',
-  comments: [{
-    id: '201',
-    text: 'Хорошо, а у тебя?',
-    createdAt: new Date('2022-03-09T23:00:05'),
-    author: 'Иванов Иван',
-  }],
-}])); 
-console.log(tweetsCollection.tweets)
-*/
+};
+const tweetsCollection = new TweetCollection(tweets);
+
+
+/*console.log(tweetsCollection.addComment('1', 'new comment'));
 console.log(tweetsCollection.tweets);
+console.log(tweetsCollection.get('1'));
+console.log(tweetsCollection.get('50'));
+console.log(tweetsCollection.getPage());
+console.log(tweetsCollection.getPage(12));
+console.log(tweetsCollection.getPage(10, 8));
+console.log(tweetsCollection.getPage(0, 50, {
+  author: '',
+  dateFrom: new Date(2000, 1, 1),
+  dateTo: new Date(),
+  hashtags: ['js'],
+  text: '',
+}));//-- должен найти твит с id=4
+console.log(tweetsCollection.add(' '));
+console.log(tweetsCollection.edit('1', 'tttt')); //+
+console.log(tweetsCollection.edit('1', 'edit tweet')); //+
+console.log(tweetsCollection.edit('1', ' '));//+
+console.log(tweetsCollection.remove('4')); //+
+console.log(tweetsCollection.tweets);
+
+console.log(tweetsCollection.getPage());
+console.log(tweetsCollection.getPage(15));
+console.log(tweetsCollection.getPage(10, 8));*/
+console.log(tweetsCollection.getPage(0,10, {
+  
+  hashtags: ['js'],
+ 
+}));
+
+//console.log(tweetsCollection.addAll([new Tweet('new tweet1'), new Tweet('new tweet2')]));
+console.log(tweetsCollection.tweets);
+

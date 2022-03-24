@@ -1,60 +1,41 @@
-const filterConfigDefault = {
-  author: '',
-  dateFrom: new Date(2010, 1, 1),
-  dateTo: new Date() + 10,
-  hashtags: [],
-  text: '.',
-};
-const maxL = 280;
-function sortByDate(arr) {
-  return new Set(Array.from(arr).sort((a, b) => a.createdAt - b.createdAt));
-}
-function checkFilterObject(obj) {
-  Object.keys(filterConfigDefault).forEach((prop) => {
-    if (obj[prop] === undefined) {
-      obj[prop] = filterConfigDefault[prop];
-    }
-  });
-  return obj;
-}
+/* eslint no-restricted-syntax: ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"] */
 function setId() {
   return Date.now().toString();
 }
-function validateType(obj, type) {
-  if (obj !== undefined) {
-    if (type === 'date') {
-      return !Number.isNaN(obj.getTime());
+function validateId(id, set) {
+  if (id !== undefined && typeof id === 'string') {
+    for (const value of set) {
+      if (value.comments.length > 0) {
+        if (value.comments.findIndex((c) => c.id === id) !== -1) {
+          return false;
+        }
+      }
+      if (value.id === id) { return false; }
     }
-    if (type === 'array') {
-      return Array.isArray(obj);
-    }
-    return typeof obj === type;
-  }
-  console.log(`error in validateType ${obj} ${type}`);
-  return false;
-}
-function checkLength(text) {
-  if (text !== undefined && text.trim() !== '') {
-    return text.length < maxL;
-  }
-  return false;
-}
-function validateParams(id, text, createdAt, author) {
-  if (validateType(id, 'string')
-    && validateType(text, 'string')
-    && checkLength(text)
-    && validateType(createdAt, 'date')
-    && validateType(author, 'string') && author.length > 0) {
     return true;
   }
   return false;
 }
-
+function validateText(text) {
+  if (text !== undefined && text.trim() !== '') {
+    return text.length < 280;
+  }
+  return false;
+}
+function validateDate(date) {
+  if (date !== undefined) { return !Number.isNaN(date.getTime()); }
+  return false;
+}
+function validateAuthor(name) {
+  if (name !== undefined) {
+    return name.length > 0;
+  }
+  return false;
+}
 export {
-  sortByDate,
-  checkFilterObject,
   setId,
-  validateParams,
-  checkLength
+  validateId,
+  validateText,
+  validateDate,
+  validateAuthor,
 };
-

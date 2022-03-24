@@ -1,4 +1,8 @@
-import { setId, validateParams } from './helpFunctions.js';
+/*eslint no-underscore-dangle: "error"*/
+
+import {
+  setId, validateId, validateText, validateDate, validateAuthor,
+} from './helpFunctions.js';
 import TweetCollection from './TweetCollection.js';
 import Comment from './Comment.js';
 
@@ -23,16 +27,16 @@ class Tweet {
 
   set createdAt(value) { }
 
-  static validate(tw) {
+  static validate(tw, set) {
     if (tw !== undefined) {
-      if (validateParams(tw.id, tw.text, tw.createdAt, tw.author)) {
-        if (Array.isArray(tw.comments)) {
-          return true;
-        }
-        return false;
-      }
-    }
-    return false;
+      if (validateId(tw.id, set)
+        && validateText(tw.text)
+        && validateDate(tw.createdAt)
+        && validateAuthor(tw.author)
+        && Array.isArray(tw.comments)) {
+        return true;
+      } return false;
+    } return false;
   }
 }
 export default Tweet;

@@ -1,6 +1,5 @@
-import { setId, validateParams } from './helpFunctions.js';
+import { setId, validateId, validateText, validateDate, validateAuthor }  from './helpFunctions.js';
 import TweetCollection from './TweetCollection.js';
-
 
 class Comment {
   constructor(newText) {
@@ -22,9 +21,14 @@ class Comment {
 
   set createdAt(value) { }
 
-  static validate(com) {
+  static validate(com, set) {
     if (com !== undefined && com instanceof Comment) {
-      return (validateParams(com.id, com.text, com.createdAt, com.author));
+      if (validateId(com.id, set)
+        && validateText(com.text)
+        && validateDate(com.createdAt)
+        && validateAuthor(com.author)) {
+        return true;
+      } return false;
     }
     return false;
   }

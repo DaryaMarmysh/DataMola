@@ -46,4 +46,4 @@ let d = mul(sub(a, 1))(c); // 58
 let doSmth = pipe(add(d), sub(c), mul(b), div(a));
 let result = doSmth(0);// (((0 + 58) - 29) * 30) / 3 = 290
 let x = pipe(add(1), mul(2))(3); // 8
-console.log(`${result}, ${x}`)
+console.log(`${result}, ${x}`);

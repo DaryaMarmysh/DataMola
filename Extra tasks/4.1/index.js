@@ -8,7 +8,7 @@ class Node {
 class List {
     list = [];
     constructor(root) {
-        {
+        if (root !== undefined) {
             this.root = new Node(root, null);
             this.list.push(new Node(root, null))
         }
@@ -16,9 +16,10 @@ class List {
     addNode(value, i) {
         if (value !== undefined && typeof value === 'number') {
             if (i !== undefined && typeof value === 'number') {
-                if (i > this.list.length - 1) {
+                if (i > this.list.length - 1 || i <= 0) {
                     return false;
                 }
+
                 else {
                     let newNode = new Node(value, this.list[i]);
                     this.list[i].next = this.list[i - 1];
@@ -34,14 +35,15 @@ class List {
 
     }
     removeNode(i) {
-        if (i !== undefined) {
-            if (this.list.length > 1 && typeof i === 'number' && i <= this.list.length - 1) {
-                if (i == 0) {
+        if(this.list.length > 1){
+        if (i !== undefined ) {
+            if (i <= this.list.length - 1 && typeof i === 'number') {
+                if (i === 0) {
                     this.root = this.list[1];
                     this.list[1].next = null;
                     this.list.splice(0, 1);
                 }
-                else if (i = this.list.length - 1) {
+                else if (i === this.list.length - 1) {
                     this.list.pop();
                 }
                 else {
@@ -59,9 +61,8 @@ class List {
             this.list.pop();
             return true;
         }
-
-
-        /* methods */
+    }
+        return false;
     }
     print() {
         let arr = [];
@@ -69,13 +70,11 @@ class List {
         console.log(arr.join(', '))
     }
 }
-let l = new List(8);
-
-l.addNode(44);
-l.addNode(9);
-l.addNode(10);
-
-//l.addNode(99999, 4);
-//l.removeNode(0);
-console.log(l);
+let l = new List(1);
+l.addNode(2)
+l.addNode(3)
+l.addNode(4)
 l.print()
+console.log(l.removeNode('hh'));
+l.print();
+console.log(l);
