@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { setId, validateParams } from './helpFunctions.js';
 import TweetCollection from './TweetCollection.js';
 import Comment from './Comment.js';
@@ -25,9 +23,8 @@ class Tweet {
 
   set createdAt(value) { }
 
-  
   static validate(tw) {
-    if (tw !== undefined /*&& tw instanceof Tweet*/) {
+    if (tw !== undefined) {
       if (validateParams(tw.id, tw.text, tw.createdAt, tw.author)) {
         if (Array.isArray(tw.comments)) {
           return true;

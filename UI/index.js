@@ -26,7 +26,7 @@ const tweets = [
   },
   {
     id: '3',
-    text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра, #которыми я наслаждаюсь от всего сердца.',
+    text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра, #которыми я наслаждаюсь от всего сердца. #js',
     createdAt: new Date('2022-02-10T23:00:01'),
     author: 'Даша Мармыш',
     comments: [{
@@ -83,7 +83,7 @@ const tweets = [
   },
   {
     id: '9',
-    text: 'Лишь независимые государства являются только методом  и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
+    text: 'Лишь независимые государства являются #jsтолько методом  и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
     createdAt: new Date('2022-02-15T23:00:01'),
     author: 'Петров Петр',
     comments: [{
@@ -95,7 +95,7 @@ const tweets = [
   },
   {
     id: '10',
-    text: 'Проснувшись однажды утром после беспокойного сна, Грегор Замза обнаружил, что он у себя в постели превратился в страшное насекомое. Лежа на панцирнотвердой спине, он видел, стоило ему приподнять голову',
+    text: 'Проснувшись однажды утром после #jsбеспокойного сна, Грегор Замза обнаружил, что он у себя в постели превратился в страшное насекомое. Лежа на панцирнотвердой спине, он видел, стоило ему приподнять голову',
     createdAt: new Date('2022-02-16T23:00:01'),
     author: 'Петров Петр',
     comments: [],
@@ -242,46 +242,61 @@ function addHashtags(text) {
   });
 }; */
 const tweetsCollection = new TweetCollection(tweets);
-
-/*
-const com = new Comment('new comment text');
-console.log(com);
-console.log(com.id);
-console.log(com.id=5);
-console.log(com.id);
-console.log(Comment.validate(com));
-*/
-/*
-const tweet = new Tweet('new tweet!');
-console.log(tweet);
-console.log(tweet.addComment('new comment'));
-console.log(tweet);
-*/
-
-
-/*
-console.log(tweetsCollection.tweets);
-console.log(TweetCollection.get('1'));
-console.log(TweetCollection.get('50'));
-console.log(TweetCollection.getPage());
-console.log(TweetCollection.getPage(15));
-console.log(TweetCollection.getPage(10, 8));
-console.log(TweetCollection.getPage(0,50,{
+//console.log(tweetsCollection.addComment('2','new comment'));
+//console.log(tweetsCollection.tweets);
+//console.log(tweetsCollection.get('1'));
+//console.log(tweetsCollection.get('50'));
+//console.log(tweetsCollection.getPage());
+//console.log(tweetsCollection.getPage('12'));
+//console.log(tweetsCollection.getPage(10, 8));
+console.log(tweetsCollection.getPage(0,50,{
   author: '',
   dateFrom: new Date(2000, 1, 1),
   dateTo: new Date(),
   hashtags: ['js'],
   text: '',
 }));
- //-- должен найти твит с id=4*/
+ //-- должен найти твит с id=4
 
-//console.log(tweetsCollection.add('new tweet!'));
-//console.log(tweetsCollection.tweets)
+//console.log(tweetsCollection.add(' '));
 
-//console.log(tweetsCollection.edit('1', ' ')); //+
+
+//console.log(tweetsCollection.edit('1', 'tttt')); //+
 //console.log(tweetsCollection.edit('1', 'edit tweet')); //+
-console.log(tweetsCollection.edit('1', ' '));//+
-//console.log(tweetsCollection.remove('40')); /+
+//console.log(tweetsCollection.edit('1', ' '));//+
 //console.log(tweetsCollection.remove('4')); /+
+//console.log(tweetsCollection.tweets);
+
+//console.log(tweetsCollection.getPage());
+//console.log(tweetsCollection.getPage(15));
+//console.log(tweetsCollection.getPage(10, 8));
+/*console.log(tweetsCollection.getPage(1,{
+  author: '',
+  dateFrom: new Date(2000, 1, 1),
+  dateTo: new Date(),
+  hashtags: ['js'],
+  text: '',
+}));*/
+/*console.log(tweetsCollection.addAll([{
+  id: '1589',
+  text: '',
+  createdAt: new Date('2022-02-09T19:25:00'),
+  author: 'Петров Петр',
+  comments: [],
+
+},
+{
+  id: '5698742',
+  text: 'Какие #дела? #hi  #datamola  #js',
+  createdAt: new Date('2022-02-10T23:00:01'),
+  author: 'Даша Мармыш',
+  comments: [{
+    id: '201',
+    text: 'Хорошо, а у тебя?',
+    createdAt: new Date('2022-03-09T23:00:05'),
+    author: 'Иванов Иван',
+  }],
+}])); 
+console.log(tweetsCollection.tweets)
+*/
 console.log(tweetsCollection.tweets);
-console.log(' '.trim() !== '');
