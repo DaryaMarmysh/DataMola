@@ -34,7 +34,7 @@ class TweetCollection {
     return filteredTweets;
   }
   
-  static _user = 'Петров Петр';
+  static _user = 'guest';
   _sortByDate=function() {
   return this.tweets.sort((a, b) => a.createdAt - b.createdAt)
   }
@@ -45,7 +45,7 @@ class TweetCollection {
     return this._user;
   }
 
-  set user(newUser) {
+  static set user(newUser) {
     this._user = newUser;
   }
 
@@ -63,31 +63,15 @@ class TweetCollection {
 
   addAll(twts) {
     const errorTweets = [];
-    twts.forEach((tw) => { Tweet.validate(tw, this.tweets) ? this._tweets.push(tw) : errorTweets.push(tw) });
+    twts.forEach((tw) => { Tweet.validate(tw, this.tweets) ? this.tweets.push(tw) : errorTweets.push(tw) });
     return errorTweets;
   }
 
   clear() {
-    this._tweets.clear();
+    this.tweets.length=0;
   }
-//
-  getPage(...args) {
-    let skip = 0;
-    let top = 10;
-    let filter = {};
-    if (typeof args[0] === 'number') {
-      [skip] = args;
-      if (typeof args[1] === 'number') {
-        [, top] = args;
-        if (typeof args[2] === 'object') {
-          [, , filter] = args;
-        }
-      } else if (typeof args[1] === 'object') {
-        [, filter] = args;
-      }
-    } else if (typeof args[0] === 'object') {
-      [filter] = args;
-    }
+
+  getPage(skip = 0,top = 10,filter = {}) {
     return this._tweetsFilter(this.sortByDate(this.tweets), filter).splice(skip, top);
   }
 
@@ -118,8 +102,8 @@ class TweetCollection {
 
   remove(id) {
     
-    const index = this.tweets.findIndex(t => t===this.get(id));
-    if (index !== -1) {
+    const index = this.tweets.findIndex(t => t===this.get(id) && t.author === TweetCollection.user);
+    if (index !== -1 ) {
       this.tweets.splice(index, 1);
         return true;
     }

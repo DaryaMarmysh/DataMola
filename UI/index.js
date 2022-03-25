@@ -250,6 +250,7 @@ const twee = {
 };
 const tweetsCollection = new TweetCollection(tweets);
 
+TweetCollection.user='Петров Петр';
 
 /*console.log(tweetsCollection.addComment('1', 'new comment'));
 console.log(tweetsCollection.tweets);
