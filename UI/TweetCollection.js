@@ -2,39 +2,41 @@ import { validateText } from './helpFunctions.js';
 import Tweet from './Tweet.js';
 import Comment from './Comment.js';
 
-function tweetsFilter(tweetsToFilter, filterParams = {}) {
-  const {
-    author: filterAuthor = '.',
-    text: filterText = '.',
-    dateFrom: filterDateFrom = new Date(2010, 1, 1),
-    dateTo: filterDateTo = new Date(),
-    hashtags: filterHashtags = []
-  } = filterParams;
-  const regAuthor = new RegExp(`${filterAuthor}`, "gi");
-  let regHashtagsArray;
-  if (filterHashtags.length > 0) {
-    regHashtagsArray = filterHashtags.map(h => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, "gi"));
-  }
-  else {
-    regHashtagsArray = [new RegExp(`.`, "gi")];
-  }
-  const regTxt = new RegExp(`${filterText}`, "gi");
-  let filteredTweets = [];
-  tweetsToFilter.forEach(element => {
-    if (regAuthor.test(element.author) &&
-      element.createdAt >= filterDateFrom &&
-      element.createdAt <= filterDateTo &&
-      regHashtagsArray.every(r => r.test(element.text)) &&
-      regTxt.test(element.text)) {
-      filteredTweets.push(element);
-    }
-  });
-  return filteredTweets;
-}
+
 class TweetCollection {
+  _tweetsFilter=function (tweetsToFilter, filterParams = {}) {
+    const {
+      author: filterAuthor = '.',
+      text: filterText = '.',
+      dateFrom: filterDateFrom = new Date(2010, 1, 1),
+      dateTo: filterDateTo = new Date(),
+      hashtags: filterHashtags = []
+    } = filterParams;
+    const regAuthor = new RegExp(`${filterAuthor}`, "gi");
+    let regHashtagsArray;
+    if (filterHashtags.length > 0) {
+      regHashtagsArray = filterHashtags.map(h => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, "gi"));
+    }
+    else {
+      regHashtagsArray = [new RegExp(`.`, "gi")];
+    }
+    const regTxt = new RegExp(`${filterText}`, "gi");
+    let filteredTweets = [];
+    tweetsToFilter.forEach(element => {
+      if (regAuthor.test(element.author) &&
+        element.createdAt >= filterDateFrom &&
+        element.createdAt <= filterDateTo &&
+        regHashtagsArray.every(r => r.test(element.text)) &&
+        regTxt.test(element.text)) {
+        filteredTweets.push(element);
+      }
+    });
+    return filteredTweets;
+  }
+  
   static _user = 'Петров Петр';
   _sortByDate=function() {
-  return new Set(Array.from(this.tweets).sort((a, b) => a.createdAt - b.createdAt));
+  return this.tweets.sort((a, b) => a.createdAt - b.createdAt)
   }
   get sortByDate() {
     return this._sortByDate;
@@ -48,7 +50,7 @@ class TweetCollection {
   }
 
   constructor(twts) {
-    this._tweets = new Set(twts);
+    this._tweets = twts;
   }
 
   get tweets() {
@@ -61,14 +63,14 @@ class TweetCollection {
 
   addAll(twts) {
     const errorTweets = [];
-    twts.forEach((tw) => { Tweet.validate(tw, this.tweets) ? this._tweets.add(tw) : errorTweets.push(tw) });
+    twts.forEach((tw) => { Tweet.validate(tw, this.tweets) ? this._tweets.push(tw) : errorTweets.push(tw) });
     return errorTweets;
   }
 
   clear() {
     this._tweets.clear();
   }
-
+//
   getPage(...args) {
     let skip = 0;
     let top = 10;
@@ -86,20 +88,18 @@ class TweetCollection {
     } else if (typeof args[0] === 'object') {
       [filter] = args;
     }
-    return tweetsFilter(this.sortByDate(this.tweets), filter).splice(skip, top);
+    return this._tweetsFilter(this.sortByDate(this.tweets), filter).splice(skip, top);
   }
 
   get(id) {
-    let tw;
-    this._tweets.forEach((t) => t.id === id ? tw = t : undefined);
-    return tw !== undefined ? tw : false;
+    return this._tweets.find((t) => t.id === id);
   }
 
   add(newTwitText = '') {
     if (newTwitText.length > 0) {
       const newTweet = new Tweet(newTwitText);
       if (Tweet.validate(newTweet, this.tweets)) {
-        this._tweets.add(newTweet);
+        this.tweets.push(newTweet);
         return true;
       }
       return false;
@@ -117,10 +117,13 @@ class TweetCollection {
   }
 
   remove(id) {
-    const removeTweet = this.get(id);
-    if (removeTweet && removeTweet.author === TweetCollection.user) {
-      this._tweets.delete(removeTweet); return true;
-    } return false;
+    
+    const index = this.tweets.findIndex(t => t===this.get(id));
+    if (index !== -1) {
+      this.tweets.splice(index, 1);
+        return true;
+    }
+    else return false;
   }
 
   addComment(id, text) {
