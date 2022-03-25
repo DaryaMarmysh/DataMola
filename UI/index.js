@@ -283,6 +283,7 @@ console.log(tweetsCollection.getPage(0,10, {
 }));
 
 //console.log(tweetsCollection.addAll([new Tweet('new tweet1'), new Tweet('new tweet2')]));
-console.log(tweetsCollection.remove('4'));
+console.log(tweetsCollection.add('hhhhhh'));
+console.log(tweetsCollection.addComment('2','hhhhhh'));
 console.log(tweetsCollection.tweets);
 
