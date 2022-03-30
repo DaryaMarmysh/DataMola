@@ -34,9 +34,9 @@ class TweetCollection {
     return filteredTweets;
   }
   
-  static _user = 'guest';
+  static _user ;
   _sortByDate=function() {
-  return this.tweets.sort((a, b) => a.createdAt - b.createdAt)
+  return this.tweets.sort((b, a) => a.createdAt - b.createdAt)
   }
   get sortByDate() {
     return this._sortByDate;

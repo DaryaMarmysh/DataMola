@@ -12,7 +12,7 @@
 
 <body>
     <div class="page-container">
-        <header>
+        <header id="headerId">
             <div class="container">
                 <div class="logo">
                     <object type="image/svg+xml" data="img/logo.svg" class="logo">
@@ -23,8 +23,8 @@
                     <object type="image/svg+xml" data="img/acc.svg" class="logo">
                         acc
                     </object>
-                    <span class="name">Даша Мармыш</span>
-                    <button class="shadow"> Выйти</button>
+                    <span class="name" id="currentUser"></span>
+                    <button id="headerButton" class="shadow">Войти</button>
                 </div>
             </div>
         </header>
@@ -114,7 +114,8 @@
                     <textarea maxlength="280" name="" id="" rows="3" placeholder="Написать сообщение..."></textarea>
                     <button class="shadow">Отправить</button>
                 </div>
-                <div class="twit-list">
+                <div class="twit-list" id="twit_list" >
+                   
 
 
                 </div>
@@ -137,6 +138,9 @@
         </footer>
     </div>
 </body>
-<script type="module" src="index.js"></script>
+<template id="tweetTemplate">
 
+</template>
+<script type="module" src="index.js"></script>
+<script type="module" src="HeaderView.js"></script>
 </html>

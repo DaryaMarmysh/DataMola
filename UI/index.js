@@ -1,7 +1,10 @@
 import TweetCollection from './TweetCollection.js';
 import Tweet from './Tweet.js';
+import HeaderView from './HeaderView.js';
+import TweetFeedView from './TweetFeedView.js';
+import TweetView from './TweetView.js';
 
-const tweets = [
+const tweetsDef = [
   {
     id: '1',
     text: 'Привет!#hi  #datamola  #js',
@@ -164,7 +167,7 @@ const tweets = [
   },
   {
     id: '20',
-    text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
+    text: 'Этот твит должен быть удален',
     createdAt: new Date('2022-02-26T23:00:01'),
     author: 'Даша Мармыш',
     comments: [],
@@ -182,7 +185,7 @@ const tweets = [
     }],
   },
 ];
-/*
+
 const myWindow = window;
 const myDocument = document;
 const filter = myDocument.getElementsByClassName('filter')[0];
@@ -212,34 +215,91 @@ function replacer(match) {
 function addHashtags(text) {
   const span = myDocument.createElement('span');
   span.className = 'hash';
-  //const regexp = /([#])\w*[А-я]*'/g;
+  const regexp = /([#])\w*[А-я]*/g;
   return text.replace(regexp, replacer);
 }
- function clickTwit(e) {
+function clickTwit(e) {
   const mytTarget = e.target;
-   if (target.classList.contains('edit')|| target.tagName=='OBJECT') {
-      alert('edit')
+  if (target.classList.contains('edit') || target.tagName == 'OBJECT') {
+    alert('edit')
   }
   if (target.classList.contains('del')) {
-      alert('del')
+    alert('del')
   }
-} 
- myWindow.onload = function () {
-  const showFilter = myDocument.getElementsByClassName('show-filter')[0];
-  showFilter.addEventListener('click', myFunction, false);
-  const currentUser = myDocument.getElementsByClassName('name')[0];
-  currentUser.innerHTML = 'Gtnhjd Gtnh';
-  const list = myDocument.getElementsByClassName('twit-list')[0];
-  getTweets().forEach((twit) => {
-    const div = myDocument.createElement('div');
-    div.className = 'twit-item big-shadow border ';
-    div.innerHTML = `<div class="twit-header"><p class="author-name bold-text">${twit.author}</p><p class="date grey-text text-small">${getDate(twit.createdAt)}</p></div><p class="twit-text">${addHashtags(twit.text)}</p><div class="twit-footer"><p class="comm grey-text text-small">Комментарии: ${twit.comments.length}</p><div class="edit  grey-text text-small"><p> Ред.</p><object type="image/svg+xml" data="img/edit.svg"></object></div></div><div class="del"><object type="image/svg+xml" data="img/close_twit.svg" ></object></div>`;
-    if (twit.author === 'Gtnhjd Gtnh') { div.className += 'view'; }
-    // div.onclick = clickTwit;
-    list.appendChild(div);
-  });
-}; */
+}
 
+function setCurrentUser(userNew) {
+  TweetCollection.user = userNew;
+  headerView.display();
+}
+function getFeed(skip = 0, top = 10, filterConfig = {}) {
+  window.onload = function () {
+    const twitList = document.querySelector("#twit_list");
+    const tweetListContainer = myDocument.createElement('div');
+    tweetListContainer.className='twit-list';
+    tweetListContainer.id = 'tweetListContainer';
+    const tweetsForView = tweets.getPage(skip,top,filterConfig);
+    if (tweetsForView !== undefined) {
+      tweetsForView.map((tw) => {
+        const div = myDocument.createElement('div');
+        div.className = 'twit-item big-shadow border ';
+        div.innerHTML = `<div class="twit-header"><p class="author-name bold-text">${tw.author}</p><p class="date grey-text text-small">${getDate(tw.createdAt)}</p></div><p class="twit-text">${addHashtags(tw.text)}</p><div class="twit-footer"><p class="comm grey-text text-small">Комментарии: ${tw.comments.length}</p><div class="edit  grey-text text-small"><p> Ред.</p><object type="image/svg+xml" data="img/edit.svg"></object></div></div><div class="del"><object type="image/svg+xml" data="img/close_twit.svg" ></object></div>`;
+        if (tw.author === TweetCollection.user) { div.className += 'view'; }
+        tweetListContainer.appendChild(div);
+      })
+      twitList.appendChild(tweetListContainer);
+    }
+  }
+
+
+}
+function addTweet(textNew) {
+  tweets.add(textNew);
+  getFeed()
+
+}
+function editTweet(id, text)
+{
+  tweets.edit(id,text);
+  getFeed();
+}
+function removeTweet(id)
+{
+  tweets.remove(id);
+  getFeed()
+}
+function showTweet(id) {
+  const tw = tweets.get(id);
+  const tweetWindow = window.open('./twit.html');
+  tweetWindow.onload = function () {
+    const cont = tweetWindow.document.querySelector("#mainTweet");
+    const contComment = tweetWindow.document.querySelector("#commentContainer");
+    const template = tweetWindow.document.querySelector('#mainTweetTemplate');
+    const templateComment = tweetWindow.document.querySelector('#commentTemplate');
+    const clone = template.content.cloneNode(true);
+    const authorName = clone.querySelector("#authorName");
+    authorName.textContent = tw.author;
+    const createDate = clone.querySelector("#createDate");
+    createDate.textContent = getDate(tw.createdAt);
+    const tweetText = clone.querySelector("#tweetText");
+    tweetText.innerHTML = addHashtags(tw.text);
+    const commentCount = clone.querySelector("#commentCount");
+    commentCount.textContent = tw.comments.length;
+    const commentClone = templateComment.content.cloneNode(true);
+    if (tw.comments.length > 0) {
+      const authorCommentName = commentClone.querySelector("#authorCommentName");
+      const dateComment = commentClone.querySelector("#dateComment");
+      const textComment = commentClone.querySelector("#textComment");
+      tw.comments.map((c) => {
+        authorCommentName.textContent = c.author;
+        dateComment.textContent = getDate(c.createdAt);
+        textComment.innerHTML = addHashtags(c.text);
+        contComment.appendChild(commentClone);
+      });
+    }
+    cont.appendChild(clone);
+  };
+}
 const twee = {
   id: '201',
   text: 'Привет!#hi  #datamola  #js',
@@ -248,10 +308,20 @@ const twee = {
   comments: [],
 
 };
-const tweetsCollection = new TweetCollection(tweets);
 
-TweetCollection.user='Петров Петр';
+const tweets = new TweetCollection(tweetsDef);
+const headerView = new HeaderView('headerId');
+const tweetFeedView = new TweetFeedView('twit_list');
+tweetFeedView.display();
+setCurrentUser('Даша Мармыш');
+//showTweet('3');
 
+//const tweetFeedView = new TweetFeedView('twit_list');
+
+//getFeed();
+//addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh')
+//editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
+//removeTweet('20')
 /*console.log(tweetsCollection.addComment('1', 'new comment'));
 console.log(tweetsCollection.tweets);
 console.log(tweetsCollection.get('1'));
@@ -276,14 +346,8 @@ console.log(tweetsCollection.tweets);
 console.log(tweetsCollection.getPage());
 console.log(tweetsCollection.getPage(15));
 console.log(tweetsCollection.getPage(10, 8));*/
-console.log(tweetsCollection.getPage(0,10, {
-  
-  hashtags: ['js'],
- 
-}));
 
 //console.log(tweetsCollection.addAll([new Tweet('new tweet1'), new Tweet('new tweet2')]));
-console.log(tweetsCollection.add('hhhhhh'));
-console.log(tweetsCollection.addComment('2','hhhhhh'));
-console.log(tweetsCollection.tweets);
+
+
 
