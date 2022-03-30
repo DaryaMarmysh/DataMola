@@ -1,5 +1,9 @@
-function createCalendar(year, month) {
-  const myDate = new Date(year, month - 1);
+function createCalendar(elem = 'body', year = 2022, month = 3) {
+  const elementToAbbend = document.getElementById(elem);
+  if (!elementToAbbend || year < 1 || month > 31 || month < 1) {
+    console.log('error params'); return;
+  }
+  const myDate = new Date(year, month - 1)
   const dayCount = new Date(year, month, 0).getDate();
   const weekday = myDate.getDay();
   const table = document.createElement('table');
@@ -7,7 +11,6 @@ function createCalendar(year, month) {
   const tbody = document.createElement('tbody');
   thead.innerHTML = '<tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th></tr>';
   let currentDay = 1;
-
   const startWith = weekday === 0 ? 7 : weekday;
   const fistWeekDaysCount = 7 - startWith + 1;
   const fullWeekCount = Math.floor((dayCount - fistWeekDaysCount) / 7);
@@ -17,7 +20,7 @@ function createCalendar(year, month) {
     const row = document.createElement('tr');
     let cellText;
     for (let j = 0; j < 7; j += 1) {
-      if ((i === 0 && j < startWith) || (i === weeksCount - 1 && currentDay > dayCount)) {
+      if ((i === 0 && j < startWith - 1) || (i === weeksCount - 1 && currentDay > dayCount)) {
         cellText = document.createTextNode('');
       }
       else {
@@ -32,7 +35,6 @@ function createCalendar(year, month) {
   }
   table.appendChild(thead);
   table.appendChild(tbody);
-  document.getElementById('body').appendChild(table);
+  elementToAbbend.appendChild(table);
 }
-
-createCalendar(2022, 7)
+createCalendar('body', 2019, 5);
