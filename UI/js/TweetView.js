@@ -30,32 +30,32 @@ class TweetView {
   }
 
   display(tw) {
-      const contComment = this.tweetWindow.document.querySelector("#commentContainer");
-      const template = this.tweetWindow.document.querySelector('#mainTweetTemplate');
-      const templateComment = this.tweetWindow.document.querySelector('#commentTemplate');
-      const clone = template.content.cloneNode(true);
-      const authorName = clone.querySelector("#authorName");
-      authorName.textContent = tw.author;
-      const createDate = clone.querySelector("#createDate");
-      createDate.textContent = TweetView.getDate(tw.createdAt);
-      const tweetText = clone.querySelector("#tweetText");
-      tweetText.innerHTML = TweetView.addHashtags(tw.text);
-      const commentCount = clone.querySelector("#commentCount");
-      commentCount.textContent = tw.comments.length;
-      const commentClone = templateComment.content.cloneNode(true);
-      if (tw.comments.length > 0) {
+    const contComment = this.tweetWindow.document.querySelector("#commentContainer");
+    const template = this.tweetWindow.document.querySelector('#mainTweetTemplate');
+    const templateComment = this.tweetWindow.document.querySelector('#commentTemplate');
+    const clone = template.content.cloneNode(true);
+    const authorName = clone.querySelector("#authorName");
+    authorName.textContent = tw.author;
+    const createDate = clone.querySelector("#createDate");
+    createDate.textContent = TweetView.getDate(tw.createdAt);
+    const tweetText = clone.querySelector("#tweetText");
+    tweetText.innerHTML = TweetView.addHashtags(tw.text);
+    const commentCount = clone.querySelector("#commentCount");
+    commentCount.textContent = tw.comments.length;
+    if (tw.comments.length > 0) {
+      tw.comments.forEach((c) => {
+        const commentClone = templateComment.content.cloneNode(true);
         const authorCommentName = commentClone.querySelector("#authorCommentName");
         const dateComment = commentClone.querySelector("#dateComment");
         const textComment = commentClone.querySelector("#textComment");
-        tw.comments.forEach((c) => {
-          authorCommentName.textContent = c.author;
-          dateComment.textContent = TweetView.getDate(c.createdAt);
-          textComment.innerHTML = TweetView.addHashtags(c.text);
-          contComment.appendChild(commentClone);
-        });
-      }
-      this.mainTweet.appendChild(clone);
-    };
-  
+        authorCommentName.textContent = c.author;
+        dateComment.textContent = TweetView.getDate(c.createdAt);
+        textComment.innerHTML = TweetView.addHashtags(c.text);
+        contComment.appendChild(commentClone);
+      });
+    }
+    this.mainTweet.appendChild(clone);
+  };
+
 }
 export default TweetView;

@@ -109,7 +109,7 @@ footer {
     flex:0;
     padding: 0.5rem 0 1.2rem;
     width: 100%;
-    margin-top:1rem;
+  
 }
 .twit-page.container {
     flex-direction: column;
@@ -125,7 +125,7 @@ margin-right: 10rem;
 .comment-block {
     display: flex;
     width: 100%;
-    margin-top: 20px;
+    
     padding-bottom: 2vh;
     max-height: 52vh;
     flex-grow: 0;
@@ -165,6 +165,7 @@ header .container {
 .main.container {
     flex-direction: column;
     align-items: center;
+    margin-bottom: 1rem;
 }
 
 .new-twit {
@@ -188,6 +189,7 @@ textarea {
     padding: 1rem 0.8rem;
     margin: 1rem 0;
     resize: none;
+    min-height: 4vh;
 
 
 }
@@ -470,11 +472,9 @@ h3 {
 .comment-list-wrapper::-webkit-scrollbar-thumb {
     padding: 2.2rem;
     background: #94FF97;
-
     border-radius: 1.4rem;
-    /* roundness of the scroll thumb */
     border: 1px solid var(--dark);
-    /* creates padding around scroll thumb */
+
 }
 
 .new-comm textarea {
@@ -488,17 +488,28 @@ h3 {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-height: 160px;
-    max-width: 800px;
+    max-height: 180px;
+  
     margin-left: 10px;
-    flex-shrink: 2;
+   
 
 }
-
+.containerTwitPage{
+   max-width: 1140px;
+    margin-top: 2vh;
+    margin-left: 10rem;
+    margin-right: 10rem;
+    display: flex;
+    flex-direction: row;
+}
 
 
 @media (max-width: 1200px) {
     .twit-page.container {
+        margin-left: 2vw;
+        margin-right: 2vw;
+    }
+    .containerTwitPage{
         margin-left: 2vw;
         margin-right: 2vw;
     }
@@ -536,6 +547,9 @@ h3 {
 
     .comment-list-wrapper {
         margin-bottom: 1vh;
+    }
+    .containerTwitPage{
+        flex-direction: column-reverse;
     }
 
 }
@@ -593,7 +607,7 @@ h3 {
     background: transparent;
     border: none;
 }
-/* .close{
-   ,!-- top:-20vh;
-} */
+ .close{
+   top:-20vh;
+} 
 .open{display:flex}

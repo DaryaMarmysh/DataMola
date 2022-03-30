@@ -40,6 +40,18 @@ const tweetsDef = [
       text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра.',
       createdAt: new Date('2022-03-09T23:00:05'),
       author: 'Иванов Иван',
+    },
+    {
+      id: '303',
+      text: 'текст коммента #haha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '304',
+      text: 'текст коммента #hahahaha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
     }],
   },
   {
@@ -187,6 +199,7 @@ const tweetsDef = [
 ];
 const filter = document.getElementsByClassName('filter')[0];
 function myFunction() {
+  alert('dsds')
   filter.classList.toggle('close');
 }
 
@@ -207,8 +220,7 @@ function setCurrentUser(userNew) {
 function getFeed(skip = 0, top = 10, filterConfig = {}) {
   window.onload = function () {
   tweetFeedView.display(tweets.getPage(skip, top, filterConfig));
-  }
-
+  };
 }
 function addTweet(textNew) {
   tweets.add(textNew);
@@ -233,15 +245,11 @@ function showTweet(id) {
 const tweets = new TweetCollection(tweetsDef);
 const headerView = new HeaderView('headerId');
 const tweetFeedView = new TweetFeedView('twit_list');
+const filterView = new FilterView('authorNameFilter');
 setCurrentUser('Даша Мармыш');
 showTweet('3');
-
-//const tweetFeedView = new TweetFeedView('twit_list');
-
 getFeed();
-//addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh')
-//editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
-//removeTweet('20')
-const filterView = new FilterView('authorNameFilter');
-
+addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
+editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
+removeTweet('20');
 filterView.display(tweets.tweets);
