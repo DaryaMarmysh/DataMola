@@ -1,9 +1,8 @@
-import TweetCollection from './TweetCollection.js';
-import Tweet from './Tweet.js';
-import HeaderView from './HeaderView.js';
-import TweetFeedView from './TweetFeedView.js';
-import TweetView from './TweetView.js';
-import FilterView from './FilterView.js';
+import TweetCollection from './js/TweetCollection.js';
+import HeaderView from './js/HeaderView.js';
+import TweetFeedView from './js/TweetFeedView.js';
+import TweetView from './js/TweetView.js';
+import FilterView from './js/FilterView.js';
 
 const tweetsDef = [
   {
@@ -186,14 +185,10 @@ const tweetsDef = [
     }],
   },
 ];
-
-const myWindow = window;
-const myDocument = document;
-const filter = myDocument.getElementsByClassName('filter')[0];
+const filter = document.getElementsByClassName('filter')[0];
 function myFunction() {
   filter.classList.toggle('close');
 }
-
 
 function clickTwit(e) {
   const mytTarget = e.target;
@@ -211,14 +206,13 @@ function setCurrentUser(userNew) {
 }
 function getFeed(skip = 0, top = 10, filterConfig = {}) {
   window.onload = function () {
-    tweetFeedView.display(tweets.getPage(skip, top, filterConfig));
+  tweetFeedView.display(tweets.getPage(skip, top, filterConfig));
   }
 
 }
 function addTweet(textNew) {
   tweets.add(textNew);
   getFeed();
-
 }
 function editTweet(id, text) {
   tweets.edit(id, text);
@@ -230,63 +224,24 @@ function removeTweet(id) {
 }
 function showTweet(id) {
   const tw = tweets.get(id);
-  const tweetWindow = window.open('./twit.html');
+  const tweetWindow = window.open('./html/twit.html');
   tweetWindow.onload = function () {
-  const tweetView=new TweetView('mainTweet',tweetWindow);
-  tweetView.display(tw);
-  }
- 
+    const tweetView = new TweetView('mainTweet', tweetWindow);
+    tweetView.display(tw);
+  };
 }
-const twee = {
-  id: '201',
-  text: 'Привет!#hi  #datamola  #js',
-  createdAt: new Date('2022-02-09T19:25:00'),
-  author: 'Петров Петр',
-  comments: [],
-
-};
-
 const tweets = new TweetCollection(tweetsDef);
 const headerView = new HeaderView('headerId');
 const tweetFeedView = new TweetFeedView('twit_list');
 setCurrentUser('Даша Мармыш');
-//showTweet('3');
+showTweet('3');
 
 //const tweetFeedView = new TweetFeedView('twit_list');
 
-//getFeed();
+getFeed();
 //addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh')
 //editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
 //removeTweet('20')
-const filterView= new FilterView('authorNameFilter');
+const filterView = new FilterView('authorNameFilter');
 
 filterView.display(tweets.tweets);
-/*console.log(tweetsCollection.addComment('1', 'new comment'));
-console.log(tweetsCollection.tweets);
-console.log(tweetsCollection.get('1'));
-console.log(tweetsCollection.get('50'));
-console.log(tweetsCollection.getPage());
-console.log(tweetsCollection.getPage(12));
-console.log(tweetsCollection.getPage(10, 8));
-console.log(tweetsCollection.getPage(0, 50, {
-  author: '',
-  dateFrom: new Date(2000, 1, 1),
-  dateTo: new Date(),
-  hashtags: ['js'],
-  text: '',
-}));//-- должен найти твит с id=4
-console.log(tweetsCollection.add(' '));
-console.log(tweetsCollection.edit('1', 'tttt')); //+
-console.log(tweetsCollection.edit('1', 'edit tweet')); //+
-console.log(tweetsCollection.edit('1', ' '));//+
-console.log(tweetsCollection.remove('4')); //+
-console.log(tweetsCollection.tweets);
-
-console.log(tweetsCollection.getPage());
-console.log(tweetsCollection.getPage(15));
-console.log(tweetsCollection.getPage(10, 8));*/
-
-//console.log(tweetsCollection.addAll([new Tweet('new tweet1'), new Tweet('new tweet2')]));
-
-
-

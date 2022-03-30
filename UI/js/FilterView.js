@@ -10,10 +10,11 @@ class FilterView {
         const op = document.createElement("option");
         op.value = option;
         op.text = option;
-        this.selectList.add(op)
+        this.selectList.add(op);
       }
       )
     }
   }
 }
 export default FilterView;
+/////доделать фильтры

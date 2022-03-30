@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="shortcut icon" href="img/Vector.png" type="image/png">
     <title>Твит</title>
 </head>
@@ -74,40 +74,40 @@
                     <span> Твит</span>
                 </nav>
                 <div class="main-twit big-shadow border " id="mainTweet">
-                   
-                    </div>
 
                 </div>
-                <div class="comment-block">
-                    <div class="comment-list-wrapper">
-                        <div class="comment-list" id="commentContainer">
-                           
-                            </div>
 
-                        </div>
-                    </div>
-                    <div class="new-comm border big-shadow">
-                        <div class="new-comm-name">Даша Мармыш</div>
-                        <textarea maxlength="180" name="" id="" rows="2"
-                            placeholder="Написать комментарий..."></textarea>
-                        <button class="shadow">Отправить</button>
-                    </div>
-                </div>
             </div>
-        </main>
-        <footer>
             <div class="container">
-                <div class="cop">
-                    <span class="prog-name">© Даша Мармыш <span class="email">vkmarmysh-darja@rambler.ru</span></span>
+            <div class="comment-block">
+                <div class="comment-list-wrapper">
+                    <div class="comment-list" id="commentContainer">
+
+                    </div>
 
                 </div>
-                <div class="logo">
-                    <object type="image/svg+xml" data="img/small-logo.svg" >
-                    </object>
-                </div>
-                <div class="ver">v 20.02.2022</div>
             </div>
-        </footer>
+            <div class="new-comm border big-shadow">
+                <div class="new-comm-name">Даша Мармыш</div>
+                <textarea maxlength="180" name="" id="" rows="2" placeholder="Написать комментарий..."></textarea>
+                <button class="shadow">Отправить</button>
+            </div></div>
+    </div>
+    </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="cop">
+                <span class="prog-name">© Даша Мармыш <span class="email">vkmarmysh-darja@rambler.ru</span></span>
+
+            </div>
+            <div class="logo">
+                <object type="image/svg+xml" data="img/small-logo.svg">
+                </object>
+            </div>
+            <div class="ver">v 20.02.2022</div>
+        </div>
+    </footer>
     </div>
     <template id="mainTweetTemplate">
         <div class="twit-header">
@@ -119,23 +119,21 @@
             <div class="comm grey-text text-small">Комментарии: <span id="commentCount">5</span></div>
             <div class="add-comm  grey-text text-small">
 
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
                         fill="#94FF97" />
                     <path
                         d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                        stroke="#212227" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
+                        stroke="#212227" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     <path
                         d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
                         stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
             </div>
-      </template>
-      <template id="commentTemplate">
+    </template>
+    <template id="commentTemplate">
         <div class="comment-item big-shadow border ">
             <div class="comment-header">
                 <div class="author-name bold-text" id="authorCommentName">Василий Аксенов</div>
@@ -148,6 +146,7 @@
                 деятельности требуют от нас анализа форм развития.
             </div>
         </div>
-      </template>
+    </template>
 </body>
+
 </html>
