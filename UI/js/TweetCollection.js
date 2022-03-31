@@ -42,11 +42,11 @@ class TweetCollection {
     return this._sortByDate;
   }
   static get user() {
-    return this._user;
+    return TweetCollection._user;
   }
 
   static set user(newUser) {
-    this._user = newUser;
+    TweetCollection._user = newUser;
   }
 
   constructor(twts) {

@@ -131,7 +131,7 @@ const tweetsDef = [
     id: '13',
     text: 'Лишь многие известные личности указаны как претенденты на роль ключевых факторов. В частности, постоянный количественный рост и сфера нашей активности в #значительной степени обусловливает важность форм воздействия.',
     createdAt: new Date('2022-02-19T23:00:01'),
-    author: 'Петров Петр',
+    author: 'Иванов Иван',
     comments: [],
   },
 
@@ -174,7 +174,7 @@ const tweetsDef = [
     id: '19',
     text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
     createdAt: new Date('2022-02-25T23:00:01'),
-    author: 'Петров Петр',
+    author: 'Иванов Иван',
     comments: [],
   },
   {
@@ -197,6 +197,7 @@ const tweetsDef = [
     }],
   },
 ];
+/*
 const filter = document.getElementsByClassName('filter')[0];
 function myFunction() {
   alert('dsds')
@@ -212,29 +213,31 @@ function clickTwit(e) {
     alert('del')
   }
 }
-
-function setCurrentUser(userNew) {
+*/
+globalThis.setCurrentUser = function (userNew) {
   TweetCollection.user = userNew;
   headerView.display();
 }
-function getFeed(skip = 0, top = 10, filterConfig = {}) {
+
+globalThis.getFeed = function (skip = 0, top = 10, filterConfig = {}) {
   window.onload = function () {
-  tweetFeedView.display(tweets.getPage(skip, top, filterConfig));
+    tweetFeedView.display(tweets.getPage(skip, top, filterConfig));
   };
 }
-function addTweet(textNew) {
+
+globalThis.addTweet = function (textNew) {
   tweets.add(textNew);
   getFeed();
 }
-function editTweet(id, text) {
+ globalThis.editTweet=function(id, text) {
   tweets.edit(id, text);
   getFeed();
 }
-function removeTweet(id) {
+globalThis.removeTweet=function (id) {
   tweets.remove(id);
   getFeed();
 }
-function showTweet(id) {
+ globalThis.showTweet=function(id) {
   const tw = tweets.get(id);
   const tweetWindow = window.open('./html/twit.html');
   tweetWindow.onload = function () {
@@ -247,9 +250,10 @@ const headerView = new HeaderView('headerId');
 const tweetFeedView = new TweetFeedView('twit_list');
 const filterView = new FilterView('authorNameFilter');
 setCurrentUser('Даша Мармыш');
-showTweet('3');
+
 getFeed();
 addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
 editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
 removeTweet('20');
+showTweet('3');
 filterView.display(tweets.tweets);

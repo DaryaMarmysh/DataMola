@@ -1,4 +1,4 @@
-<?xml-stylesheet type="text/css" href="../style.css"?>
+<?xml-stylesheet type="text/css" href="../css/style.css"?>
 <svg class="edit" width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <script><![CDATA[
  this.onclick=clickTwit;

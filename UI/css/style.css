@@ -607,7 +607,7 @@ h3 {
     background: transparent;
     border: none;
 }
- .close{
+ /*.close{
    top:-20vh;
-} 
+} */
 .open{display:flex}
