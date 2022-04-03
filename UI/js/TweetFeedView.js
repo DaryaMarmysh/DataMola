@@ -1,8 +1,17 @@
+/* eslint no-use-before-define: 0 */
+/* eslint func-names: 0 */
+/* eslint no-undef:0 */
+/* eslint import/extensions: 0 */
+
 import TweetCollection from './TweetCollection.js';
 
 class TweetFeedView {
   constructor(containerId) {
-    this.twitList = document.querySelector(`#${containerId}`);
+    this.main = document.querySelector('main');
+    this.mainTemplate = document.querySelector('#mainPage');
+    this.clone = this.mainTemplate.content.cloneNode(true);
+    this.mainContainer = this.clone.querySelector('#mainContainerForMainPages');
+    this.twitList = this.mainContainer.querySelector(`#${containerId}`);
   }
 
   static getDate(date) {
@@ -24,14 +33,16 @@ class TweetFeedView {
   }
 
   static addHashtags(text) {
-    const regexp = /([#])\w*[А-я]*/g;
-    return text.replace(regexp, replacer);
     function replacer(match) {
       return `<span class="hash">${match}</span>`;
     }
+    const regexp = /([#])\w*[А-я]*/g;
+    return text.replace(regexp, replacer);
   }
 
   display(tweetsForView) {
+    const newTweetAuthorName = this.clone.querySelector('#newTweetAuthorName');
+    newTweetAuthorName.textContent = TweetCollection.user;
     const tweetListContainer = document.createElement('div');
     tweetListContainer.className = 'twit-list';
     tweetListContainer.id = 'tweetListContainer';
@@ -49,8 +60,9 @@ class TweetFeedView {
         </object></div>`;
         if (tw.author === TweetCollection.user) { div.className += 'view'; }
         tweetListContainer.appendChild(div);
-      })
+      });
       this.twitList.appendChild(tweetListContainer);
+      this.main.appendChild(this.mainContainer);
     }
   }
 }

@@ -1,8 +1,11 @@
+/* eslint no-use-before-define: 0 */ 
+/*eslint func-names: 0*/
+/*eslint no-undef:0*/
+/* eslint import/extensions: 0*/
 import TweetCollection from './js/TweetCollection.js';
 import HeaderView from './js/HeaderView.js';
 import TweetFeedView from './js/TweetFeedView.js';
 import TweetView from './js/TweetView.js';
-import FilterView from './js/FilterView.js';
 
 const tweetsDef = [
   {
@@ -49,6 +52,30 @@ const tweetsDef = [
     },
     {
       id: '304',
+      text: 'текст коммента #hahahaha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '305',
+      text: 'текст коммента #haha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '306',
+      text: 'текст коммента #hahahaha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '307',
+      text: 'текст коммента #haha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '308',
       text: 'текст коммента #hahahaha',
       createdAt: new Date('2022-03-09T23:00:05'),
       author: 'Иванов Иван',
@@ -217,43 +244,39 @@ function clickTwit(e) {
 globalThis.setCurrentUser = function (userNew) {
   TweetCollection.user = userNew;
   headerView.display();
-}
+};
 
 globalThis.getFeed = function (skip = 0, top = 10, filterConfig = {}) {
   window.onload = function () {
     tweetFeedView.display(tweets.getPage(skip, top, filterConfig));
   };
-}
+};
 
 globalThis.addTweet = function (textNew) {
-  tweets.add(textNew);
-  getFeed();
-}
- globalThis.editTweet=function(id, text) {
-  tweets.edit(id, text);
-  getFeed();
-}
-globalThis.removeTweet=function (id) {
-  tweets.remove(id);
-  getFeed();
-}
- globalThis.showTweet=function(id) {
+  if (tweets.add(textNew)) getFeed();
+};
+
+globalThis.editTweet = function (id, text) {
+  if (tweets.edit(id, text)) getFeed();
+};
+
+globalThis.removeTweet = function (id) {
+  if (tweets.remove(id)) getFeed();
+};
+
+globalThis.showTweet = function (id) {
   const tw = tweets.get(id);
-  const tweetWindow = window.open('./html/twit.html');
-  tweetWindow.onload = function () {
-    const tweetView = new TweetView('mainTweet', tweetWindow);
-    tweetView.display(tw);
-  };
-}
+  if (tw) tweetView.display(tw);
+};
+
 const tweets = new TweetCollection(tweetsDef);
 const headerView = new HeaderView('headerId');
 const tweetFeedView = new TweetFeedView('twit_list');
-const filterView = new FilterView('authorNameFilter');
-setCurrentUser('Даша Мармыш');
+const tweetView = new TweetView('main');
 
+setCurrentUser('Даша Мармыш');
 getFeed();
-addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
-editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
-removeTweet('20');
+//addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
+///editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
+//removeTweet('20');
 showTweet('3');
-filterView.display(tweets.tweets);

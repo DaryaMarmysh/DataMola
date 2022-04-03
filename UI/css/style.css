@@ -131,6 +131,11 @@ margin-right: 10rem;
     flex-grow: 0;
    
 }
+#twit_list
+{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 .comment-list-wrapper {
     flex-grow: 0;
     max-width: 800px;
@@ -166,12 +171,13 @@ header .container {
     flex-direction: column;
     align-items: center;
     margin-bottom: 1rem;
+    max-height: 73vh;
 }
 
 .new-twit {
     border-radius: 1rem;
     background: var( --linear-gradient-background);
-    padding: 1.8rem 2rem 2.2rem;
+    padding: 0.8rem 1.2rem 1rem;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -198,7 +204,7 @@ textarea {
     display: flex;
     gap: 2.5rem;
     flex-direction: column;
-    margin: 1.2rem 0 1rem;
+    margin: 1.2rem 0.5rem 1rem;
 }
 
 .twit-list>button {
@@ -316,7 +322,7 @@ footer .logo {
 }
 
 .filter {
-    display: flex;
+    display:none;
     flex-direction: column;
     gap: 0.9rem;
     background-color: #ffffff;
@@ -476,7 +482,24 @@ h3 {
     border: 1px solid var(--dark);
 
 }
+#twit_list::-webkit-scrollbar {
+    width: 1.2rem;
+    margin-left: 2.2rem;
 
+}
+
+#twit_list::-webkit-scrollbar-track {
+    background: rgba(196, 196, 196, 0.4);
+    border-radius: 1rem;
+}
+
+#twit_list::-webkit-scrollbar-thumb {
+    padding: 2.2rem;
+    background: #94FF97;
+    border-radius: 1.4rem;
+    border: 1px solid var(--dark);
+
+}
 .new-comm textarea {
     margin: 0.9rem 0;
 }
@@ -501,10 +524,15 @@ h3 {
     margin-right: 10rem;
     display: flex;
     flex-direction: row;
+    flex-grow: 1;
 }
 
 
 @media (max-width: 1200px) {
+    .main.container{
+        margin-left: 2vw;
+    margin-right: 2vw;
+    }
     .twit-page.container {
         margin-left: 2vw;
         margin-right: 2vw;

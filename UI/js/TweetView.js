@@ -1,7 +1,10 @@
 class TweetView {
-  constructor(containerId, newWindow) {
-    this.tweetWindow = newWindow;
-    this.mainTweet = this.tweetWindow.document.querySelector(`#${containerId}`);
+  constructor(containerId) {
+    this.main = document.getElementById(`${containerId}`);
+    this.mainTemplate = document.querySelector('#tweetPage');
+    this.templateComment = document.querySelector('#commentTemplate');
+    this.mainClone = this.mainTemplate.content.cloneNode(true);
+    this.contComment = this.mainClone.querySelector('#commentContainer');
   }
 
   static getDate(date) {
@@ -23,39 +26,38 @@ class TweetView {
 
   static addHashtags(text) {
     function replacer(match) {
-      return `<span class="hash">${match}</span>`;
+      return `<span class='hash'>${match}</span>`;
     }
     const regexp = /([#])\w*[А-я]*/g;
     return text.replace(regexp, replacer);
   }
 
   display(tw) {
-    const contComment = this.tweetWindow.document.querySelector("#commentContainer");
-    const template = this.tweetWindow.document.querySelector('#mainTweetTemplate');
-    const templateComment = this.tweetWindow.document.querySelector('#commentTemplate');
-    const clone = template.content.cloneNode(true);
-    const authorName = clone.querySelector("#authorName");
+    const mainTag = document.createElement('main');
+    mainTag.id = 'main';
+    const authorName = this.mainClone.querySelector('#authorName');
     authorName.textContent = tw.author;
-    const createDate = clone.querySelector("#createDate");
+    const createDate = this.mainClone.querySelector('#createDate');
     createDate.textContent = TweetView.getDate(tw.createdAt);
-    const tweetText = clone.querySelector("#tweetText");
+    const tweetText = this.mainClone.querySelector('#tweetText');
     tweetText.innerHTML = TweetView.addHashtags(tw.text);
-    const commentCount = clone.querySelector("#commentCount");
+    const commentCount = this.mainClone.querySelector('#commentCount');
     commentCount.textContent = tw.comments.length;
     if (tw.comments.length > 0) {
       tw.comments.forEach((c) => {
-        const commentClone = templateComment.content.cloneNode(true);
-        const authorCommentName = commentClone.querySelector("#authorCommentName");
-        const dateComment = commentClone.querySelector("#dateComment");
-        const textComment = commentClone.querySelector("#textComment");
+        const commentClone = this.templateComment.content.cloneNode(true);
+        const authorCommentName = commentClone.querySelector('#authorCommentName');
+        const dateComment = commentClone.querySelector('#dateComment');
+        const textComment = commentClone.querySelector('#textComment');
         authorCommentName.textContent = c.author;
         dateComment.textContent = TweetView.getDate(c.createdAt);
         textComment.innerHTML = TweetView.addHashtags(c.text);
-        contComment.appendChild(commentClone);
+        this.contComment.appendChild(commentClone);
       });
     }
-    this.mainTweet.appendChild(clone);
-  };
-
+    mainTag.appendChild(this.mainClone);
+    const replaced = document.getElementsByClassName('page-container')[0];
+    replaced.replaceChild(mainTag, this.main);
+  }
 }
 export default TweetView;
