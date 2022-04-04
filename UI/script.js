@@ -1,11 +1,9 @@
-/* eslint no-use-before-define: 0 */ 
+/* eslint-disable spaced-comment */
+/* eslint no-use-before-define: 0 */
 /*eslint func-names: 0*/
 /*eslint no-undef:0*/
 /* eslint import/extensions: 0*/
-import TweetCollection from './js/TweetCollection.js';
-import HeaderView from './js/HeaderView.js';
-import TweetFeedView from './js/TweetFeedView.js';
-import TweetView from './js/TweetView.js';
+import TweetsController from './js/TweetsController.js';
 
 const tweetsDef = [
   {
@@ -224,7 +222,7 @@ const tweetsDef = [
     }],
   },
 ];
-/*
+
 const filter = document.getElementsByClassName('filter')[0];
 function myFunction() {
   alert('dsds')
@@ -240,43 +238,42 @@ function clickTwit(e) {
     alert('del')
   }
 }
-*/
-globalThis.setCurrentUser = function (userNew) {
-  TweetCollection.user = userNew;
-  headerView.display();
-};
 
-globalThis.getFeed = function (skip = 0, top = 10, filterConfig = {}) {
-  window.onload = function () {
-    tweetFeedView.display(tweets.getPage(skip, top, filterConfig));
-  };
-};
 
-globalThis.addTweet = function (textNew) {
-  if (tweets.add(textNew)) getFeed();
-};
-
-globalThis.editTweet = function (id, text) {
-  if (tweets.edit(id, text)) getFeed();
-};
-
-globalThis.removeTweet = function (id) {
-  if (tweets.remove(id)) getFeed();
-};
-
-globalThis.showTweet = function (id) {
-  const tw = tweets.get(id);
-  if (tw) tweetView.display(tw);
-};
-
-const tweets = new TweetCollection(tweetsDef);
-const headerView = new HeaderView('headerId');
-const tweetFeedView = new TweetFeedView('twit_list');
-const tweetView = new TweetView('main');
-
-setCurrentUser('Даша Мармыш');
-getFeed();
 //addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
 ///editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
 //removeTweet('20');
-showTweet('3');
+//showTweet('3');
+//закинуть все твиты через конструктор твита и конструктор уоммента
+//через addall stringify массив в строчку и сохранить в local storage
+//проверка в локал стораже
+
+const tweetController = new TweetsController(tweetsDef, 'headerId', 'twit_list', 'main', 'filter');
+tweetController.setCurrentUser('Даша Мармыш');
+tweetController.getFeed();
+const tweetList = document.getElementById('tweetListContainer');
+const addNewTweetButton = document.querySelector('#addNewTweet');
+addNewTweetButton.addEventListener('click', () => {
+  const textarea = document.getElementById('textareaNewTweet');
+  tweetController.addTweet(textarea.value);
+})
+tweetList.onclick = function (event) {
+  let target = event.target;
+  if (target.classList.contains('del')) {
+    tweetController.removeTweet(target.closest('.twit-item').dataset.id);
+  } else if (target.classList.contains('edit')) {
+    const editTweet = target.closest('.twit-item');
+    const textarea = document.createElement('textarea');
+    const paragText = editTweet.querySelector('#twitText');
+    const but = document.createElement('button');
+    but.innerHTML = 'Сохранить';
+    but.onclick = function () {
+      tweetController.editTweet(editTweet.dataset.id, textarea.value);
+    }
+    editTweet.replaceChild(textarea, paragText);
+    editTweet.querySelector('#tweetFooter').replaceChild(but, editTweet.querySelector('#editDiv'));
+  } else {
+    const showTweet = target.closest('.twit-item');
+    tweetController.showTweet(showTweet.dataset.id);
+  }
+}

@@ -12,6 +12,7 @@ class TweetFeedView {
     this.clone = this.mainTemplate.content.cloneNode(true);
     this.mainContainer = this.clone.querySelector('#mainContainerForMainPages');
     this.twitList = this.mainContainer.querySelector(`#${containerId}`);
+    this.newTweetAuthorName = this.clone.querySelector('#newTweetAuthorName');
   }
 
   static getDate(date) {
@@ -41,8 +42,7 @@ class TweetFeedView {
   }
 
   display(tweetsForView) {
-    const newTweetAuthorName = this.clone.querySelector('#newTweetAuthorName');
-    newTweetAuthorName.textContent = TweetCollection.user;
+    this.newTweetAuthorName.textContent = TweetCollection.user;
     const tweetListContainer = document.createElement('div');
     tweetListContainer.className = 'twit-list';
     tweetListContainer.id = 'tweetListContainer';
@@ -50,18 +50,24 @@ class TweetFeedView {
       tweetsForView.forEach((tw) => {
         const div = document.createElement('div');
         div.className = 'twit-item big-shadow border ';
+        div.dataset.id = tw.id;
         div.innerHTML = `<div class="twit-header"><p class="author-name bold-text">${tw.author}</p>
         <p class="date grey-text text-small">${TweetFeedView.getDate(tw.createdAt)}</p></div>
-        <p class="twit-text">${TweetFeedView.addHashtags(tw.text)}</p><div class="twit-footer">
+        <p class="twit-text" id="twitText">${TweetFeedView.addHashtags(tw.text)}</p><div class="twit-footer" id="tweetFooter">
         <p class="comm grey-text text-small">Комментарии: ${tw.comments.length}</p>
-        <div class="edit  grey-text text-small">
-        <p> Ред.</p><object type="image/svg+xml" data="img/edit.svg">
-        </object></div></div><div class="del"><object type="image/svg+xml" data="img/close_twit.svg" >
-        </object></div>`;
+        <div class="edit  grey-text text-small" id="editDiv">
+        <p> Ред.</p><img class="edit" src="img/edit.svg">
+        </img></div></div><div ><img class="del" src="img/close_twit.svg" >
+        </img></div>`;
         if (tw.author === TweetCollection.user) { div.className += 'view'; }
         tweetListContainer.appendChild(div);
       });
-      this.twitList.appendChild(tweetListContainer);
+      const existList = document.getElementById('tweetListContainer');
+      if (existList) {
+        this.twitList.replaceChild(tweetListContainer, existList);
+      } else {
+        this.twitList.appendChild(tweetListContainer);
+      }
       this.main.appendChild(this.mainContainer);
     }
   }

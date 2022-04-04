@@ -1,6 +1,6 @@
 :root {
     --main-color: #86E8B9;
-    --lite-color: #D0FFB7;
+    --lite-color: #dafdc8;
     --dark-color: #94FF97;
     --dark: #212227;
     --dark-white: #F2F6DF;
@@ -20,7 +20,9 @@
     flex-direction: column;
     
 }
-
+img:hover{
+    cursor: var(--pointer);
+}
 
 * {
     text-decoration: none;
