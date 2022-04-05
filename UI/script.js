@@ -1,9 +1,12 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable spaced-comment */
 /* eslint no-use-before-define: 0 */
 /*eslint func-names: 0*/
 /*eslint no-undef:0*/
 /* eslint import/extensions: 0*/
 import TweetsController from './js/TweetsController.js';
+import UserCollection from './js/UserCollection.js';
 
 const tweetsDef = [
   {
@@ -185,14 +188,14 @@ const tweetsDef = [
     id: '17',
     text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
     createdAt: new Date('2022-02-23T23:00:01'),
-    author: 'Петров Петр',
+    author: 'Даша Мармыш',
     comments: [],
   },
   {
     id: '18',
     text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
     createdAt: new Date('2022-02-24T23:00:01'),
-    author: 'Петров Петр',
+    author: 'Даша Мармыш',
     comments: [],
   },
   {
@@ -238,8 +241,14 @@ function clickTwit(e) {
     alert('del')
   }
 }
+const headerBut = document.getElementById('headerButton');
+const tweetController = new TweetsController(tweetsDef, 'headerId', 'main', 'main', 'filter','main');
 
-
+/*headerBut.addEventListener('click', (e) => {
+  tweetController.loginPageLoad(tweetController);
+});*/
+tweetController.setCurrentUser('Даша Мармыш');
+tweetController.getFeed();
 //addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
 ///editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
 //removeTweet('20');
@@ -248,32 +257,4 @@ function clickTwit(e) {
 //через addall stringify массив в строчку и сохранить в local storage
 //проверка в локал стораже
 
-const tweetController = new TweetsController(tweetsDef, 'headerId', 'twit_list', 'main', 'filter');
-tweetController.setCurrentUser('Даша Мармыш');
-tweetController.getFeed();
-const tweetList = document.getElementById('tweetListContainer');
-const addNewTweetButton = document.querySelector('#addNewTweet');
-addNewTweetButton.addEventListener('click', () => {
-  const textarea = document.getElementById('textareaNewTweet');
-  tweetController.addTweet(textarea.value);
-})
-tweetList.onclick = function (event) {
-  let target = event.target;
-  if (target.classList.contains('del')) {
-    tweetController.removeTweet(target.closest('.twit-item').dataset.id);
-  } else if (target.classList.contains('edit')) {
-    const editTweet = target.closest('.twit-item');
-    const textarea = document.createElement('textarea');
-    const paragText = editTweet.querySelector('#twitText');
-    const but = document.createElement('button');
-    but.innerHTML = 'Сохранить';
-    but.onclick = function () {
-      tweetController.editTweet(editTweet.dataset.id, textarea.value);
-    }
-    editTweet.replaceChild(textarea, paragText);
-    editTweet.querySelector('#tweetFooter').replaceChild(but, editTweet.querySelector('#editDiv'));
-  } else {
-    const showTweet = target.closest('.twit-item');
-    tweetController.showTweet(showTweet.dataset.id);
-  }
-}
+

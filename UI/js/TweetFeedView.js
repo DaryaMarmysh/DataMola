@@ -7,12 +7,8 @@ import TweetCollection from './TweetCollection.js';
 
 class TweetFeedView {
   constructor(containerId) {
-    this.main = document.querySelector('main');
+    this.main = document.querySelector(`#${containerId}`);
     this.mainTemplate = document.querySelector('#mainPage');
-    this.clone = this.mainTemplate.content.cloneNode(true);
-    this.mainContainer = this.clone.querySelector('#mainContainerForMainPages');
-    this.twitList = this.mainContainer.querySelector(`#${containerId}`);
-    this.newTweetAuthorName = this.clone.querySelector('#newTweetAuthorName');
   }
 
   static getDate(date) {
@@ -42,7 +38,11 @@ class TweetFeedView {
   }
 
   display(tweetsForView) {
-    this.newTweetAuthorName.textContent = TweetCollection.user;
+    const oldChild = document.querySelector('#pageContainer');
+    const clone = this.mainTemplate.content.cloneNode(true);
+    const twitList = clone.querySelector('#twit_list');
+    const newTweetAuthorName = clone.querySelector('#newTweetAuthorName');
+    newTweetAuthorName.textContent = TweetCollection.user;
     const tweetListContainer = document.createElement('div');
     tweetListContainer.className = 'twit-list';
     tweetListContainer.id = 'tweetListContainer';
@@ -63,12 +63,13 @@ class TweetFeedView {
         tweetListContainer.appendChild(div);
       });
       const existList = document.getElementById('tweetListContainer');
-      if (existList) {
-        this.twitList.replaceChild(tweetListContainer, existList);
-      } else {
-        this.twitList.appendChild(tweetListContainer);
+
+      twitList.appendChild(tweetListContainer);
+if(oldChild)
+      {this.main.replaceChild(clone, oldChild);}
+      else{
+        this.main.appendChild(clone);
       }
-      this.main.appendChild(this.mainContainer);
     }
   }
 }

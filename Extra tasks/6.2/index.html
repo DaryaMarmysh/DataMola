@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+</head>
+<style>
+    #container{
+       display: flex;
+       justify-content: center;
+       padding-top: 5rem;
+    }
+    td {
+        width: 10rem;
+        height: 10rem;
+        border: 3px solid blue;
+    }
+
+    table {
+
+
+        border-collapse: collapse;
+        border: 4px solid white
+    }
+    .test-icon .icon-path {
+  stroke-dashoffset: 100;
+  transition: all 700ms linear;
+}
+
+.animated .test-icon .icon-path {
+  stroke-dashoffset:0;
+}
+
+</style>
+<div class="wrapper wrapper--close"  onclick="this.classList.add('animated')">
+    <svg id="icon2" class="test-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="white" 
+         stroke-width="3" stroke-dasharray="100">
+      <path class="icon-path" id="check" d="M 15,15 L 32,33 M 32,15 L 15,33"></path>
+    </svg>
+  </div>
+<body>
+<div id="container">
+    <table>
+        <tr>
+            <td>grgr</td>
+            <td>rgrg</td>
+            <td>rgr</td>
+        </tr>
+        <tr>
+            <td>rgr</td>
+            <td>rgr</td>
+            <td>rgr</td>
+        </tr>
+        <tr>
+            <td>rgr</td>
+            <td>rgr</td>
+            <td>grr</td>
+        </tr>
+    </table>
+</div>
+</body>
+<script src="./index.js"></script>
+
+</html>

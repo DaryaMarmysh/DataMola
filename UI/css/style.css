@@ -18,6 +18,8 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+   
+    justify-content: space-between;
     
 }
 img:hover{
@@ -52,6 +54,7 @@ body {
     background-image:var(--body-grid);
     background-size: 25px 25px;
     min-height: 100vh;
+   
 }
 
 nav {
@@ -528,8 +531,26 @@ h3 {
     flex-direction: row;
     flex-grow: 1;
 }
-
-
+#loginInput,#passwordInput{
+    width: 70%;
+    margin-bottom: 0.3rem;
+}
+#logForm{
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    width: 100%;
+}
+.errorMessage{
+    height: 0.7rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.7rem;
+    color: darkslategray;
+}
+input:invalid{
+    border:2px solid var(--dark-color)
+}
 @media (max-width: 1200px) {
     .main.container{
         margin-left: 2vw;
@@ -618,16 +639,14 @@ h3 {
     padding: 2rem 2rem;
     width: 30vw;
     height: max-content;
-    gap:1rem;
+    gap:0.3rem;
 }
 .modal> input
 {
     width: 100%;
     height: 2.5rem;
 }
-.modal>button{
-    width: 60%;
-}
+
 .madal-title{
     font-size: 2rem;
     font-weight: 500;

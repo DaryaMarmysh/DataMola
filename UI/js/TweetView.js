@@ -33,8 +33,6 @@ class TweetView {
   }
 
   display(tw) {
-    const mainTag = document.createElement('main');
-    mainTag.id = 'main';
     const authorName = this.mainClone.querySelector('#authorName');
     authorName.textContent = tw.author;
     const createDate = this.mainClone.querySelector('#createDate');
@@ -55,9 +53,8 @@ class TweetView {
         this.contComment.appendChild(commentClone);
       });
     }
-    mainTag.appendChild(this.mainClone);
     const replaced = document.getElementsByClassName('page-container')[0];
-    replaced.replaceChild(mainTag, this.main);
+    this.main.replaceWith(this.mainClone);
   }
 }
 export default TweetView;
