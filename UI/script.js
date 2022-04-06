@@ -6,7 +6,6 @@
 /*eslint no-undef:0*/
 /* eslint import/extensions: 0*/
 import TweetsController from './js/TweetsController.js';
-import UserCollection from './js/UserCollection.js';
 
 const tweetsDef = [
   {
@@ -222,33 +221,35 @@ const tweetsDef = [
       text: 'Хорошо, а у тебя?',
       createdAt: new Date('2022-03-09T23:00:05'),
       author: 'Иванов Иван',
+    },
+    {
+      id: '2102',
+      text: 'Хорошо, а у тебя?',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '2103',
+      text: 'Хорошо, а у тебя?',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '2104',
+      text: 'Хорошо, а у тебя?',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
     }],
   },
 ];
 
-const filter = document.getElementsByClassName('filter')[0];
-function myFunction() {
-  alert('dsds')
-  filter.classList.toggle('close');
-}
-
-function clickTwit(e) {
-  const mytTarget = e.target;
-  if (target.classList.contains('edit') || target.tagName == 'OBJECT') {
-    alert('edit')
-  }
-  if (target.classList.contains('del')) {
-    alert('del')
-  }
-}
 const headerBut = document.getElementById('headerButton');
-const tweetController = new TweetsController(tweetsDef, 'headerId', 'main', 'main', 'filter','main');
+const tweetController = new TweetsController(tweetsDef, 'headerId', 'main', 'main', 'filter', 'main');
 
-/*headerBut.addEventListener('click', (e) => {
-  tweetController.loginPageLoad(tweetController);
-});*/
-tweetController.setCurrentUser('Даша Мармыш');
+
+tweetController.filterBlockLoad();
 tweetController.getFeed();
+
 //addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
 ///editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
 //removeTweet('20');

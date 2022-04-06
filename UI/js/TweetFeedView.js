@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint no-use-before-define: 0 */
 /* eslint func-names: 0 */
 /* eslint no-undef:0 */
@@ -37,14 +38,53 @@ class TweetFeedView {
     return text.replace(regexp, replacer);
   }
 
+  bindControllerTweets(removeFun, editFun, showFun, addFun) {
+    const twitList = document.querySelector('#twit_list');
+    const newTweetBut = document.querySelector('#addNewTweet');
+    newTweetBut.addEventListener('click', () => {
+      const newTweetText = document.querySelector('#textareaNewTweet').value;
+      addFun(newTweetText);
+    });
+    twitList.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target.classList.contains('del')) {
+        removeFun(target.closest('.twit-item').dataset.id);
+      } else if (target.classList.contains('edit')) {
+        const editTweet = target.closest('.twit-item');
+        const textarea = document.createElement('textarea');
+        const paragText = editTweet.querySelector('#twitText');
+        textarea.value = paragText.textContent;
+        const but = document.createElement('button');
+        but.innerHTML = 'Сохранить';
+
+        but.onclick = function () {
+          editFun(editTweet.dataset.id, textarea.value);
+          event.stopImmediatePropagation();
+        };
+        editTweet.replaceChild(textarea, paragText);
+        textarea.focus();
+        editTweet.querySelector('#tweetFooter').replaceChild(but, editTweet.querySelector('#editDiv'));
+      } else if (target.classList.contains('twit-item')) {
+        const showTweet = target.closest('.twit-item');
+        showFun(showTweet.dataset.id);
+      }
+    });
+  }
+
   display(tweetsForView) {
-    const oldChild = document.querySelector('#pageContainer');
     const clone = this.mainTemplate.content.cloneNode(true);
+    const oldChild = document.querySelector('#pageContainer');
     const twitList = clone.querySelector('#twit_list');
-    const newTweetAuthorName = clone.querySelector('#newTweetAuthorName');
-    newTweetAuthorName.textContent = TweetCollection.user;
+    if (TweetCollection.user === 'Гость') {
+      const newTweetContainer = clone.querySelector('#newTweetContainer');
+      newTweetContainer.classList.add('hidden');
+    } else {
+      const newTweetAuthorName = clone.querySelector('#newTweetAuthorName');
+      newTweetAuthorName.textContent = TweetCollection.user;
+    }
     const tweetListContainer = document.createElement('div');
     tweetListContainer.className = 'twit-list';
+
     tweetListContainer.id = 'tweetListContainer';
     if (tweetsForView !== undefined) {
       tweetsForView.forEach((tw) => {
@@ -62,14 +102,17 @@ class TweetFeedView {
         if (tw.author === TweetCollection.user) { div.className += 'view'; }
         tweetListContainer.appendChild(div);
       });
-      const existList = document.getElementById('tweetListContainer');
-
       twitList.appendChild(tweetListContainer);
-if(oldChild)
-      {this.main.replaceChild(clone, oldChild);}
-      else{
-        this.main.appendChild(clone);
-      }
+
+    }
+    const openFilterBut = clone.querySelector('#filterBut');
+    openFilterBut.addEventListener('click', () => {
+      filterContainer.classList.remove('close');
+    });
+    if (oldChild) { this.main.replaceChild(clone, oldChild); }
+    else {
+      this.main.appendChild(clone);
+
     }
   }
 }

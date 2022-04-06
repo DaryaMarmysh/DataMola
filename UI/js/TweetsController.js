@@ -15,11 +15,18 @@ class TweetsController {
   constructor(tweetsDef, headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId) {
     this.tweetCollection = new TweetCollection(tweetsDef);
     this.headerView = new HeaderView(headerId);
+    this.headerView.setNewUser(this.setCurrentUser(this));///???
+    this.headerView.getUser = this.getCurrentUser(this);
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);
-    this.tweetView = new TweetView(tweetViewId);
+    this.tweetView = new TweetView(tweetViewId, filterViewId);
     this.filterView = new FilterView(filterViewId);
+    this.filterView.authors = this.getAuthors();
     this.logView = new LogView(logViewId);
   }
+
+  getCurrentUser = function () {
+    return TweetCollection.user;
+  };
 
   setCurrentUser = function (userNew) {
     TweetCollection.user = userNew;
@@ -30,29 +37,28 @@ class TweetsController {
     this.logView.display(obj);
   };
 
+  filterBlockLoad = function () {
+    this.filterView.display();
+  };
+
+  getSearchTweets = function (filterConfig) {
+    console.log(filterConfig);
+    this.getFeed(0, 10, filterConfig);
+  };
+
   getFeed = function (skip = 0, top = 10, filterConfig = {}) {
     this.tweetFeedView.display(this.tweetCollection.getPage(skip, top, filterConfig));
-    const twitList = document.getElementById('twit_list');
-    twitList.onclick = function (event) {
-      const target = event.target;
-      if (target.classList.contains('del')) {
-       removeTweet(target.closest('.twit-item').dataset.id);
-      } else if (target.classList.contains('edit')) {
-        const editTweet = target.closest('.twit-item');
-        const textarea = document.createElement('textarea');
-        const paragText = editTweet.querySelector('#twitText');
-        const but = document.createElement('button');
-        but.innerHTML = 'Сохранить';
-        but.onclick = function () {
-          editTweet(editTweet.dataset.id, textarea.value);
-        };
-        editTweet.replaceChild(textarea, paragText);
-        editTweet.querySelector('#tweetFooter').replaceChild(but, editTweet.querySelector('#editDiv'));
-      } else {
-        const showTweet = target.closest('.twit-item');
-        showTweet(showTweet.dataset.id);
-      }
-    }
+    this.tweetFeedView.bindControllerTweets(
+      this.removeTweet.bind(this),
+      this.editTweet.bind(this),
+      this.showTweet.bind(this),
+      this.addTweet.bind(this),
+    );
+    this.filterView.bindControllerTweets(this.getSearchTweets.bind(this));
+  };
+
+  getAuthors = function () {
+    return new Set(this.tweetCollection.tweets.map((t) => t.author));
   };
 
   addTweet = function (textNew) {
@@ -69,7 +75,10 @@ class TweetsController {
 
   showTweet = function (id) {
     const tw = this.tweetCollection.get(id);
-    if (tw) this.tweetView.display(tw);
+    if (tw) {
+      this.tweetView.display(tw);
+      this.tweetView.bindControllerTweets(this.getFeed.bind(this));
+    }
   };
 }
 export default TweetsController;

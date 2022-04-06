@@ -16,12 +16,12 @@ class TweetCollection {
       dateTo: filterDateTo = new Date(),
       hashtags: filterHashtags = [],
     } = filterParams;
-    const regAuthor = new RegExp(`${filterAuthor}`, "gi");
+    const regAuthor = new RegExp(`${filterAuthor}`, 'gi');
     let regHashtagsArray;
     if (filterHashtags.length > 0) {
       regHashtagsArray = filterHashtags.map((h) => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, 'gi'));
     } else {
-      regHashtagsArray = [new RegExp(`.`, "gi")];
+      regHashtagsArray = [new RegExp(`.`, 'gi')];
     }
     const regTxt = new RegExp(`${filterText}`, 'gi');
     const filteredTweets = [];
@@ -37,7 +37,7 @@ class TweetCollection {
     return filteredTweets;
   };
 
-  static _user;
+  static _user='Гость';
 
   _sortByDate = function () {
     return this.tweets.sort((b, a) => a.createdAt - b.createdAt)

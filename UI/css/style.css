@@ -63,11 +63,11 @@ nav {
     margin-bottom: 0.4rem;
 }
 
-button:hover {
+button:hover,[type=submit] {
     background: var(--dark-color);
 }
 
-button {
+button,[type=submit] {
 
     font-weight: 500;
     font-size: 1.2rem;
@@ -79,7 +79,19 @@ button {
     height: min-content;
     cursor:var(--pointer);
 }
+#addHashtagButton{
+    position: absolute;
+    top: 55%;
+}
+#hashtagsContainer{
+    margin:1rem 0;
+    display:flex;
+    flex-wrap: wrap;
+    gap:0.3rem;
+}
+#smallHashtagTemplate{
 
+}
 .name {
     font-size: 1.2rem;
     margin-right: 0.9rem;
@@ -210,6 +222,7 @@ textarea {
     gap: 2.5rem;
     flex-direction: column;
     margin: 1.2rem 0.5rem 1rem;
+    width: 95%;
 }
 
 .twit-list>button {
@@ -327,7 +340,7 @@ footer .logo {
 }
 
 .filter {
-    display:none;
+    display:flex;
     flex-direction: column;
     gap: 0.9rem;
     background-color: #ffffff;
@@ -335,9 +348,9 @@ footer .logo {
     padding: 1vh 7vh 2.2vh 11vh;
     margin-bottom: 1.6rem;
     position:absolute;
-    top:10vh;
+    top:0;
     transition: top 0.5s ease-in-out;
-    z-index: 2;
+    z-index: 3;
     left:0;
     right:0;
     margin-left: auto;
@@ -357,7 +370,7 @@ footer .logo {
     flex-wrap: wrap;
 }
 
-[type=text] {
+[type=text],[type=date] {
     border-radius: 0.5rem;
     border: 1px solid var(--dark);
     padding: 0.5rem 0 0.5rem 0.7rem;
@@ -367,9 +380,6 @@ select{
 
     width: 150px;
     height: 34px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     border-radius: 0.5rem;
     border: 1px solid var(--dark);
     padding: 0.5rem 0 0.5rem 0.7rem;
@@ -390,8 +400,7 @@ h3 {
     background-color: var(--dark-color);
     border-radius: 3rem;
     padding-left: 0.8rem;
-    ;
-    padding-right: 0.6rem;
+    padding-right: 0.2rem;
     width: min-content;
     border: 1px solid black;
     display: flex;
@@ -402,7 +411,7 @@ h3 {
     font-size: 0.8rem;
     font-weight: 500;
     margin-right: 0.5rem;
-    line-height: 2rem;
+    line-height: 1.5rem;
 }
 
 .date-block {
@@ -656,7 +665,10 @@ input:invalid{
     background: transparent;
     border: none;
 }
- /*.close{
-   top:-20vh;
-} */
+ .close{
+   top:-100vh;
+} 
+.hidden{
+    display:none;
+}
 .open{display:flex}
