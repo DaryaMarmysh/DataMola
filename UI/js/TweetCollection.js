@@ -1,3 +1,9 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable max-len */
+/* eslint-disable no-else-return */
+/* eslint-disable prefer-regex-literals */
 /* eslint no-use-before-define: 0 */
 /* eslint func-names: 0 */
 /* eslint no-undef:0 */
@@ -21,7 +27,7 @@ class TweetCollection {
     if (filterHashtags.length > 0) {
       regHashtagsArray = filterHashtags.map((h) => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, 'gi'));
     } else {
-      regHashtagsArray = [new RegExp(`.`, 'gi')];
+      regHashtagsArray = [new RegExp('.', 'gi')];
     }
     const regTxt = new RegExp(`${filterText}`, 'gi');
     const filteredTweets = [];
@@ -107,12 +113,12 @@ class TweetCollection {
   }
 
   remove(id) {
-    const index = this.tweets.findIndex(t => t === this.get(id) && t.author === TweetCollection.user);
+    const index = this.tweets.findIndex((t) => t === this.get(id) && t.author === TweetCollection.user);
     if (index !== -1) {
       this.tweets.splice(index, 1);
       return true;
     }
-    else return false;
+    return false;
   }
 
   addComment(id, text) {

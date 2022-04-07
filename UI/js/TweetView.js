@@ -30,11 +30,20 @@ class TweetView {
     return text.replace(regexp, replacer);
   }
 
-  bindControllerTweets(returnMainFun) {
+  bindControllerTweets(returnMainFun, addCommFun) {
+    
     const returnMainPage = document.querySelector('#returnMainPage');
+    const addNewCommentButton = document.querySelector('#addNewCommentButton');
+    const tweetId = document.querySelector('#mainTweet').dataset.id;
+    const newCommenttextarea = document.querySelector('#newCommenttextarea');
     returnMainPage.addEventListener('click', () => {
       returnMainFun();
     });
+    addNewCommentButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      addCommFun(tweetId, newCommenttextarea.value);
+    });
+    
   }
 
   display(tw) {
@@ -61,11 +70,20 @@ class TweetView {
         contComment.appendChild(commentClone);
       });
     }
+    if (this.getUsername() === 'Гость') {
+      const addNewCommentContainer = mainClone.querySelector('#addNewCommentContainer');
+      addNewCommentContainer.classList.add('hidden');
+    } else {
+      const newCommentauthorName = mainClone.querySelector('#newCommentauthorName');
+      newCommentauthorName.textContent = this.getUsername();
+    }
     if (oldChild) {
       this.main.replaceChild(mainClone, oldChild);
     } else {
       this.main.appendChild(mainClone);
     }
+    const container = document.querySelector('#mainTweet');
+    container.dataset.id = tw.id;
   }
 }
 export default TweetView;

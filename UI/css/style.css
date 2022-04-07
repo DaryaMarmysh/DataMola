@@ -155,12 +155,12 @@ margin-right: 10rem;
 }
 .comment-list-wrapper {
     flex-grow: 0;
-    max-width: 800px;
     overflow-y: scroll;
     /*max-height: 60vh;*/
     padding-right: 0.5rem;
     display: flex;
     flex-direction: column;
+    width:100%;
    
 }
 .shadow {
@@ -516,6 +516,7 @@ h3 {
 }
 .new-comm textarea {
     margin: 0.9rem 0;
+    width: 100%;
 }
 
 .new-comm {
@@ -534,8 +535,6 @@ h3 {
 .containerTwitPage{
    max-width: 1140px;
     margin-top: 2vh;
-    margin-left: 10rem;
-    margin-right: 10rem;
     display: flex;
     flex-direction: row;
     flex-grow: 1;

@@ -10,6 +10,7 @@ class TweetFeedView {
   constructor(containerId) {
     this.main = document.querySelector(`#${containerId}`);
     this.mainTemplate = document.querySelector('#mainPage');
+
   }
 
   static getDate(date) {
@@ -38,7 +39,11 @@ class TweetFeedView {
     return text.replace(regexp, replacer);
   }
 
-  bindControllerTweets(removeFun, editFun, showFun, addFun) {
+  bindControllerTweets(removeFun, editFun, showFun, addFun,skipFun) {
+    const moreTweetsButton = document.querySelector('#moreTweetsButton');
+    moreTweetsButton.addEventListener('click', () => {
+      skipFun();
+    });
     const twitList = document.querySelector('#twit_list');
     const newTweetBut = document.querySelector('#addNewTweet');
     newTweetBut.addEventListener('click', () => {
@@ -75,12 +80,12 @@ class TweetFeedView {
     const clone = this.mainTemplate.content.cloneNode(true);
     const oldChild = document.querySelector('#pageContainer');
     const twitList = clone.querySelector('#twit_list');
-    if (TweetCollection.user === 'Гость') {
+    if (this.getUsername() === 'Гость') {
       const newTweetContainer = clone.querySelector('#newTweetContainer');
       newTweetContainer.classList.add('hidden');
     } else {
       const newTweetAuthorName = clone.querySelector('#newTweetAuthorName');
-      newTweetAuthorName.textContent = TweetCollection.user;
+      newTweetAuthorName.textContent = this.getUsername();
     }
     const tweetListContainer = document.createElement('div');
     tweetListContainer.className = 'twit-list';
@@ -103,7 +108,6 @@ class TweetFeedView {
         tweetListContainer.appendChild(div);
       });
       twitList.appendChild(tweetListContainer);
-
     }
     const openFilterBut = clone.querySelector('#filterBut');
     openFilterBut.addEventListener('click', () => {
@@ -112,7 +116,6 @@ class TweetFeedView {
     if (oldChild) { this.main.replaceChild(clone, oldChild); }
     else {
       this.main.appendChild(clone);
-
     }
   }
 }

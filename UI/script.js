@@ -241,14 +241,27 @@ const tweetsDef = [
       author: 'Иванов Иван',
     }],
   },
+  {
+    id: '21',
+    text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
+    createdAt: new Date('2022-02-25T23:00:01'),
+    author: 'Иванов Иван',
+    comments: [],
+  },
+  {
+    id: '22',
+    text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
+    createdAt: new Date('2022-02-25T23:00:01'),
+    author: 'Иванов Иван',
+    comments: [],
+  },
 ];
 
-const headerBut = document.getElementById('headerButton');
 const tweetController = new TweetsController(tweetsDef, 'headerId', 'main', 'main', 'filter', 'main');
-
-
 tweetController.filterBlockLoad();
 tweetController.getFeed();
+tweetController.displayHeader();
+tweetController.bindFunction();
 
 //addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
 ///editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');

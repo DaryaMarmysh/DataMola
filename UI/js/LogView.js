@@ -21,10 +21,7 @@ class LogView {
     }
   }
 
-  display(tweetController) {
-    const loginPageTemplate = document.getElementById('loginPage');
-    const clone = loginPageTemplate.content.cloneNode(true);
-    this.main.appendChild(clone);
+  bindControllerTweets(setUserFun, getFeedFun) {
     const formLogin = document.getElementById('logForm');
     const login = document.getElementById('loginInput');
     const password = document.getElementById('passwordInput');
@@ -39,16 +36,25 @@ class LogView {
         const users = new UserCollection();
         const user = users.findUser(login.value);
         if (user && user.password === password.value) {
-          tweetController.setCurrentUser(user.name);
-          tweetController.getFeed(tweetController);
-         
-          // const tweetList = document.getElementById('twit_list');
+          setUserFun(user.name);
+          getFeedFun();
         } else {
           passwordError.textContent = 'Неверный логин или пароль';
           loginError.textContent = 'Неверный логин или пароль';
         }
       }
     });
+  }
+
+  display() {
+    const oldChild = document.querySelector('#pageContainer');
+    const loginPageTemplate = document.getElementById('loginPage');
+    const clone = loginPageTemplate.content.cloneNode(true);
+    if (oldChild) { this.main.replaceChild(clone, oldChild); }
+    else {
+      this.main.appendChild(clone);
+    }
+
   }
 }
 export default LogView;
