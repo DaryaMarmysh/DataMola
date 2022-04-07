@@ -1,7 +1,13 @@
-import TweetCollection from './TweetCollection.js';
-import Tweet from './Tweet.js';
+/* eslint no-use-before-define: 0 */ 
+/*eslint func-names: 0*/
+/*eslint no-undef:0*/
+/* eslint import/extensions: 0*/
+import TweetCollection from './js/TweetCollection.js';
+import HeaderView from './js/HeaderView.js';
+import TweetFeedView from './js/TweetFeedView.js';
+import TweetView from './js/TweetView.js';
 
-const tweets = [
+const tweetsDef = [
   {
     id: '1',
     text: 'Привет!#hi  #datamola  #js',
@@ -35,6 +41,42 @@ const tweets = [
     }, {
       id: '302',
       text: 'Душа моя озарена неземной радостью, как эти чудесные весенние утра.',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '303',
+      text: 'текст коммента #haha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '304',
+      text: 'текст коммента #hahahaha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '305',
+      text: 'текст коммента #haha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '306',
+      text: 'текст коммента #hahahaha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '307',
+      text: 'текст коммента #haha',
+      createdAt: new Date('2022-03-09T23:00:05'),
+      author: 'Иванов Иван',
+    },
+    {
+      id: '308',
+      text: 'текст коммента #hahahaha',
       createdAt: new Date('2022-03-09T23:00:05'),
       author: 'Иванов Иван',
     }],
@@ -116,7 +158,7 @@ const tweets = [
     id: '13',
     text: 'Лишь многие известные личности указаны как претенденты на роль ключевых факторов. В частности, постоянный количественный рост и сфера нашей активности в #значительной степени обусловливает важность форм воздействия.',
     createdAt: new Date('2022-02-19T23:00:01'),
-    author: 'Петров Петр',
+    author: 'Иванов Иван',
     comments: [],
   },
 
@@ -159,12 +201,12 @@ const tweets = [
     id: '19',
     text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
     createdAt: new Date('2022-02-25T23:00:01'),
-    author: 'Петров Петр',
+    author: 'Иванов Иван',
     comments: [],
   },
   {
     id: '20',
-    text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
+    text: 'Этот твит должен быть удален',
     createdAt: new Date('2022-02-26T23:00:01'),
     author: 'Даша Мармыш',
     comments: [],
@@ -183,107 +225,58 @@ const tweets = [
   },
 ];
 /*
-const myWindow = window;
-const myDocument = document;
-const filter = myDocument.getElementsByClassName('filter')[0];
+const filter = document.getElementsByClassName('filter')[0];
 function myFunction() {
+  alert('dsds')
   filter.classList.toggle('close');
 }
-function getDate(date) {
-  const month = [
-    'Января',
-    'Февраля',
-    'Марта',
-    'Апреля',
-    'Мая',
-    'Июня',
-    'Июля',
-    'Августа',
-    'Сентября',
-    'Ноября',
-    'Декабря',
-  ];
 
-  return `${date.getDate()} ${month[date.getMonth() - 1]} ${date.getFullYear()} ${date.toLocaleTimeString().substring(0, 5)}`;
-}
-function replacer(match) {
-  return `<span class="hash">${match}</span>`;
-}
-function addHashtags(text) {
-  const span = myDocument.createElement('span');
-  span.className = 'hash';
-  //const regexp = /([#])\w*[А-я]*'/g;
-  return text.replace(regexp, replacer);
-}
- function clickTwit(e) {
+function clickTwit(e) {
   const mytTarget = e.target;
-   if (target.classList.contains('edit')|| target.tagName=='OBJECT') {
-      alert('edit')
+  if (target.classList.contains('edit') || target.tagName == 'OBJECT') {
+    alert('edit')
   }
   if (target.classList.contains('del')) {
-      alert('del')
+    alert('del')
   }
-} 
- myWindow.onload = function () {
-  const showFilter = myDocument.getElementsByClassName('show-filter')[0];
-  showFilter.addEventListener('click', myFunction, false);
-  const currentUser = myDocument.getElementsByClassName('name')[0];
-  currentUser.innerHTML = 'Gtnhjd Gtnh';
-  const list = myDocument.getElementsByClassName('twit-list')[0];
-  getTweets().forEach((twit) => {
-    const div = myDocument.createElement('div');
-    div.className = 'twit-item big-shadow border ';
-    div.innerHTML = `<div class="twit-header"><p class="author-name bold-text">${twit.author}</p><p class="date grey-text text-small">${getDate(twit.createdAt)}</p></div><p class="twit-text">${addHashtags(twit.text)}</p><div class="twit-footer"><p class="comm grey-text text-small">Комментарии: ${twit.comments.length}</p><div class="edit  grey-text text-small"><p> Ред.</p><object type="image/svg+xml" data="img/edit.svg"></object></div></div><div class="del"><object type="image/svg+xml" data="img/close_twit.svg" ></object></div>`;
-    if (twit.author === 'Gtnhjd Gtnh') { div.className += 'view'; }
-    // div.onclick = clickTwit;
-    list.appendChild(div);
-  });
-}; */
-
-const twee = {
-  id: '201',
-  text: 'Привет!#hi  #datamola  #js',
-  createdAt: new Date('2022-02-09T19:25:00'),
-  author: 'Петров Петр',
-  comments: [],
-
+}
+*/
+globalThis.setCurrentUser = function (userNew) {
+  TweetCollection.user = userNew;
+  headerView.display();
 };
-const tweetsCollection = new TweetCollection(tweets);
 
-TweetCollection.user='Петров Петр';
+globalThis.getFeed = function (skip = 0, top = 10, filterConfig = {}) {
+  window.onload = function () {
+    tweetFeedView.display(tweets.getPage(skip, top, filterConfig));
+  };
+};
 
-/*console.log(tweetsCollection.addComment('1', 'new comment'));
-console.log(tweetsCollection.tweets);
-console.log(tweetsCollection.get('1'));
-console.log(tweetsCollection.get('50'));
-console.log(tweetsCollection.getPage());
-console.log(tweetsCollection.getPage(12));
-console.log(tweetsCollection.getPage(10, 8));
-console.log(tweetsCollection.getPage(0, 50, {
-  author: '',
-  dateFrom: new Date(2000, 1, 1),
-  dateTo: new Date(),
-  hashtags: ['js'],
-  text: '',
-}));//-- должен найти твит с id=4
-console.log(tweetsCollection.add(' '));
-console.log(tweetsCollection.edit('1', 'tttt')); //+
-console.log(tweetsCollection.edit('1', 'edit tweet')); //+
-console.log(tweetsCollection.edit('1', ' '));//+
-console.log(tweetsCollection.remove('4')); //+
-console.log(tweetsCollection.tweets);
+globalThis.addTweet = function (textNew) {
+  if (tweets.add(textNew)) getFeed();
+};
 
-console.log(tweetsCollection.getPage());
-console.log(tweetsCollection.getPage(15));
-console.log(tweetsCollection.getPage(10, 8));*/
-console.log(tweetsCollection.getPage(0,10, {
-  
-  hashtags: ['js'],
- 
-}));
+globalThis.editTweet = function (id, text) {
+  if (tweets.edit(id, text)) getFeed();
+};
 
-//console.log(tweetsCollection.addAll([new Tweet('new tweet1'), new Tweet('new tweet2')]));
-console.log(tweetsCollection.add('hhhhhh'));
-console.log(tweetsCollection.addComment('2','hhhhhh'));
-console.log(tweetsCollection.tweets);
+globalThis.removeTweet = function (id) {
+  if (tweets.remove(id)) getFeed();
+};
 
+globalThis.showTweet = function (id) {
+  const tw = tweets.get(id);
+  if (tw) tweetView.display(tw);
+};
+
+const tweets = new TweetCollection(tweetsDef);
+const headerView = new HeaderView('headerId');
+const tweetFeedView = new TweetFeedView('twit_list');
+const tweetView = new TweetView('main');
+
+setCurrentUser('Даша Мармыш');
+getFeed();
+//addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
+///editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
+//removeTweet('20');
+showTweet('3');

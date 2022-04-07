@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="img/Vector.png" type="image/png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../img/Vector.png" type="image/png">
     <title>Твит</title>
 </head>
 
 <body>
     <div class="page-container">
-        <header>
+        <header id="headerId">
             <div class="container">
                 <div class="logo">
                     <svg width="115" height="30" viewBox="0 0 129 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,14 +57,14 @@
                             stroke-linejoin="round" />
                     </svg>
 
-                    <span class="name">Даша Мармыш</span>
-                    <button class="shadow"> Выйти</button>
+                    <span class="name" id="currentUser"></span>
+                    <button class="shadow" id="headerButton"> Войти</button>
                 </div>
             </div>
         </header>
         <main>
             <div class="container twit-page">
-                <nav><span><a href="main.html">Главная </a> </span><svg width="5" height="8" viewBox="0 0 5 8"
+                <nav><span><a href="../index.html">Главная </a> </span><svg width="5" height="8" viewBox="0 0 5 8"
                         fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1 7L4 4L1 1" stroke="#212227" stroke-width="1.5" stroke-linecap="round"
                             stroke-linejoin="round" />
@@ -73,168 +73,82 @@
                     </svg>
                     <span> Твит</span>
                 </nav>
-                <div class="main-twit big-shadow border ">
-                    <div class="twit-header">
-                        <div class="author-name bold-text">Василий Аксенов</div>
-                        <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                    </div>
-                    <div class="twit-text">Задача организации, в особенности же дальнейшее развитие различных форм
-                        деятельности в значительной степени обуславливает создание существенных финансовых и
-                        административных условий. Задача организации, в особенности же постоянное
-                        информационно-пропагандистское обеспечение нашей деятельности требуют от нас анализа форм
-                        развития. </div>
-                    <div class="twit-footer">
-                        <div class="comm grey-text text-small">Комментарии: 5</div>
-                        <div class="add-comm  grey-text text-small">
-
-                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                                    fill="#94FF97" />
-                                <path
-                                    d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                                    stroke="#212227" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path
-                                    d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                                    stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
+                <div class="main-twit big-shadow border " id="mainTweet">
 
                 </div>
-                <div class="comment-block">
-                    <div class="comment-list-wrapper">
-                        <div class="comment-list">
-                            <div class="comment-item big-shadow border ">
-                                <div class="comment-header">
-                                    <div class="author-name bold-text">Василий Аксенов</div>
-                                    <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                                </div>
-                                <div class="comment-text">Задача организации, в особенности же дальнейшее развитие
-                                    различных форм деятельности в значительной степени обуславливает создание
-                                    существенных финансовых и административных условий. Задача организации, в
-                                    особенности же постоянное информационно-пропагандистское обеспечение нашей
-                                    деятельности требуют от нас анализа форм развития.
-                                </div>
-                            </div>
 
-                            <div class="comment-item big-shadow border ">
-                                <div class="comment-header">
-                                    <div class="author-name bold-text">Василий Аксенов</div>
-                                    <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                                </div>
-                                <div class="comment-text">Задача организации, в особенности же дальнейшее развитие
-                                    различных форм деятельности в значительной степени обуславливает создание
-                                    существенных финансовых и административных условий. Задача организации, в
-                                    особенности же постоянное информационно-пропагандистское обеспечение нашей
-                                    деятельности требуют от нас анализа форм развития.
-                                </div>
-                            </div>
+            </div>
+            <div class="containerTwitPage">
+            <div class="comment-block">
+                <div class="comment-list-wrapper">
+                    <div class="comment-list" id="commentContainer">
 
-                            <div class="comment-item big-shadow border ">
-                                <div class="comment-header">
-                                    <div class="author-name bold-text">Василий Аксенов</div>
-                                    <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                                </div>
-                                <div class="comment-text">Задача организации, в особенности же дальнейшее развитие
-                                    различных форм деятельности в значительной степени обуславливает создание
-                                    существенных финансовых и административных условий. Задача организации, в
-                                    особенности же постоянное информационно-пропагандистское обеспечение нашей
-                                    деятельности требуют от нас анализа форм развития.
-                                </div>
-                            </div>
-
-                            <div class="comment-item big-shadow border ">
-                                <div class="comment-header">
-                                    <div class="author-name bold-text">Василий Аксенов</div>
-                                    <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                                </div>
-                                <div class="comment-text">Задача организации, в особенности же дальнейшее развитие
-                                    различных форм деятельности в значительной степени обуславливает создание
-                                    существенных финансовых и административных условий. Задача организации, в
-                                    особенности же постоянное информационно-пропагандистское обеспечение нашей
-                                    деятельности требуют от нас анализа форм развития.
-                                </div>
-                            </div>
-
-                            <div class="comment-item big-shadow border ">
-                                <div class="comment-header">
-                                    <div class="author-name bold-text">Василий Аксенов</div>
-                                    <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                                </div>
-                                <div class="comment-text">Задача организации, в особенности же дальнейшее развитие
-                                    различных форм деятельности в значительной степени обуславливает создание
-                                    существенных финансовых и административных условий. Задача организации, в
-                                    особенности же постоянное информационно-пропагандистское обеспечение нашей
-                                    деятельности требуют от нас анализа форм развития.
-                                </div>
-                            </div>
-
-                            <div class="comment-item big-shadow border ">
-                                <div class="comment-header">
-                                    <div class="author-name bold-text">Василий Аксенов</div>
-                                    <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                                </div>
-                                <div class="comment-text">Задача организации, в особенности же дальнейшее развитие
-                                    различных форм деятельности в значительной степени обуславливает создание
-                                    существенных финансовых и административных условий. Задача организации, в
-                                    особенности же постоянное информационно-пропагандистское обеспечение нашей
-                                    деятельности требуют от нас анализа форм развития.
-                                </div>
-                            </div>
-                            <div class="comment-item big-shadow border ">
-                                <div class="comment-header">
-                                    <div class="author-name bold-text">Василий Аксенов</div>
-                                    <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                                </div>
-                                <div class="comment-text">Задача организации, в особенности же дальнейшее развитие
-                                    различных форм деятельности в значительной степени обуславливает создание
-                                    существенных финансовых и административных условий. Задача организации, в
-                                    особенности же постоянное информационно-пропагандистское обеспечение нашей
-                                    деятельности требуют от нас анализа форм развития.
-                                </div>
-                            </div>
-                            <div class="comment-item big-shadow border ">
-                                <div class="comment-header">
-                                    <div class="author-name bold-text">Василий Аксенов</div>
-                                    <div class="date grey-text text-small">19 сентября 2022 14:02</div>
-                                </div>
-                                <div class="comment-text">Задача организации, в особенности же дальнейшее развитие
-                                    различных форм деятельности в значительной степени обуславливает создание
-                                    существенных финансовых и административных условий. Задача организации, в
-                                    особенности же постоянное информационно-пропагандистское обеспечение нашей
-                                    деятельности требуют от нас анализа форм развития.
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
-                    <div class="new-comm border big-shadow">
-                        <div class="new-comm-name">Даша Мармыш</div>
-                        <textarea maxlength="180" name="" id="" rows="2"
-                            placeholder="Написать комментарий..."></textarea>
-                        <button class="shadow">Отправить</button>
-                    </div>
+
                 </div>
             </div>
+            <div class="new-comm border big-shadow">
+                <div class="new-comm-name">Даша Мармыш</div>
+                <textarea maxlength="180" name="" id="" rows="2" placeholder="Написать комментарий..."></textarea>
+                <button class="shadow">Отправить</button>
+            </div></div>
         </main>
         <footer>
-            <div class="container">
-                <div class="cop">
-                    <span class="prog-name">© Даша Мармыш <span class="email">vkmarmysh-darja@rambler.ru</span></span>
+        <div class="container">
+            <div class="cop">
+                <span class="prog-name">© Даша Мармыш <span class="email">vkmarmysh-darja@rambler.ru</span></span>
 
-                </div>
-                <div class="logo">
-                    <object type="image/svg+xml" data="img/small-logo.svg" >
-                    </object>
-                </div>
-                <div class="ver">v 20.02.2022</div>
             </div>
-        </footer>
+            <div class="logo">
+                <object type="image/svg+xml" data="img/small-logo.svg">
+                </object>
+            </div>
+            <div class="ver">v 20.02.2022</div>
+        </div>
+    </footer>
     </div>
-</body>
+    
+    
+   
+    </div>
+    <template id="mainTweetTemplate">
+        <div class="twit-header">
+            <div id="authorName" class="author-name bold-text">name</div>
+            <div id="createDate" class="date grey-text text-small">date</div>
+        </div>
+        <div id="tweetText" class="twit-text">text </div>
+        <div class="twit-footer">
+            <div class="comm grey-text text-small">Комментарии: <span id="commentCount">5</span></div>
+            <div class="add-comm  grey-text text-small">
 
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
+                        fill="#94FF97" />
+                    <path
+                        d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
+                        stroke="#212227" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
+                        stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+    </template>
+    <template id="commentTemplate">
+        <div class="comment-item big-shadow border ">
+            <div class="comment-header">
+                <div class="author-name bold-text" id="authorCommentName">Василий Аксенов</div>
+                <div class="date grey-text text-small" id="dateComment">19 сентября 2022 14:02</div>
+            </div>
+            <div class="comment-text" id="textComment">Задача организации, в особенности же дальнейшее развитие
+                различных форм деятельности в значительной степени обуславливает создание
+                существенных финансовых и административных условий. Задача организации, в
+                особенности же постоянное информационно-пропагандистское обеспечение нашей
+                деятельности требуют от нас анализа форм развития.
+            </div>
+        </div>
+    </template>
+</body>
+<script type="module" src="../js/header.js "></script>
 </html>

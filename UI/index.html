@@ -1,0 +1,207 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./img/Vector.png" type="image/png">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>Главная</title>
+</head>
+
+<body>
+    <div class="page-container">
+        <header id="headerId">
+            <div class="container">
+                <div class="logo">
+                    <object type="image/svg+xml" data="img/logo.svg" class="logo">
+                        Logo
+                    </object>
+                </div>
+                <div class="ac">
+                    <object type="image/svg+xml" data="img/acc.svg" class="logo">
+                        acc
+                    </object>
+                    <span class="name" id="currentUser"></span>
+                    <button id="headerButton" class="shadow">Войти</button>
+                </div>
+            </div>
+        </header>
+        <div class="filter close border big-shadow">
+            <div class="filter-header">
+                <h3>Поиск по записям</h3>
+                <object type="image/svg+xml" data="img/close-big.svg" class="logo">
+                    close
+                </object>
+
+            </div>
+            <div class="filter-body">
+                <div class="heshtag-block">
+                    <p class="title">По хэштэгам:</p>
+                    <input type="text" name="" id="" placeholder="#Хэштэг...">
+                    <object type="image/svg+xml" data="img/plus_big.svg" class="svg-bott">
+                        +
+                    </object>
+                </div>
+                <div class="date-block">
+                    <div class="date-start">
+                        <div class="title">От:</div>
+                        <object type="image/svg+xml" data="img/calen.svg" class="calendar ">
+
+                        </object>
+
+                        <input type="text" name="" id="" placeholder="01-12-20">
+                    </div>
+                    <div class="date-end">
+                        <div class="title">До:</div>
+                        <object type="image/svg+xml" data="img/calen.svg" class="calendar ">
+
+                        </object>
+                        <input type="text" name="" id="" placeholder="01-12-20">
+                    </div>
+                </div>
+                <div class="author-block">
+                    <p class="title">По имени автора:</p>
+                   <!-- <input type="text" name="" id="" placeholder="Имя автора">-->
+                   <select id="authorNameFilter" class="custom-select"></select>
+                    <object type="image/svg+xml" data="img/arrow_down.svg" class="svg-bott">
+
+                    </object>
+                </div>
+                <div class="text-block">
+                    <p class="title">По тексту:</p>
+                    <input type="text" name="" id="" placeholder="Начните писать ...">
+
+                </div>
+                <button class="shadow">Найти</button>
+            </div>
+            <div class="hashtags">
+                <div class="hashtag">
+                    <span> #jsDataMola</span>
+                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
+                    </object>
+                </div>
+                <div class="hashtag">
+                    <span>#news2022</span>
+                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
+                    </object>
+                </div>
+                <div class="hashtag">
+                    <span>#jsMola</span>
+                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
+                    </object>
+                </div>
+                <div class="hashtag">
+                    <span>#jsMola</span>
+                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
+                    </object>
+                </div>
+                <div class="hashtag">
+                    <span>#jsData2022MolaCamp</span>
+                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
+                    </object>
+                </div>
+
+            </div>
+        </div>
+        <button  class="show-filter">*кнопка*</button>
+       
+        <main id="main">
+            
+        </main>
+        <footer>
+            <div class="container">
+                <div class="cop">
+                    <span class="prog-name">© Даша Мармыш <span class="email">vkmarmysh-darja@rambler.ru</span></span>
+                </div>
+                <div class="logo">
+                    <object type="image/svg+xml" data="img/small-logo.svg">
+                    </object>
+                </div>
+                <p class="ver">v 20.02.2022</p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+<template id="tweetPage">
+    <div class="container twit-page" id="mainContainerForTweetPages">
+        <nav><span><a href="../index.html">Главная</a> </span><svg width="5" height="8" viewBox="0 0 5 8"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 7L4 4L1 1" stroke="#212227" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path d="M1 7L4 4L1 1" stroke="black" stroke-opacity="0.2" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Твит</span>
+        </nav>
+        <div class="main-twit big-shadow border " id="mainTweet">
+            <div class="twit-header">
+                <div class="author-name bold-text" id="authorName">Василий Аксенов</div>
+                <div class="date grey-text text-small" id="createDate"></div>
+            </div>
+            <div class="twit-text" id="tweetText"></div>
+            <div class="twit-footer">
+                <div class="comm grey-text text-small">Комментарии: <span id="commentCount"></span></div>
+                <div class="add-comm  grey-text text-small">
+
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
+                            fill="#94FF97" />
+                        <path
+                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
+                            stroke="#212227" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path
+                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
+                            stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="containerTwitPage">
+    <div class="comment-block">
+        <div class="comment-list-wrapper">
+            <div class="comment-list" id="commentContainer">
+            </div>
+        </div>
+    </div>
+    <div class="new-comm border big-shadow">
+        <div class="new-comm-name" id="newCommentauthorName"></div>
+        <textarea maxlength="180" name="" id="" rows="2" placeholder="Написать комментарий..."></textarea>
+        <button class="shadow">Отправить</button>
+    </div></div>
+</template>
+<template id="commentTemplate">
+    <div class="comment-item big-shadow border ">
+        <div class="comment-header">
+            <div class="author-name bold-text" id="authorCommentName"></div>
+            <div class="date grey-text text-small" id="dateComment"></div>
+        </div>
+        <div class="comment-text" id="textComment">
+        </div>
+    </div>
+</template>
+<template id="mainPage">
+    <div class="container main" id="mainContainerForMainPages">
+        <div class="new-twit border big-shadow">
+            <p class="new-twit-name" id="newTweetAuthorName"></p>
+            <textarea maxlength="280" name="" id="" rows="3" placeholder="Написать сообщение..."></textarea>
+            <button class="shadow">Отправить</button>
+        </div>
+        <div class="twit-list" id="twit_list" >
+        </div>
+        <button class="shadow">
+            Загрузить&#160;ещё
+        </button>
+    </div>
+</template>
+<script type="module" src="./script.js"></script>
+
+</html>

@@ -1,52 +1,58 @@
+/* eslint no-use-before-define: 0 */
+/* eslint func-names: 0 */
+/* eslint no-undef:0 */
+/* eslint import/extensions: 0 */
+/* eslint import/no-cycle: 0 */
 import { validateText } from './helpFunctions.js';
 import Tweet from './Tweet.js';
 import Comment from './Comment.js';
 
-
 class TweetCollection {
-  _tweetsFilter=function (tweetsToFilter, filterParams = {}) {
+  _tweetsFilter = function (tweetsToFilter, filterParams = {}) {
     const {
       author: filterAuthor = '.',
       text: filterText = '.',
       dateFrom: filterDateFrom = new Date(2010, 1, 1),
       dateTo: filterDateTo = new Date(),
-      hashtags: filterHashtags = []
+      hashtags: filterHashtags = [],
     } = filterParams;
     const regAuthor = new RegExp(`${filterAuthor}`, "gi");
     let regHashtagsArray;
     if (filterHashtags.length > 0) {
-      regHashtagsArray = filterHashtags.map(h => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, "gi"));
-    }
-    else {
+      regHashtagsArray = filterHashtags.map((h) => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, 'gi'));
+    } else {
       regHashtagsArray = [new RegExp(`.`, "gi")];
     }
-    const regTxt = new RegExp(`${filterText}`, "gi");
-    let filteredTweets = [];
-    tweetsToFilter.forEach(element => {
+    const regTxt = new RegExp(`${filterText}`, 'gi');
+    const filteredTweets = [];
+    tweetsToFilter.forEach((element) => {
       if (regAuthor.test(element.author) &&
         element.createdAt >= filterDateFrom &&
         element.createdAt <= filterDateTo &&
-        regHashtagsArray.every(r => r.test(element.text)) &&
+        regHashtagsArray.every((r) => r.test(element.text)) &&
         regTxt.test(element.text)) {
         filteredTweets.push(element);
       }
     });
     return filteredTweets;
-  }
-  
-  static _user = 'guest';
-  _sortByDate=function() {
-  return this.tweets.sort((a, b) => a.createdAt - b.createdAt)
-  }
+  };
+
+  static _user;
+
+  _sortByDate = function () {
+    return this.tweets.sort((b, a) => a.createdAt - b.createdAt)
+  };
+
   get sortByDate() {
     return this._sortByDate;
   }
+
   static get user() {
-    return this._user;
+    return TweetCollection._user;
   }
 
   static set user(newUser) {
-    this._user = newUser;
+    TweetCollection._user = newUser;
   }
 
   constructor(twts) {
@@ -68,10 +74,10 @@ class TweetCollection {
   }
 
   clear() {
-    this.tweets.length=0;
+    this.tweets.length = 0;
   }
 
-  getPage(skip = 0,top = 10,filter = {}) {
+  getPage(skip = 0, top = 10, filter = {}) {
     return this._tweetsFilter(this.sortByDate(this.tweets), filter).splice(skip, top);
   }
 
@@ -101,11 +107,10 @@ class TweetCollection {
   }
 
   remove(id) {
-    
-    const index = this.tweets.findIndex(t => t===this.get(id) && t.author === TweetCollection.user);
-    if (index !== -1 ) {
+    const index = this.tweets.findIndex(t => t === this.get(id) && t.author === TweetCollection.user);
+    if (index !== -1) {
       this.tweets.splice(index, 1);
-        return true;
+      return true;
     }
     else return false;
   }
