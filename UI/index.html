@@ -48,8 +48,8 @@
 </body>
 
 <template id="tweetPage">
-    <div id="pageContainer">
-    <div class="container twit-page" id="mainContainerForTweetPages">
+    <div class="container" id="pageContainer">
+    <div  id="mainContainerForTweetPages">
         <nav><span id="returnMainPage">Главная</span><svg width="5" height="8" viewBox="0 0 5 8" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 7L4 4L1 1" stroke="#212227" stroke-width="1.5" stroke-linecap="round"
@@ -69,36 +69,26 @@
                 <div class="comm grey-text text-small">Комментарии: <span id="commentCount"></span></div>
                 <div class="add-comm  grey-text text-small">
 
-                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                            fill="#94FF97" />
-                        <path
-                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                            stroke="#212227" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                            stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="containerTwitPage">
-        <div class="comment-block">
-            <div class="comment-list-wrapper">
-                <div class="comment-list" id="commentContainer">
                 </div>
             </div>
         </div>
-        <div class="new-comm border big-shadow">
-            <div class="new-comm-name" id="newCommentauthorName"></div>
-            <textarea maxlength="180" name="" id="" rows="2" placeholder="Написать комментарий..."></textarea>
-            <button class="shadow">Отправить</button>
+        <div class="containerTwitPage">
+            <div class="comment-block">
+                <div class="comment-list-wrapper">
+                    <div class="comment-list" id="commentContainer">
+                    </div>
+                </div>
+            </div>
+            <div id="addNewCommentContainer" class="new-comm border big-shadow">
+                <form  id="newCommentForm">
+                <div class="new-comm-name" id="newCommentauthorName"></div>
+                <textarea maxlength="180" name="" id="newCommenttextarea" rows="2" placeholder="Написать комментарий..."></textarea>
+                <input type="submit" value="Сохранить" id="addNewCommentButton">
+            </form>
+            </div>
         </div>
     </div>
+    
 </div>
 </template>
 <template id="commentTemplate">
@@ -124,7 +114,7 @@
         </div>
         <div class="twit-list" id="twit_list">
         </div>
-        <button class="shadow">
+        <button id="moreTweetsButton" class="shadow">
             Загрузить&#160;ещё
         </button>
     </div>
@@ -145,6 +135,16 @@
 
     </div>
 </div>
+</template>
+<template id="regPage">
+    <div class="modal big-shadow border">
+        <p class="madal-title">Регистрация</p>
+        <input type="text" name="" id="" placeholder="Логин">
+        <input type="text" name="" id="" placeholder="Пороль">
+        <input type="text" name="" id="" placeholder="Повторите пароль">
+        <button >Зарегистрироваться</button>
+        <button class="second-but"><a href="log.html">Войти</a></button>
+    </div>
 </template>
 <template id="regPageTemplate">
     <div id="pageContainer">
@@ -188,7 +188,7 @@
             <div class="author-block">
                 <p class="title">По имени автора:</p>
                 <select id="authorNameFilter" class="custom-select">
-                    <option disabled></option>
+                    <option disabled selected="selected"></option>
                 </select>
                 
                 </img>
