@@ -10,21 +10,25 @@ class HeaderView {
   bindControllerTweets(loginPageLoad, getFeedFun, setUserFun) {
     const headerBut = document.getElementById('headerButton');
     headerBut.addEventListener('click', () => {
-      if (this.username() === 'Гость') {
-        loginPageLoad();
-        this.button.innerText = 'Выйти';
-      } else {
+      loginPageLoad();
+      if (this.username() !== 'Гость') {
         setUserFun('Гость');
         getFeedFun();
-        this.button.innerText = 'Войти';
       }
     });
   };
-  
+
   display() {
     this.user.innerText = this.username();
+    if (this.username() === 'Гость') {
+      this.button.innerText = 'Войти';
+    } else if (this.username() === undefined) {
+      this.button.innerText = 'Войти';
+      this.user.innerText = 'Гость';
+    } else {
+      this.button.innerText = 'Выйти';
+    }
   }
-
 }
 
 export default HeaderView;

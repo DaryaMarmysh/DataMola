@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable class-methods-use-this */
 class TweetView {
   constructor(containerId) {
     this.main = document.querySelector(`#${containerId}`);
@@ -6,6 +8,7 @@ class TweetView {
   }
 
   static getDate(date) {
+    date = new Date(date);
     const month = [
       'Января',
       'Февраля',
@@ -31,7 +34,6 @@ class TweetView {
   }
 
   bindControllerTweets(returnMainFun, addCommFun) {
-    
     const returnMainPage = document.querySelector('#returnMainPage');
     const addNewCommentButton = document.querySelector('#addNewCommentButton');
     const tweetId = document.querySelector('#mainTweet').dataset.id;
@@ -43,7 +45,6 @@ class TweetView {
       event.preventDefault();
       addCommFun(tweetId, newCommenttextarea.value);
     });
-    
   }
 
   display(tw) {

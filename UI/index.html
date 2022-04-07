@@ -131,30 +131,25 @@
             <span class="errorMessage" id="passwordError"> </span>
             <button type="submit">Войти</button>
         </form>
-        <button class="second-but" id="regPageButton" onclick="regPageLoad">Зарегистрироваться</button>
+        <button class="second-but" id="regPageButton">Зарегистрироваться</button>
 
     </div>
 </div>
-</template>
-<template id="regPage">
-    <div class="modal big-shadow border">
-        <p class="madal-title">Регистрация</p>
-        <input type="text" name="" id="" placeholder="Логин">
-        <input type="text" name="" id="" placeholder="Пороль">
-        <input type="text" name="" id="" placeholder="Повторите пароль">
-        <button >Зарегистрироваться</button>
-        <button class="second-but"><a href="log.html">Войти</a></button>
-    </div>
 </template>
 <template id="regPageTemplate">
     <div id="pageContainer">
         <div class="modal big-shadow border">
             <p class="madal-title">Регистрация</p>
-            <input type="text" name="" id="" placeholder="Логин">
-            <input type="text" name="" id="" placeholder="Пороль">
-            <input type="text" name="" id="" placeholder="Повторите пароль">
-            <button >Зарегистрироваться</button>
-            <button class="second-but"><a href="log.html">Войти</a></button>
+            <form id="regForm">
+            <input type="text" name="login" id="loginInput" placeholder="Логин" required pattern="[0-9a-zА-я_]+\s{0,1}[0-9a-zА-я_]+" minlength="3" maxlength="20">
+            <span class="errorMessage" id="loginError"> </span>
+            <input type="text" name="password" id="passwordInput" placeholder="Пороль" required pattern="\w*" minlength="3" maxlength="10">
+            <span class="errorMessage" id="passwordError"> </span>
+            <input type="text" name="passwordConfirm" id="passwordInputConfirm"  required pattern="\w*" minlength="3" maxlength="10" placeholder="Повторите пароль">
+            <span class="errorMessage" id="passwordErrorConfirm"> </span>
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+            <button class="second-but" id="loginPageLoadButton">Войти</button>
         </div>
     </div>
 </template>   
@@ -209,6 +204,15 @@
         <span id="hashtagText"></span>
         <img id="closeHashtagButton" src="img/close_small.svg">
         </img>
+    </div>
+</template>
+<template id="modalTemplate">
+    <div class="modal-class border" id="modalWindow">
+        <span>Вы уверены, что хотите удалить сообщение?</span>
+        <div class="confirm-buttons">
+            <button  id="confirmDelete">Удалить</button>
+            <button id="cansel">Отмена</button>
+        </div>
     </div>
 </template>
 <script type="module" src="./script.js"></script>

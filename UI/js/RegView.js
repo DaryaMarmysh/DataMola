@@ -1,8 +1,9 @@
+/* eslint-disable no-lonely-if */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-param-reassign */
 import UserCollection from './UserCollection.js';
 
-class LogView {
+class RegView {
   constructor(containerId) {
     this.main = document.querySelector(`#${containerId}`);
   }
@@ -21,30 +22,27 @@ class LogView {
     }
   }
 
-  bindControllerTweets(setUserFun, getFeedFun, regPageLoadFun) {
-    const regPageButton = document.getElementById('regPageButton');
-    const formLogin = document.getElementById('logForm');
+  bindControllerTweets(addUserFun, lodinPageLoad) {
+    const loginPageLoadButton = document.getElementById('loginPageLoadButton');
+    loginPageLoadButton.addEventListener('click', () => lodinPageLoad());
+    const formReg = document.getElementById('regForm');
     const login = document.getElementById('loginInput');
     const password = document.getElementById('passwordInput');
+    const passwordConfirm = document.getElementById('passwordInputConfirm');
     const loginError = document.getElementById('loginError');
     const passwordError = document.getElementById('passwordError');
-    regPageButton.addEventListener('click', () => {
-      regPageLoadFun();
-    });
-    formLogin.addEventListener('submit', (event) => {
+    const passwordErrorConfirm = document.getElementById('passwordErrorConfirm');
+    formReg.addEventListener('submit', (event) => {
       event.preventDefault();
       if (!login.validity.valid || !password.validity.valid) {
         this.showError(login, loginError);
         this.showError(password, passwordError);
       } else {
-        const users = new UserCollection();
-        const user = users.findUser(login.value);
-        if (user && user.password === password.value) {
-          setUserFun(user.name);
-          getFeedFun();
+        if (passwordConfirm.value === password.value && login.value.trim() !== '') {
+          addUserFun(login.value, password.value);
         } else {
-          passwordError.textContent = 'Неверный логин или пароль';
-          loginError.textContent = 'Неверный логин или пароль';
+          passwordError.textContent = 'Пороли должны совпадать.';
+          passwordErrorConfirm.textContent = 'Пороли должны совпадать.';
         }
       }
     });
@@ -52,13 +50,12 @@ class LogView {
 
   display() {
     const oldChild = document.querySelector('#pageContainer');
-    const loginPageTemplate = document.getElementById('loginPage');
-    const clone = loginPageTemplate.content.cloneNode(true);
+    const regPageTemplate = document.getElementById('regPageTemplate');
+    const clone = regPageTemplate.content.cloneNode(true);
     if (oldChild) { this.main.replaceChild(clone, oldChild); }
     else {
       this.main.appendChild(clone);
     }
-
   }
 }
-export default LogView;
+export default RegView;

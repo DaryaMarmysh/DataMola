@@ -10,10 +10,13 @@ import TweetView from './TweetView.js';
 import FilterView from './FilterView.js';
 import TweetCollection from './TweetCollection.js';
 import LogView from './LogView.js';
+import UserCollection from './UserCollection.js';
+import RegView from './RegView.js';
 
 class TweetsController {
-  constructor(tweetsDef, headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId) {
-    this.tweetCollection = new TweetCollection(tweetsDef);
+  constructor(headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId, regViewId) {
+    this.userCollection = new UserCollection();
+    this.tweetCollection = new TweetCollection();
     this.headerView = new HeaderView(headerId);
     //this.headerView.setNewUser = this.setCurrentUser(this);///???
     this.headerView.username = this.getCurrentUser;
@@ -24,6 +27,7 @@ class TweetsController {
     this.filterView = new FilterView(filterViewId);
     this.filterView.authors = this.getAuthors();
     this.logView = new LogView(logViewId);
+    this.regView = new RegView(regViewId);
     this.skip = 0;
     this.top = 10;
     this.filterParams = {};
@@ -38,6 +42,21 @@ class TweetsController {
     this.headerView.display();
   };
 
+  addnewUser = function (newUserName, newUserPassword) {
+    const newUserToSet = this.userCollection.add(newUserName, newUserPassword);
+    if (newUserToSet) {
+      this.setCurrentUser(newUserToSet.name);
+      this.getFeed();
+      let users = JSON.parse(localStorage.getItem('users'));
+      users.push(newUserToSet);
+      users = JSON.stringify(users);
+      localStorage.setItem('users', users);
+    }
+    else {
+      alert('User has alredy exist');
+    }
+  };
+
   setCurrentUser = function (userNew) {
     TweetCollection.user = userNew;
     this.headerView.display();
@@ -50,11 +69,12 @@ class TweetsController {
 
   loginPageLoad = function () {
     this.logView.display();
-    this.logView.bindControllerTweets(this.setCurrentUser.bind(this), this.getFeed.bind(this));
+    this.logView.bindControllerTweets(this.setCurrentUser.bind(this), this.getFeed.bind(this), this.regPageLoad.bind(this));
   };
 
   regPageLoad = function () {
-
+    this.regView.display();
+    this.regView.bindControllerTweets(this.addnewUser.bind(this), this.loginPageLoad.bind(this));
   };
 
   filterBlockLoad = function () {

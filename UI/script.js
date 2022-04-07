@@ -256,8 +256,28 @@ const tweetsDef = [
     comments: [],
   },
 ];
+const users = [
+  {
+    name: 'Даша Мармыш',
+    password: '111',
 
-const tweetController = new TweetsController(tweetsDef, 'headerId', 'main', 'main', 'filter', 'main');
+  },
+  {
+    name: 'Петров Петр',
+    password: '222',
+  },
+];
+function AddToLocalStorage(tweets, usrs) {
+  if (localStorage.length === 0) {
+    tweets = JSON.stringify(tweets);
+    usrs = JSON.stringify(usrs);
+    localStorage.setItem('tweets', tweets);
+    localStorage.setItem('currentUser', 'Гость');
+    localStorage.setItem('users', usrs);
+  }
+}
+AddToLocalStorage(tweetsDef,users);
+const tweetController = new TweetsController('headerId', 'main', 'main', 'filter', 'main', 'main');
 tweetController.filterBlockLoad();
 tweetController.getFeed();
 tweetController.displayHeader();

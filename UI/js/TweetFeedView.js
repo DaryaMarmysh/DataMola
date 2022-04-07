@@ -39,7 +39,12 @@ class TweetFeedView {
     return text.replace(regexp, replacer);
   }
 
-  bindControllerTweets(removeFun, editFun, showFun, addFun,skipFun) {
+  bindControllerTweets(removeFun, editFun, showFun, addFun, skipFun) {
+    document.addEventListener('click', (event) => {
+      if (event.target.id !== 'modalWindow' && document.getElementById('modalWindow')) {
+        document.getElementById('modalWindow').remove();
+      }
+    });
     const moreTweetsButton = document.querySelector('#moreTweetsButton');
     moreTweetsButton.addEventListener('click', () => {
       skipFun();
@@ -53,7 +58,20 @@ class TweetFeedView {
     twitList.addEventListener('click', (event) => {
       const target = event.target;
       if (target.classList.contains('del')) {
-        removeFun(target.closest('.twit-item').dataset.id);
+        const modalTemplate = document.querySelector('#modalTemplate');
+        const cloneModal = modalTemplate.content.cloneNode(true);
+        const confirmDelete = cloneModal.querySelector('#confirmDelete');
+        const cansel = cloneModal.querySelector('#cansel');
+        event.stopImmediatePropagation();
+        confirmDelete.onclick = function () {
+          removeFun(target.closest('.twit-item').dataset.id);
+          document.getElementById('modalWindow').remove();
+        };
+        cansel.onclick = function () {
+          document.getElementById('modalWindow').remove();
+        };
+        this.main.appendChild(cloneModal);
+        //
       } else if (target.classList.contains('edit')) {
         const editTweet = target.closest('.twit-item');
         const textarea = document.createElement('textarea');
@@ -69,9 +87,9 @@ class TweetFeedView {
         editTweet.replaceChild(textarea, paragText);
         textarea.focus();
         editTweet.querySelector('#tweetFooter').replaceChild(but, editTweet.querySelector('#editDiv'));
-      } else if (target.classList.contains('twit-item')) {
+      } else {
         const showTweet = target.closest('.twit-item');
-        showFun(showTweet.dataset.id);
+        if (showTweet) { showFun(showTweet.dataset.id); }
       }
     });
   }
