@@ -24,7 +24,7 @@ class FilterView {
       const closeFilterBut = document.querySelector('#closeFilterButton');
       closeFilterBut.click();
       searchFun(filterConfig);
-      console.log(filterConfig)
+      //console.log(filterConfig)
     });
   }
 

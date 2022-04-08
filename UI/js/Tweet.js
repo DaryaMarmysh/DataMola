@@ -37,25 +37,26 @@ class Tweet {
     }
     return false;
   }
+
   constructor(text) {
-    this._id = this._setId();
-    this._author = TweetCollection.user;
+    this.id = this._setId();
+    this.author = TweetCollection.user;
     this.text = text;
-    this._createdAt = new Date();
+    this.createdAt = new Date();
     this.comments = [];
   }
 
-  get id() { return this._id; }
+  //get id() { return this._id; }
 
-  set id(value) { }
+  //set id(value) { }
 
-  get author() { return this._author; }
+  //get author() { return this._author; }
 
-  set author(value) { }
+  //set author(value) { }
 
-  get createdAt() { return this._createdAt }
+  //get createdAt() { return this._createdAt }
 
-  set createdAt(value) { }
+  //set createdAt(value) { }
 
   static validate(tw, set) {
     if (tw !== undefined) {

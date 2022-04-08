@@ -33,7 +33,7 @@ class TweetsController {
     this.skip = 0;
     this.top = 10;
     this.filterParams = {};
-    this.filteredTweets = [];
+    this.currentTweetstoView = this.tweetCollection.tweets;
     this.tweetFeedView.skip = this.skip;
   }
 
@@ -68,6 +68,7 @@ class TweetsController {
 
   skipTweets = function () {
     this.skip += 10;
+    this.top += 10;
     this.getFeed(this.skip, this.top, this.filterParams);
   };
 
@@ -86,8 +87,10 @@ class TweetsController {
   };
 
   getSearchTweets = function (filterConfig) {
+    this.tweetFeedView.tweetsCount=this.tweetCollection.getPage(0, Number.MAX_SAFE_INTEGER, filterConfig).length;
     this.filterParams = filterConfig;
     this.skip = 0;
+    this.top = 10;
     this.getFeed(this.skip, this.top, this.filterParams);
   };
 
@@ -104,10 +107,12 @@ class TweetsController {
     this.skip = skip;
     this.top = top;
     this.filterParams = filterParams;
+    console.log(this.skip,this.top);
     /*if (this.skip === 0) {
       this.tweetFeedView.tweetsCount = this.tweetCollection.getPage(this.skip, Number.MAX_SAFE_INTEGER, this.filterParams).length;
     }*/
-    this.tweetFeedView.display(this.tweetCollection.getPage(this.skip, this.top, this.filterParams));
+    this.currentTweetstoView = this.tweetCollection.getPage(this.skip, this.top, this.filterParams);
+    this.tweetFeedView.display(this.currentTweetstoView);
     this.tweetFeedView.bindControllerTweets(
       this.removeTweet.bind(this),
       this.editTweet.bind(this),
