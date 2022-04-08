@@ -42,7 +42,7 @@ class TweetCollection {
           filteredTweets.push(element);
         }
       } else {
-        console.log(element);
+        //console.log(element);
       }
     }); return filteredTweets;
   };
@@ -63,7 +63,6 @@ class TweetCollection {
 
   static set user(newUser) {
     localStorage.setItem('currentUser', newUser);
-    //TweetCollection._user = newUser;
   }
 
   get tweets() {
@@ -98,6 +97,7 @@ class TweetCollection {
       if (Tweet.validate(newTweet, this.tweets)) {
         this.tweets.push(newTweet);
         this.save();
+         //console.log(this.tweets);
         return true;
       }
       return false;

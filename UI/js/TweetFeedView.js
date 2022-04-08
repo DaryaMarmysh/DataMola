@@ -73,7 +73,6 @@ class TweetFeedView {
         but.innerHTML = 'Сохранить';
         but.onclick = function () {
           editFun(editTweet.dataset.id, textarea.value);
-
         };
         editTweet.replaceChild(textarea, paragText);
         textarea.focus();
@@ -85,7 +84,6 @@ class TweetFeedView {
     };
 
     moreTweetsButton.addEventListener('click', () => {
-      console.log(skip);
       skipFun();
       if (Number(skip) + 11 >= Number(this.tweetsCount)) {
         document.getElementById('moreTweetsButton').classList.add('hidden');
@@ -97,32 +95,30 @@ class TweetFeedView {
       const newTweetText = document.querySelector('#textareaNewTweet').value;
       addFun(newTweetText);
     });
-    twitList.addEventListener('click', listener, false)
-
- 
-}
-
-display(tweetsForView) {
-  const clone = this.mainTemplate.content.cloneNode(true);
-  const oldChild = document.querySelector('#pageContainer');
-  const twitList = clone.querySelector('#twit_list');
-  if (this.getUsername() === 'Гость') {
-    const newTweetContainer = clone.querySelector('#newTweetContainer');
-    newTweetContainer.classList.add('hidden');
-  } else {
-    const newTweetAuthorName = clone.querySelector('#newTweetAuthorName');
-    newTweetAuthorName.textContent = this.getUsername();
+    twitList.addEventListener('click', listener, false);
   }
-  const tweetListContainer = document.createElement('div');
-  tweetListContainer.className = 'twit-list';
 
-  tweetListContainer.id = 'tweetListContainer';
-  if (tweetsForView !== undefined) {
-    tweetsForView.forEach((tw) => {
-      const div = document.createElement('div');
-      div.className = 'twit-item big-shadow border ';
-      div.dataset.id = tw.id;
-      div.innerHTML = `<div class="twit-header"><p class="author-name bold-text">${tw.author}</p>
+  display(tweetsForView) {
+    const clone = this.mainTemplate.content.cloneNode(true);
+    const oldChild = document.querySelector('#pageContainer');
+    const twitList = clone.querySelector('#twit_list');
+    if (this.getUsername() === 'Гость') {
+      const newTweetContainer = clone.querySelector('#newTweetContainer');
+      newTweetContainer.classList.add('hidden');
+    } else {
+      const newTweetAuthorName = clone.querySelector('#newTweetAuthorName');
+      newTweetAuthorName.textContent = this.getUsername();
+    }
+    const tweetListContainer = document.createElement('div');
+    tweetListContainer.className = 'twit-list';
+
+    tweetListContainer.id = 'tweetListContainer';
+    if (tweetsForView !== undefined) {
+      tweetsForView.forEach((tw) => {
+        const div = document.createElement('div');
+        div.className = 'twit-item big-shadow border ';
+        div.dataset.id = tw.id;
+        div.innerHTML = `<div class="twit-header"><p class="author-name bold-text">${tw.author}</p>
         <p class="date grey-text text-small">${TweetFeedView.getDate(tw.createdAt)}</p></div>
         <p class="twit-text" id="twitText">${TweetFeedView.addHashtags(tw.text)}</p><div class="twit-footer" id="tweetFooter">
         <p class="comm grey-text text-small">Комментарии: ${tw.comments.length}</p>
@@ -130,20 +126,20 @@ display(tweetsForView) {
         <p> Ред.</p><img class="edit" src="img/edit.svg">
         </img></div></div><div ><img class="del" src="img/close_twit.svg" >
         </img></div>`;
-      if (tw.author === TweetCollection.user) { div.className += 'view'; }
-      tweetListContainer.appendChild(div);
+        if (tw.author === TweetCollection.user) { div.className += 'view'; }
+        tweetListContainer.appendChild(div);
+      });
+      twitList.appendChild(tweetListContainer);
+    }
+    const openFilterBut = clone.querySelector('#filterBut');
+    openFilterBut.addEventListener('click', () => {
+      filterContainer.classList.remove('close');
     });
-    twitList.appendChild(tweetListContainer);
+    if (oldChild) { this.main.replaceChild(clone, oldChild); }
+    else {
+      this.main.appendChild(clone);
+    }
   }
-  const openFilterBut = clone.querySelector('#filterBut');
-  openFilterBut.addEventListener('click', () => {
-    filterContainer.classList.remove('close');
-  });
-  if (oldChild) { this.main.replaceChild(clone, oldChild); }
-  else {
-    this.main.appendChild(clone);
-  }
-}
 }
 
 export default TweetFeedView;
