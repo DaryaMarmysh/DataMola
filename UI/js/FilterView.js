@@ -24,10 +24,12 @@ class FilterView {
       const closeFilterBut = document.querySelector('#closeFilterButton');
       closeFilterBut.click();
       searchFun(filterConfig);
+      console.log(filterConfig)
     });
-  };
+  }
 
   display() {
+    const oldChild = document.querySelector('#filterContainer');
     const clone = this.template.content.cloneNode(true);
     const authorNameList = this.authors;
     const selectList = clone.querySelector('#authorNameFilter');
@@ -40,30 +42,32 @@ class FilterView {
         const hashclone = this.hashtagTemplate.content.cloneNode(true);
         const hashText = hashclone.querySelector('#hashtagText');
         hashText.textContent = `#${hashtagField.value}`;
-        hashtagsContainer.appendChild(hashclone);
+        hashtagsContainer.appendChild(hashclone); 
+        //console.log(this.hashtagsList);
       }
-    })
+    });
     hashtagsContainer.addEventListener('click', (event) => {
       const target = event.target;
       const parent = target.closest('.hashtag');
       hashtagsContainer.removeChild(parent);
       this.hashtagsList.splice(this.hashtagsList.indexOf(parent.textContet), 1);
-    })
-    
+      //console.log(this.hashtagsList);
+    });
     const filterContainer = clone.querySelector('#filterContainer');
     const closeFilterBut = clone.querySelector('#closeFilterButton');
-    
     closeFilterBut.addEventListener('click', () => {
       filterContainer.classList.add('close');
     });
-
     authorNameList.forEach((option) => {
       const op = document.createElement('option');
       op.value = option;
       op.text = option;
       selectList.add(op);
     });
-    this.container.appendChild(clone);
+    if (oldChild) { this.container.replaceChild(clone, oldChild); }
+    else {
+      this.container.appendChild(clone);
+    }
   }
 }
 export default FilterView;

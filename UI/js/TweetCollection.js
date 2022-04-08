@@ -30,22 +30,21 @@ class TweetCollection {
     const regAuthor = new RegExp(`${filterAuthor}`, 'gi');
     let regHashtagsArray;
     if (filterHashtags.length > 0) {
-      regHashtagsArray = filterHashtags.map((h) => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, 'gi'));
+      regHashtagsArray = filterHashtags.map((h) => new RegExp(`#${h}`, 'gi'));
     } else {
       regHashtagsArray = [new RegExp('.', 'gi')];
     }
     const regTxt = new RegExp(`${filterText}`, 'gi');
     const filteredTweets = [];
     tweetsToFilter.forEach((element) => {
-      if (regAuthor.test(element.author)
-        && new Date(element.createdAt) >= filterDateFrom
-        && new Date(element.createdAt) <= filterDateTo
-        && regHashtagsArray.every((r) => r.test(element.text))
-        && regTxt.test(element.text)) {
-        filteredTweets.push(element);
+      if (element.author.match(regAuthor) && new Date(element.createdAt) > filterDateFrom && new Date(element.createdAt) < filterDateTo) {
+        if (regHashtagsArray.every((r) => element.text.match(r)) && element.text.match(regTxt)) {
+          filteredTweets.push(element);
+        }
+      } else {
+        console.log(element);
       }
-    });
-    return filteredTweets;
+    }); return filteredTweets;
   };
 
   static _user = 'Гость';
