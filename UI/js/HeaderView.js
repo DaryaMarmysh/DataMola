@@ -1,17 +1,34 @@
 import TweetCollection from './TweetCollection.js';
 
 class HeaderView {
-
   constructor(containerId) {
     this.myHeader = document.querySelector(`#${containerId}`);
-
+    this.user = this.myHeader.querySelector('#currentUser');
+    this.button = this.myHeader.querySelector('#headerButton');
   }
+
+  bindControllerTweets(loginPageLoad, getFeedFun, setUserFun) {
+    const headerBut = document.getElementById('headerButton');
+    headerBut.addEventListener('click', () => {
+      loginPageLoad();
+      if (this.username() !== 'Гость') {
+        setUserFun('Гость');
+        getFeedFun();
+      }
+    });
+  };
 
   display() {
-    const user = this.myHeader.querySelector('#currentUser');
-    const button = this.myHeader.querySelector('#headerButton');
-    user.innerText = TweetCollection.user;
-    button.innerText = "Выйти";
+    this.user.innerText = this.username();
+    if (this.username() === 'Гость') {
+      this.button.innerText = 'Войти';
+    } else if (this.username() === undefined) {
+      this.button.innerText = 'Войти';
+      this.user.innerText = 'Гость';
+    } else {
+      this.button.innerText = 'Выйти';
+    }
   }
 }
+
 export default HeaderView;

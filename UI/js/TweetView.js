@@ -1,13 +1,14 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable class-methods-use-this */
 class TweetView {
   constructor(containerId) {
-    this.main = document.getElementById(`${containerId}`);
+    this.main = document.querySelector(`#${containerId}`);
     this.mainTemplate = document.querySelector('#tweetPage');
     this.templateComment = document.querySelector('#commentTemplate');
-    this.mainClone = this.mainTemplate.content.cloneNode(true);
-    this.contComment = this.mainClone.querySelector('#commentContainer');
   }
 
   static getDate(date) {
+    date = new Date(date);
     const month = [
       'Января',
       'Февраля',
@@ -32,16 +33,31 @@ class TweetView {
     return text.replace(regexp, replacer);
   }
 
+  bindControllerTweets(returnMainFun, addCommFun) {
+    const returnMainPage = document.querySelector('#returnMainPage');
+    const addNewCommentButton = document.querySelector('#addNewCommentButton');
+    const tweetId = document.querySelector('#mainTweet').dataset.id;
+    const newCommenttextarea = document.querySelector('#newCommenttextarea');
+    returnMainPage.addEventListener('click', () => {
+      returnMainFun();
+    });
+    addNewCommentButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      addCommFun(tweetId, newCommenttextarea.value);
+    });
+  }
+
   display(tw) {
-    const mainTag = document.createElement('main');
-    mainTag.id = 'main';
-    const authorName = this.mainClone.querySelector('#authorName');
+    const oldChild = document.querySelector('#pageContainer');
+    const mainClone = this.mainTemplate.content.cloneNode(true);
+    const contComment = mainClone.querySelector('#commentContainer');
+    const authorName = mainClone.querySelector('#authorName');
     authorName.textContent = tw.author;
-    const createDate = this.mainClone.querySelector('#createDate');
+    const createDate = mainClone.querySelector('#createDate');
     createDate.textContent = TweetView.getDate(tw.createdAt);
-    const tweetText = this.mainClone.querySelector('#tweetText');
+    const tweetText = mainClone.querySelector('#tweetText');
     tweetText.innerHTML = TweetView.addHashtags(tw.text);
-    const commentCount = this.mainClone.querySelector('#commentCount');
+    const commentCount = mainClone.querySelector('#commentCount');
     commentCount.textContent = tw.comments.length;
     if (tw.comments.length > 0) {
       tw.comments.forEach((c) => {
@@ -52,12 +68,23 @@ class TweetView {
         authorCommentName.textContent = c.author;
         dateComment.textContent = TweetView.getDate(c.createdAt);
         textComment.innerHTML = TweetView.addHashtags(c.text);
-        this.contComment.appendChild(commentClone);
+        contComment.appendChild(commentClone);
       });
     }
-    mainTag.appendChild(this.mainClone);
-    const replaced = document.getElementsByClassName('page-container')[0];
-    replaced.replaceChild(mainTag, this.main);
+    if (this.getUsername() === 'Гость') {
+      const addNewCommentContainer = mainClone.querySelector('#addNewCommentContainer');
+      addNewCommentContainer.classList.add('hidden');
+    } else {
+      const newCommentauthorName = mainClone.querySelector('#newCommentauthorName');
+      newCommentauthorName.textContent = this.getUsername();
+    }
+    if (oldChild) {
+      this.main.replaceChild(mainClone, oldChild);
+    } else {
+      this.main.appendChild(mainClone);
+    }
+    const container = document.querySelector('#mainTweet');
+    container.dataset.id = tw.id;
   }
 }
 export default TweetView;

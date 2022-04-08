@@ -28,87 +28,9 @@
                 </div>
             </div>
         </header>
-        <div class="filter close border big-shadow">
-            <div class="filter-header">
-                <h3>Поиск по записям</h3>
-                <object type="image/svg+xml" data="img/close-big.svg" class="logo">
-                    close
-                </object>
-
-            </div>
-            <div class="filter-body">
-                <div class="heshtag-block">
-                    <p class="title">По хэштэгам:</p>
-                    <input type="text" name="" id="" placeholder="#Хэштэг...">
-                    <object type="image/svg+xml" data="img/plus_big.svg" class="svg-bott">
-                        +
-                    </object>
-                </div>
-                <div class="date-block">
-                    <div class="date-start">
-                        <div class="title">От:</div>
-                        <object type="image/svg+xml" data="img/calen.svg" class="calendar ">
-
-                        </object>
-
-                        <input type="text" name="" id="" placeholder="01-12-20">
-                    </div>
-                    <div class="date-end">
-                        <div class="title">До:</div>
-                        <object type="image/svg+xml" data="img/calen.svg" class="calendar ">
-
-                        </object>
-                        <input type="text" name="" id="" placeholder="01-12-20">
-                    </div>
-                </div>
-                <div class="author-block">
-                    <p class="title">По имени автора:</p>
-                   <!-- <input type="text" name="" id="" placeholder="Имя автора">-->
-                   <select id="authorNameFilter" class="custom-select"></select>
-                    <object type="image/svg+xml" data="img/arrow_down.svg" class="svg-bott">
-
-                    </object>
-                </div>
-                <div class="text-block">
-                    <p class="title">По тексту:</p>
-                    <input type="text" name="" id="" placeholder="Начните писать ...">
-
-                </div>
-                <button class="shadow">Найти</button>
-            </div>
-            <div class="hashtags">
-                <div class="hashtag">
-                    <span> #jsDataMola</span>
-                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
-                    </object>
-                </div>
-                <div class="hashtag">
-                    <span>#news2022</span>
-                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
-                    </object>
-                </div>
-                <div class="hashtag">
-                    <span>#jsMola</span>
-                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
-                    </object>
-                </div>
-                <div class="hashtag">
-                    <span>#jsMola</span>
-                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
-                    </object>
-                </div>
-                <div class="hashtag">
-                    <span>#jsData2022MolaCamp</span>
-                    <object type="image/svg+xml" data="img/close_small.svg" class="logo">
-                    </object>
-                </div>
-
-            </div>
-        </div>
-        <button  class="show-filter">*кнопка*</button>
-       
+       <div id="filter"></div>
         <main id="main">
-            
+
         </main>
         <footer>
             <div class="container">
@@ -126,13 +48,14 @@
 </body>
 
 <template id="tweetPage">
-    <div class="container twit-page" id="mainContainerForTweetPages">
-        <nav><span><a href="../index.html">Главная</a> </span><svg width="5" height="8" viewBox="0 0 5 8"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="container" id="pageContainer">
+    <div  id="mainContainerForTweetPages">
+        <nav><span id="returnMainPage">Главная</span><svg width="5" height="8" viewBox="0 0 5 8" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 7L4 4L1 1" stroke="#212227" stroke-width="1.5" stroke-linecap="round"
                     stroke-linejoin="round" />
-                <path d="M1 7L4 4L1 1" stroke="black" stroke-opacity="0.2" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M1 7L4 4L1 1" stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
             </svg>
             <span>Твит</span>
         </nav>
@@ -146,37 +69,27 @@
                 <div class="comm grey-text text-small">Комментарии: <span id="commentCount"></span></div>
                 <div class="add-comm  grey-text text-small">
 
-                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                            fill="#94FF97" />
-                        <path
-                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                            stroke="#212227" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path
-                            d="M8 11H11H8ZM14 11H11H14ZM11 11V8V11ZM11 11V14V11ZM11 21C16.523 21 21 16.523 21 11C21 5.477 16.523 1 11 1C5.477 1 1 5.477 1 11C1 12.821 1.487 14.53 2.338 16L1.5 20.5L6 19.662C7.51954 20.5411 9.24451 21.0027 11 21Z"
-                            stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
                 </div>
             </div>
-
         </div>
-    </div>
-    <div class="containerTwitPage">
-    <div class="comment-block">
-        <div class="comment-list-wrapper">
-            <div class="comment-list" id="commentContainer">
+        <div class="containerTwitPage">
+            <div class="comment-block">
+                <div class="comment-list-wrapper">
+                    <div class="comment-list" id="commentContainer">
+                    </div>
+                </div>
+            </div>
+            <div id="addNewCommentContainer" class="new-comm border big-shadow">
+                <form  id="newCommentForm">
+                <div class="new-comm-name" id="newCommentauthorName"></div>
+                <textarea maxlength="180" name="" id="newCommenttextarea" rows="2" placeholder="Написать комментарий..."></textarea>
+                <input type="submit" value="Сохранить" id="addNewCommentButton">
+            </form>
             </div>
         </div>
     </div>
-    <div class="new-comm border big-shadow">
-        <div class="new-comm-name" id="newCommentauthorName"></div>
-        <textarea maxlength="180" name="" id="" rows="2" placeholder="Написать комментарий..."></textarea>
-        <button class="shadow">Отправить</button>
-    </div></div>
+    
+</div>
 </template>
 <template id="commentTemplate">
     <div class="comment-item big-shadow border ">
@@ -189,17 +102,117 @@
     </div>
 </template>
 <template id="mainPage">
+    <div id="pageContainer">
+        <button id="filterBut" class="show-filter">Поиск</button>
+
     <div class="container main" id="mainContainerForMainPages">
-        <div class="new-twit border big-shadow">
+        <div class="new-twit border big-shadow" id="newTweetContainer">
             <p class="new-twit-name" id="newTweetAuthorName"></p>
-            <textarea maxlength="280" name="" id="" rows="3" placeholder="Написать сообщение..."></textarea>
-            <button class="shadow">Отправить</button>
+            <textarea id="textareaNewTweet" maxlength="280" name="" id="" rows="3"
+                placeholder="Написать сообщение..."></textarea>
+            <button id="addNewTweet" class="shadow">Отправить</button>
         </div>
-        <div class="twit-list" id="twit_list" >
+        <div class="twit-list" id="twit_list">
         </div>
-        <button class="shadow">
+        <button id="moreTweetsButton" class="shadow">
             Загрузить&#160;ещё
         </button>
+    </div>
+</div>
+</template>
+<template id="loginPage">
+    <div id="pageContainer">
+    <div class="modal big-shadow border">
+        <p class="madal-title">Вход</p>
+        <form id="logForm" novalidate>
+            <input type="text" name="login" id="loginInput" placeholder="Логин" required pattern="[0-9a-zА-я_]+\s{0,1}[0-9a-zА-я_]+" minlength="3" maxlength="20">
+            <span class="errorMessage" id="loginError"> </span>
+            <input type="text" name="password" id="passwordInput" placeholder="Пороль" required pattern="\w*" minlength="3" maxlength="10">
+            <span class="errorMessage" id="passwordError"> </span>
+            <button type="submit">Войти</button>
+        </form>
+        <button class="second-but" id="regPageButton">Зарегистрироваться</button>
+
+    </div>
+</div>
+</template>
+<template id="regPageTemplate">
+    <div id="pageContainer">
+        <div class="modal big-shadow border">
+            <p class="madal-title">Регистрация</p>
+            <form id="regForm">
+            <input type="text" name="login" id="loginInput" placeholder="Логин" required pattern="[0-9a-zА-я_]+\s{0,1}[0-9a-zА-я_]+" minlength="3" maxlength="20">
+            <span class="errorMessage" id="loginError"> </span>
+            <input type="text" name="password" id="passwordInput" placeholder="Пороль" required pattern="\w*" minlength="3" maxlength="10">
+            <span class="errorMessage" id="passwordError"> </span>
+            <input type="text" name="passwordConfirm" id="passwordInputConfirm"  required pattern="\w*" minlength="3" maxlength="10" placeholder="Повторите пароль">
+            <span class="errorMessage" id="passwordErrorConfirm"> </span>
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+            <button class="second-but" id="loginPageLoadButton">Войти</button>
+        </div>
+    </div>
+</template>   
+<template id="filterTemplate">
+    <div class="filter close border big-shadow" id="filterContainer">
+        <form id="filterForm">
+        <div class="filter-header">
+            <h3>Поиск по записям</h3>
+            <img src="img/close-big.svg" id="closeFilterButton">
+            </img>
+
+        </div>
+        <div class="filter-body">
+            <div class="heshtag-block">
+                <p class="title">По хэштэгам:</p>
+                <input type="text" name="" id="hashtagField" placeholder="#Хэштэг...">
+                <img src="img/plus_big.svg" class="svg-bott" id="addHashtagButton">
+                </img>
+            </div>
+            <div class="date-block">
+                <div class="date-start">
+                    <div class="title">От:</div>
+
+                    <input type="date" id="startDate"  >
+                </div>
+                <div class="date-end">
+                    <div class="title">До:</div>
+                    <input type="date" id="endDate"  >
+                </div>
+            </div>
+            <div class="author-block">
+                <p class="title">По имени автора:</p>
+                <select id="authorNameFilter" class="custom-select">
+                    <option disabled selected="selected"></option>
+                </select>
+                
+                </img>
+            </div>
+            <div class="text-block">
+                <p class="title">По тексту:</p>
+                <input type="text" name="" id="filterTextField" placeholder="Начните писать ...">
+            </div>
+            <input type="submit" class="shadow" value="Найти">
+        </div>
+        <div id="hashtagsContainer">
+        </div>
+    </form>
+    </div>
+</template>
+<template id="smallHashtagTemplate">
+    <div class="hashtag">
+        <span id="hashtagText"></span>
+        <img id="closeHashtagButton" src="img/close_small.svg">
+        </img>
+    </div>
+</template>
+<template id="modalTemplate">
+    <div class="modal-class border" id="modalWindow">
+        <span>Вы уверены, что хотите удалить сообщение?</span>
+        <div class="confirm-buttons">
+            <button  id="confirmDelete">Удалить</button>
+            <button id="cansel">Отмена</button>
+        </div>
     </div>
 </template>
 <script type="module" src="./script.js"></script>

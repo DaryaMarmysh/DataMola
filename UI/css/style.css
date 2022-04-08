@@ -1,6 +1,6 @@
 :root {
     --main-color: #86E8B9;
-    --lite-color: #D0FFB7;
+    --lite-color: #dafdc8;
     --dark-color: #94FF97;
     --dark: #212227;
     --dark-white: #F2F6DF;
@@ -18,9 +18,13 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+   
+    justify-content: space-between;
     
 }
-
+img:hover{
+    cursor: var(--pointer);
+}
 
 * {
     text-decoration: none;
@@ -50,6 +54,7 @@ body {
     background-image:var(--body-grid);
     background-size: 25px 25px;
     min-height: 100vh;
+   
 }
 
 nav {
@@ -58,11 +63,11 @@ nav {
     margin-bottom: 0.4rem;
 }
 
-button:hover {
+button:hover,[type=submit] {
     background: var(--dark-color);
 }
 
-button {
+button,[type=submit] {
 
     font-weight: 500;
     font-size: 1.2rem;
@@ -74,7 +79,19 @@ button {
     height: min-content;
     cursor:var(--pointer);
 }
+#addHashtagButton{
+    position: absolute;
+    top: 55%;
+}
+#hashtagsContainer{
+    margin:1rem 0;
+    display:flex;
+    flex-wrap: wrap;
+    gap:0.3rem;
+}
+#smallHashtagTemplate{
 
+}
 .name {
     font-size: 1.2rem;
     margin-right: 0.9rem;
@@ -138,12 +155,12 @@ margin-right: 10rem;
 }
 .comment-list-wrapper {
     flex-grow: 0;
-    max-width: 800px;
     overflow-y: scroll;
     /*max-height: 60vh;*/
     padding-right: 0.5rem;
     display: flex;
     flex-direction: column;
+    width:100%;
    
 }
 .shadow {
@@ -205,6 +222,7 @@ textarea {
     gap: 2.5rem;
     flex-direction: column;
     margin: 1.2rem 0.5rem 1rem;
+    width: 95%;
 }
 
 .twit-list>button {
@@ -322,7 +340,7 @@ footer .logo {
 }
 
 .filter {
-    display:none;
+    display:flex;
     flex-direction: column;
     gap: 0.9rem;
     background-color: #ffffff;
@@ -330,9 +348,9 @@ footer .logo {
     padding: 1vh 7vh 2.2vh 11vh;
     margin-bottom: 1.6rem;
     position:absolute;
-    top:10vh;
+    top:0;
     transition: top 0.5s ease-in-out;
-    z-index: 2;
+    z-index: 3;
     left:0;
     right:0;
     margin-left: auto;
@@ -352,7 +370,7 @@ footer .logo {
     flex-wrap: wrap;
 }
 
-[type=text] {
+[type=text],[type=date] {
     border-radius: 0.5rem;
     border: 1px solid var(--dark);
     padding: 0.5rem 0 0.5rem 0.7rem;
@@ -362,9 +380,6 @@ select{
 
     width: 150px;
     height: 34px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     border-radius: 0.5rem;
     border: 1px solid var(--dark);
     padding: 0.5rem 0 0.5rem 0.7rem;
@@ -385,8 +400,7 @@ h3 {
     background-color: var(--dark-color);
     border-radius: 3rem;
     padding-left: 0.8rem;
-    ;
-    padding-right: 0.6rem;
+    padding-right: 0.2rem;
     width: min-content;
     border: 1px solid black;
     display: flex;
@@ -397,7 +411,7 @@ h3 {
     font-size: 0.8rem;
     font-weight: 500;
     margin-right: 0.5rem;
-    line-height: 2rem;
+    line-height: 1.5rem;
 }
 
 .date-block {
@@ -502,6 +516,7 @@ h3 {
 }
 .new-comm textarea {
     margin: 0.9rem 0;
+    width: 100%;
 }
 
 .new-comm {
@@ -520,14 +535,56 @@ h3 {
 .containerTwitPage{
    max-width: 1140px;
     margin-top: 2vh;
-    margin-left: 10rem;
-    margin-right: 10rem;
     display: flex;
     flex-direction: row;
     flex-grow: 1;
 }
+#loginInput,#passwordInput,#passwordInputConfirm{
+    width: 70%;
+    margin-bottom: 0.3rem;
+}
+#logForm,#regForm{
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    width: 100%;
+}
+.modal-class{
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-color: white;
+    padding: 1rem;
+    z-index: 6;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 1rem;
+    width: 20vw;
+    height: min-content;
+    
+}
+.modal-class span{
+    width:100%;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+.confirm-buttons{
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 0.5rem;
+}
 
-
+.errorMessage{
+    height: 0.7rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.7rem;
+    color: darkslategray;
+}
+input:invalid{
+    border:2px solid var(--dark-color)
+}
 @media (max-width: 1200px) {
     .main.container{
         margin-left: 2vw;
@@ -616,16 +673,14 @@ h3 {
     padding: 2rem 2rem;
     width: 30vw;
     height: max-content;
-    gap:1rem;
+    gap:0.3rem;
 }
 .modal> input
 {
     width: 100%;
     height: 2.5rem;
 }
-.modal>button{
-    width: 60%;
-}
+
 .madal-title{
     font-size: 2rem;
     font-weight: 500;
@@ -635,7 +690,10 @@ h3 {
     background: transparent;
     border: none;
 }
- /*.close{
-   top:-20vh;
-} */
+ .close{
+   top:-100vh;
+} 
+.hidden{
+    display:none;
+}
 .open{display:flex}

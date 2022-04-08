@@ -1,3 +1,9 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable max-len */
+/* eslint-disable no-else-return */
+/* eslint-disable prefer-regex-literals */
 /* eslint no-use-before-define: 0 */
 /* eslint func-names: 0 */
 /* eslint no-undef:0 */
@@ -8,6 +14,11 @@ import Tweet from './Tweet.js';
 import Comment from './Comment.js';
 
 class TweetCollection {
+  constructor() {
+    this._tweets = [];
+    this.restore();
+  }
+
   _tweetsFilter = function (tweetsToFilter, filterParams = {}) {
     const {
       author: filterAuthor = '.',
@@ -16,31 +27,31 @@ class TweetCollection {
       dateTo: filterDateTo = new Date(),
       hashtags: filterHashtags = [],
     } = filterParams;
-    const regAuthor = new RegExp(`${filterAuthor}`, "gi");
+    const regAuthor = new RegExp(`${filterAuthor}`, 'gi');
     let regHashtagsArray;
     if (filterHashtags.length > 0) {
       regHashtagsArray = filterHashtags.map((h) => new RegExp(`#+[А-яa-z0-9_]*[${h}]+[А-яa-z0-9_]*`, 'gi'));
     } else {
-      regHashtagsArray = [new RegExp(`.`, "gi")];
+      regHashtagsArray = [new RegExp('.', 'gi')];
     }
     const regTxt = new RegExp(`${filterText}`, 'gi');
     const filteredTweets = [];
     tweetsToFilter.forEach((element) => {
-      if (regAuthor.test(element.author) &&
-        element.createdAt >= filterDateFrom &&
-        element.createdAt <= filterDateTo &&
-        regHashtagsArray.every((r) => r.test(element.text)) &&
-        regTxt.test(element.text)) {
+      if (regAuthor.test(element.author)
+        && new Date(element.createdAt) >= filterDateFrom
+        && new Date(element.createdAt) <= filterDateTo
+        && regHashtagsArray.every((r) => r.test(element.text))
+        && regTxt.test(element.text)) {
         filteredTweets.push(element);
       }
     });
     return filteredTweets;
   };
 
-  static _user;
+  static _user = 'Гость';
 
   _sortByDate = function () {
-    return this.tweets.sort((b, a) => a.createdAt - b.createdAt)
+    return this.tweets.sort((b, a) => a.createdAt - b.createdAt);
   };
 
   get sortByDate() {
@@ -48,15 +59,12 @@ class TweetCollection {
   }
 
   static get user() {
-    return TweetCollection._user;
+    return localStorage.getItem('currentUser');
   }
 
   static set user(newUser) {
-    TweetCollection._user = newUser;
-  }
-
-  constructor(twts) {
-    this._tweets = twts;
+    localStorage.setItem('currentUser', newUser);
+    //TweetCollection._user = newUser;
   }
 
   get tweets() {
@@ -69,7 +77,7 @@ class TweetCollection {
 
   addAll(twts) {
     const errorTweets = [];
-    twts.forEach((tw) => { Tweet.validate(tw, this.tweets) ? this.tweets.push(tw) : errorTweets.push(tw) });
+    twts.forEach((tw) => { Tweet.validate(tw, this.tweets) ? this.tweets.push(tw) : errorTweets.push(tw); });
     return errorTweets;
   }
 
@@ -82,7 +90,7 @@ class TweetCollection {
   }
 
   get(id) {
-    return this._tweets.find((t) => t.id === id);
+    return this.tweets.find((t) => t.id === id);
   }
 
   add(newTwitText = '') {
@@ -90,6 +98,7 @@ class TweetCollection {
       const newTweet = new Tweet(newTwitText);
       if (Tweet.validate(newTweet, this.tweets)) {
         this.tweets.push(newTweet);
+        this.save();
         return true;
       }
       return false;
@@ -101,18 +110,20 @@ class TweetCollection {
     const editTweet = this.get(id);
     if (editTweet && editTweet.author === TweetCollection.user && validateText(text)) {
       editTweet.text = text;
+      this.save();
       return true;
     }
     return false;
   }
 
   remove(id) {
-    const index = this.tweets.findIndex(t => t === this.get(id) && t.author === TweetCollection.user);
+    const index = this.tweets.findIndex((t) => t === this.get(id) && t.author === TweetCollection.user);
     if (index !== -1) {
       this.tweets.splice(index, 1);
+      this.save();
       return true;
     }
-    else return false;
+    return false;
   }
 
   addComment(id, text) {
@@ -120,9 +131,19 @@ class TweetCollection {
     const tweetToAddComm = this.get(id);
     if (tweetToAddComm && Comment.validate(twNewComm, this.tweets)) {
       tweetToAddComm.comments.push(twNewComm);
+      this.save();
       return true;
     }
     return false;
+  }
+
+  restore() {
+    const parseTweets = JSON.parse(localStorage.getItem('tweets'));
+    this._tweets = parseTweets.map((t) => { t.createdAt = new Date(t.createdAt); return t; });
+  }
+
+  save() {
+    localStorage.setItem('tweets', JSON.stringify(this.tweets));
   }
 }
 export default TweetCollection;
