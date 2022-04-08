@@ -37,12 +37,13 @@ class TweetCollection {
     const regTxt = new RegExp(`${filterText}`, 'gi');
     const filteredTweets = [];
     tweetsToFilter.forEach((element) => {
-      if (element.author.match(regAuthor) && new Date(element.createdAt) > filterDateFrom && new Date(element.createdAt) < filterDateTo) {
+      if (element.author.match(regAuthor) && new Date(element.createdAt) > new Date(filterDateFrom) 
+      && new Date(element.createdAt) < new Date(filterDateTo)) {
         if (regHashtagsArray.every((r) => element.text.match(r)) && element.text.match(regTxt)) {
           filteredTweets.push(element);
         }
       } else {
-        //console.log(element);
+        console.log(element.createdAt,filterDateTo);
       }
     }); return filteredTweets;
   };

@@ -27,7 +27,7 @@ class TweetFeedView {
       'Декабря',
     ];
 
-    return `${date.getDate()} ${month[date.getMonth() - 1]} ${date.getFullYear()} ${date.toLocaleTimeString().substring(0, 5)}`;
+    return `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()} ${date.toLocaleTimeString().substring(0, 5)}`;
   }
 
   static addHashtags(text) {
