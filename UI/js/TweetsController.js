@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable class-methods-use-this */
 /* eslint import/extensions: 0 */
@@ -22,6 +23,7 @@ class TweetsController {
     this.headerView.username = this.getCurrentUser;
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);
     this.tweetFeedView.getUsername = this.getCurrentUser;
+    this.tweetFeedView.tweetsCount = this.tweetCollection.tweets.length;
     this.tweetView = new TweetView(tweetViewId, filterViewId);
     this.tweetView.getUsername = this.getCurrentUser;
     this.filterView = new FilterView(filterViewId);
@@ -31,6 +33,7 @@ class TweetsController {
     this.skip = 0;
     this.top = 10;
     this.filterParams = {};
+    this.filteredTweets = [];
     this.tweetFeedView.skip = this.skip;
   }
 
@@ -51,8 +54,9 @@ class TweetsController {
       users.push(newUserToSet);
       users = JSON.stringify(users);
       localStorage.setItem('users', users);
-    }
-    else {
+      this.filterView.authors = this.getAuthors();
+      this.filterView.display();
+    } else {
       alert('User has alredy exist');
     }
   };
@@ -83,6 +87,7 @@ class TweetsController {
 
   getSearchTweets = function (filterConfig) {
     this.filterParams = filterConfig;
+    this.skip = 0;
     this.getFeed(this.skip, this.top, this.filterParams);
   };
 
@@ -95,23 +100,33 @@ class TweetsController {
     );
   };
 
-  getFeed = function (skip = 0, top = 10, filterConfig = {}) {
-    this.tweetFeedView.display(this.tweetCollection.getPage(skip, top, filterConfig));
+  getFeed = function (skip = 0, top = 10, filterParams = {}) {
+    this.skip = skip;
+    this.top = top;
+    this.filterParams = filterParams;
+    /*if (this.skip === 0) {
+      this.tweetFeedView.tweetsCount = this.tweetCollection.getPage(this.skip, Number.MAX_SAFE_INTEGER, this.filterParams).length;
+    }*/
+    this.tweetFeedView.display(this.tweetCollection.getPage(this.skip, this.top, this.filterParams));
     this.tweetFeedView.bindControllerTweets(
       this.removeTweet.bind(this),
       this.editTweet.bind(this),
       this.showTweet.bind(this),
       this.addTweet.bind(this),
       this.skipTweets.bind(this),
+      this.skip,
     );
   };
 
   getAuthors = function () {
-    return new Set(this.tweetCollection.tweets.map((t) => t.author));
+    // return new Set(this.tweetCollection.tweets.map((t) => t.author));
+    return this.userCollection.users.map((u) => u.name);
   };
 
   addTweet = function (textNew) {
-    if (this.tweetCollection.add(textNew)) this.getFeed();
+    if (this.tweetCollection.add(textNew)) {
+      this.getFeed();
+    }
   };
 
   editTweet = function (id, text) {

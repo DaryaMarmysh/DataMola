@@ -63,11 +63,11 @@ nav {
     margin-bottom: 0.4rem;
 }
 
-button:hover,[type=submit] {
+button:hover,[type=submit]:hover,[type=reset]:hover {
     background: var(--dark-color);
 }
 
-button,[type=submit] {
+button,[type=submit],[type=reset] {
 
     font-weight: 500;
     font-size: 1.2rem;
@@ -694,6 +694,7 @@ input:invalid{
    top:-100vh;
 } 
 .hidden{
-    display:none;
+    visibility: hidden;
+    display: none;
 }
 .open{display:flex}
