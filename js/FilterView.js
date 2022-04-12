@@ -32,7 +32,7 @@ class FilterView {
     const oldChild = document.querySelector('#filterContainer');
     const clone = this.template.content.cloneNode(true);
     const authorNameList = this.authors;
-    const selectList = clone.querySelector('#authorNameFilter');
+    //const selectList = clone.querySelector('#authorNameFilter');
     const addHashtagButton = clone.querySelector('#addHashtagButton');
     const hashtagsContainer = clone.querySelector('#hashtagsContainer');
     const hashtagField = clone.querySelector('#hashtagField');
@@ -58,12 +58,12 @@ class FilterView {
     closeFilterBut.addEventListener('click', () => {
       filterContainer.classList.add('close');
     });
-    authorNameList.forEach((option) => {
+  /*  authorNameList.forEach((option) => {
       const op = document.createElement('option');
       op.value = option;
       op.text = option;
       selectList.add(op);
-    });
+    });*/
     if (oldChild) { this.container.replaceChild(clone, oldChild); }
     else {
       this.container.appendChild(clone);

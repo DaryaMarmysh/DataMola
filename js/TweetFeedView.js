@@ -12,7 +12,8 @@ class TweetFeedView {
     this.mainTemplate = document.querySelector('#mainPage');
   }
 
-  static getDate(date) {
+  static getDate(dateformat) {
+    const date=new Date(dateformat);
     const month = [
       'Января',
       'Февраля',

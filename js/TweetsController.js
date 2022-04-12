@@ -13,27 +13,27 @@ import TweetCollection from './TweetCollection.js';
 import LogView from './LogView.js';
 import UserCollection from './UserCollection.js';
 import RegView from './RegView.js';
+import TweetFeedApiService from './TweetFeedApiService.js';
 
 class TweetsController {
-  constructor(headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId, regViewId) {
+  constructor(headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId, regViewId, server) {
+    this.server = server;
     this.userCollection = new UserCollection();
-    this.tweetCollection = new TweetCollection();
     this.headerView = new HeaderView(headerId);
-    //this.headerView.setNewUser = this.setCurrentUser(this);///???
     this.headerView.username = this.getCurrentUser;
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);
     this.tweetFeedView.getUsername = this.getCurrentUser;
-    this.tweetFeedView.tweetsCount = this.tweetCollection.tweets.length;
+    this.tweetFeedView.tweetsCount = 10;
     this.tweetView = new TweetView(tweetViewId, filterViewId);
     this.tweetView.getUsername = this.getCurrentUser;
     this.filterView = new FilterView(filterViewId);
-    this.filterView.authors = this.getAuthors();
+    this.filterView.authors = '';
     this.logView = new LogView(logViewId);
     this.regView = new RegView(regViewId);
     this.skip = 0;
     this.top = 10;
     this.filterParams = {};
-    this.currentTweetstoView = this.tweetCollection.tweets;
+    this.currentTweetstoView = [];
     this.tweetFeedView.skip = this.skip;
   }
 
@@ -87,7 +87,7 @@ class TweetsController {
   };
 
   getSearchTweets = function (filterConfig) {
-    this.tweetFeedView.tweetsCount=this.tweetCollection.getPage(0, Number.MAX_SAFE_INTEGER, filterConfig).length;
+    this.tweetFeedView.tweetsCount = this.tweetCollection.getPage(0, Number.MAX_SAFE_INTEGER, filterConfig).length;
     this.filterParams = filterConfig;
     this.skip = 0;
     this.top = 10;
@@ -103,24 +103,26 @@ class TweetsController {
     );
   };
 
-  getFeed = function (skip = 0, top = 10, filterParams = {}) {
+  getFeed = async function (skip = 0, top = 10, filterParams = {}) {
     this.skip = skip;
     this.top = top;
     this.filterParams = filterParams;
-    console.log(this.skip,this.top);
-    /*if (this.skip === 0) {
-      this.tweetFeedView.tweetsCount = this.tweetCollection.getPage(this.skip, Number.MAX_SAFE_INTEGER, this.filterParams).length;
-    }*/
-    this.currentTweetstoView = this.tweetCollection.getPage(this.skip, this.top, this.filterParams);
-    this.tweetFeedView.display(this.currentTweetstoView);
-    this.tweetFeedView.bindControllerTweets(
-      this.removeTweet.bind(this),
-      this.editTweet.bind(this),
-      this.showTweet.bind(this),
-      this.addTweet.bind(this),
-      this.skipTweets.bind(this),
-      this.skip,
-    );
+    this.server.getTweetsFromServer().then((data) => {
+      this.currentTweetstoView = data;
+     // console.log(this.currentTweetstoView);
+      this.tweetFeedView.display(this.currentTweetstoView);
+      this.tweetFeedView.bindControllerTweets(
+        this.removeTweet.bind(this),
+        this.editTweet.bind(this),
+        this.showTweet.bind(this),
+        this.addTweet.bind(this),
+        this.skipTweets.bind(this),
+        this.skip,
+      );
+    });
+
+    //console.log(this.server.tweets) //this.tweetCollection.getPage(this.skip, this.top, this.filterParams);
+
   };
 
   getAuthors = function () {
@@ -129,25 +131,29 @@ class TweetsController {
   };
 
   addTweet = function (textNew) {
-    if (this.tweetCollection.add(textNew)) {
+    //if (this.server.addNewTweet(textNew)) {
+      this.server.addNewTweet(textNew);
       this.getFeed();
-    }
+   // }
   };
 
   editTweet = function (id, text) {
-    if (this.tweetCollection.edit(id, text)) this.getFeed();
+    this.server.editTweet(id, text);
+    this.getFeed();
   };
 
   removeTweet = function (id) {
-    if (this.tweetCollection.remove(id)) this.getFeed();
+    this.server.deleteTweet(id);
+    this.getFeed();
   };
 
   addComment = function (id, text) {
-    if (this.tweetCollection.addComment(id, text)) this.showTweet(id);
+    this.server.addNewComment(id, text);
+    this.showTweet(id);
   };
 
   showTweet = function (id) {
-    const tw = this.tweetCollection.get(id);
+    const tw = this.currentTweetstoView.find((tw)=>tw.id===id)
     if (tw) {
       this.tweetView.display(tw);
       this.tweetView.bindControllerTweets(this.getFeed.bind(this), this.addComment.bind(this));
