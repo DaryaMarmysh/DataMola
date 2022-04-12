@@ -6,6 +6,7 @@
 /*eslint no-undef:0*/
 /* eslint import/extensions: 0*/
 import TweetsController from './js/TweetsController.js';
+import TweetFeedApiService from './js/TweetFeedApiService.js'
 
 const tweetsDef = [
   {
@@ -102,7 +103,7 @@ const tweetsDef = [
     author: 'Петров Петр',
     comments: [],
   },
-  
+
   {
     id: '7',
     text: 'Есть над чем задуматься: сторонники тоталитаризма в науке, превозмогая сложившуюся непростую экономическую ситуацию, объявлены нарушающими #общечеловеческие нормы этики и морали. Банальные, но неопровержимые выводы, а также реплицированные с зарубежных источников',
@@ -162,7 +163,7 @@ const tweetsDef = [
     author: 'Иванов Иван',
     comments: [],
   },
-{
+  {
     id: '14',
     text: 'Лишь независимые государства являются только методом политического участия и рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок! Ключевые особенности структуры проекта формируют глобальную экономическую сеть и при этом - обнародованы. ',
     createdAt: new Date('2022-02-20T23:00:01'),
@@ -271,7 +272,7 @@ const users = [
     password: '333',
   },
 ];
-function AddToLocalStorage(tweets, usrs) {
+/*function AddToLocalStorage(tweets, usrs) {
   if (localStorage.length === 0) {
     tweets = JSON.stringify(tweets);
     usrs = JSON.stringify(usrs);
@@ -287,6 +288,34 @@ tweetController.getFeed();
 tweetController.displayHeader();
 tweetController.bindFunction();
 
+*/
+/*const response = fetch('https://jslabapi.datamola.com/tweet', {
+  mode: 'no-cors',
+  method: 'GET',
+  headers: {
+    ['Contetnt-Type']: 'application/json',
+
+  },
+
+});
+
+response.then(res => res.json());
+
+let response = await fetch('https://jslabapi.datamola.com/tweet',{mode: 'no-cors',
+method: 'GET',});
+
+if (response.ok) { // если HTTP-статус в диапазоне 200-299
+  // получаем тело ответа (см. про этот метод ниже)
+  let json = await response.json();
+} else {
+  alert("Ошибка HTTP: " + response.status);
+}*/
+const server = new TweetFeedApiService('https://jslabapi.datamola.com');
+
+
+//let text = await response.text(); // прочитать тело ответа как текст
+
+//alert(text.slice(0, 80) + '...');
 //addTweet('huviytvytvy ycuyrctcuytf gyvcutfcgvytcexrxe. #hhh');
 ///editTweet('20', 'НОВЫЙ ТЕКСТ ТВИТА #EDIT_TWEET');
 //removeTweet('20');
