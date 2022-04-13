@@ -11,9 +11,11 @@ class TweetFeedApiService {
 
   async getTweetsFromServer(skip, top, filterConfig) {
     const url = new URL(`${this.URL}/tweet`);
-    const params = Object.assign({ from: skip, count: top }, filterConfig);
+    const params = { from: skip, count: top };
+    Object.keys(filterConfig).forEach((key) => {
+      if (filterConfig[key] !== null) { params[key] = filterConfig[key]; }
+    });
     url.search = new URLSearchParams(params).toString();
-    console.log(url)
     const response = await fetch(url)
       .then((resp) => {
         if (!resp.ok) {

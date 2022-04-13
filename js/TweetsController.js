@@ -88,7 +88,7 @@ class TweetsController {
   loginUser = function (login, password) {
     this.server.loginUser(login, password).then((data) => {
       this.server.token = data.token;
-      //console.log(this.server.token)
+      //console.log(data.token)
       this.setCurrentUser(login);
       this.getFeed();
     });
@@ -103,8 +103,6 @@ class TweetsController {
     this.skip = 0;
     this.top = 10;
     this.getFeed(this.skip, this.top, this.filterParams);
-    /* this.tweetFeedView.tweetsCount = this.tweetCollection.getPage(0, Number.MAX_SAFE_INTEGER, filterConfig).length;
-     this.getFeed(this.skip, this.top, this.filterParams);*/
   };
 
   bindFunction = function () {

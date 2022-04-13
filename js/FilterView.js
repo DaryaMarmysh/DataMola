@@ -15,15 +15,17 @@ class FilterView {
       const authorField = form.querySelector('#authorNameFilter').value;
       const filterTextField = form.querySelector('#filterTextField').value;
       const filterConfig = {
-        text: filterTextField,
-        author: authorField,
-        dateFrom: startDate === '' ? new Date(2010, 1, 1).toISOString() : new Date(startDate).toISOString(),
-        dateTo: endDate === '' ? new Date().toISOString() : new Date(endDate).toISOString(),
-        hashtags: this.hashtagsList,
+        text: filterTextField === '' ? null : filterTextField,
+        author: authorField === '' ? null : authorField,
+        dateFrom: startDate === '' ? null : new Date(startDate).toISOString(),
+        dateTo: endDate === '' ? null : new Date(endDate).toISOString(),
+        hashtags: this.hashtagsList.length > 0 ? this.hashtagsList.join(',') : null,
       };
       const closeFilterBut = document.querySelector('#closeFilterButton');
       closeFilterBut.click();
       searchFun(filterConfig);
+      //console.log('filterConfig')
+      //console.log(filterConfig)
     });
   }
 
@@ -41,7 +43,7 @@ class FilterView {
         const hashclone = this.hashtagTemplate.content.cloneNode(true);
         const hashText = hashclone.querySelector('#hashtagText');
         hashText.textContent = `#${hashtagField.value}`;
-        hashtagsContainer.appendChild(hashclone); 
+        hashtagsContainer.appendChild(hashclone);
         //console.log(this.hashtagsList);
       }
     });
@@ -57,12 +59,12 @@ class FilterView {
     closeFilterBut.addEventListener('click', () => {
       filterContainer.classList.add('close');
     });
-  /*  authorNameList.forEach((option) => {
-      const op = document.createElement('option');
-      op.value = option;
-      op.text = option;
-      selectList.add(op);
-    });*/
+    /*  authorNameList.forEach((option) => {
+        const op = document.createElement('option');
+        op.value = option;
+        op.text = option;
+        selectList.add(op);
+      });*/
     if (oldChild) { this.container.replaceChild(clone, oldChild); }
     else {
       this.container.appendChild(clone);
