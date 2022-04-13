@@ -21,7 +21,7 @@ class LogView {
     }
   }
 
-  bindControllerTweets(setUserFun, getFeedFun, regPageLoadFun) {
+  bindControllerTweets(loginFun,regPageLoadFun) {
     const regPageButton = document.getElementById('regPageButton');
     const formLogin = document.getElementById('logForm');
     const login = document.getElementById('loginInput');
@@ -37,15 +37,12 @@ class LogView {
         this.showError(login, loginError);
         this.showError(password, passwordError);
       } else {
-        const users = new UserCollection();
-        const user = users.findUser(login.value);
-        if (user && user.password === password.value) {
-          setUserFun(user.name);
-          getFeedFun();
-        } else {
-          passwordError.textContent = 'Неверный логин или пароль';
-          loginError.textContent = 'Неверный логин или пароль';
-        }
+        loginFun(login.value, password.value);
+        
+        /*else {
+         passwordError.textContent = 'Неверный логин или пароль';
+         loginError.textContent = 'Неверный логин или пароль';
+       }*/
       }
     });
   }

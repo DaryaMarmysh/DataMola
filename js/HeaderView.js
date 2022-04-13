@@ -19,10 +19,11 @@ class HeaderView {
   };
 
   display() {
-    this.user.innerText = this.username();
-    if (this.username() === 'Гость') {
+    const username = this.username();
+    this.user.innerText = username;
+    if (username === 'Гость') {
       this.button.innerText = 'Войти';
-    } else if (this.username() === undefined) {
+    } else if (username === undefined) {
       this.button.innerText = 'Войти';
       this.user.innerText = 'Гость';
     } else {

@@ -585,6 +585,19 @@ h3 {
 input:invalid{
     border:2px solid var(--dark-color)
 }
+
+.error-code{
+    text-align: center;
+    color:var(--dark-color);
+    font-size: 20vw;
+    text-shadow: -1px 1px 0 #000,
+    1px 1px 0 #000,
+   1px -1px 0 #000,
+  -1px -1px 0 #000;
+}
+.error-message{
+    text-align: center;
+}
 @media (max-width: 1200px) {
     .main.container{
         margin-left: 2vw;

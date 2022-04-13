@@ -17,14 +17,13 @@ class FilterView {
       const filterConfig = {
         text: filterTextField,
         author: authorField,
-        dateFrom: startDate === '' ? undefined : new Date(startDate),
-        dateTo: endDate === '' ? undefined : new Date(endDate),
+        dateFrom: startDate === '' ? new Date(2010, 1, 1).toISOString() : new Date(startDate).toISOString(),
+        dateTo: endDate === '' ? new Date().toISOString() : new Date(endDate).toISOString(),
         hashtags: this.hashtagsList,
       };
       const closeFilterBut = document.querySelector('#closeFilterButton');
       closeFilterBut.click();
       searchFun(filterConfig);
-      //console.log(filterConfig)
     });
   }
 

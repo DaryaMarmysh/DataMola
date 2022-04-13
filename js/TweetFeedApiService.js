@@ -1,15 +1,20 @@
+/* eslint-disable prefer-object-spread */
+/* eslint-disable quote-props */
 /* eslint-disable no-return-assign */
 /* eslint-disable arrow-body-style */
 /* eslint-disable brace-style */
 class TweetFeedApiService {
   constructor(url) {
     this.URL = url;
-    //this.getTweetsFromServer();
-    this.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ItCU0LDRiNCwINCc0LDRgNC80YvRiCIsImlhdCI6MTY0OTc2NzIyMiwiZXhwIjoxNjQ5NzgxNjIyfQ.rGkYQQQi2cCkC-32QmgZMDb7LTkqVhYtAqE7tW3zpOU';
+    this.token = '';
   }
 
-  async getTweetsFromServer() {
-    const response = await fetch(`${this.URL}/tweet`)
+  async getTweetsFromServer(skip, top, filterConfig) {
+    const url = new URL(`${this.URL}/tweet`);
+    const params = Object.assign({ from: skip, count: top }, filterConfig);
+    url.search = new URLSearchParams(params).toString();
+    console.log(url)
+    const response = await fetch(url)
       .then((resp) => {
         if (!resp.ok) {
           throw new Error(`HTTP error: ${response.status}`);
@@ -17,10 +22,10 @@ class TweetFeedApiService {
         return resp.json();
       })
       .catch((error) => console.log(`Could not fetch verse: ${error}`));
-   return await response;
+    return await response;
   }
 
-  async loginUser(user) {
+  async loginUser(login, password) {
     const response = await fetch(`${this.URL}/login`, {
       method: 'POST',
       mode: 'cors',
@@ -28,17 +33,13 @@ class TweetFeedApiService {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify({ 'login': login, 'password': password }),
     });
     return await response.json();
   }
 
-  setLogintUser() {
-    this.loginUser({ 'login': 'Даша Мармыш', 'password': '111' }).then((data) => { this.token = data.token })
-  }
-
   async registerUser(user) {
-    const response = await fetch(`${this.URL}/registration`, {
+    await fetch(`${this.URL}/registration`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -47,7 +48,7 @@ class TweetFeedApiService {
       },
       body: JSON.stringify(user),
     });
-    return await response.json();
+
   }
 
   setRegisterUser() {
@@ -63,12 +64,12 @@ class TweetFeedApiService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.token}`,
       },
-      body: JSON.stringify({ "text": newTweettext }),
+      body: JSON.stringify({ 'text': newTweettext }),
     });
   }
 
   async deleteTweet(id) {
-    await fetch(`${this.URL}/tweet${id}`, {
+    await fetch(`${this.URL}/tweet/${id}`, {
       method: 'DELETE',
       cache: 'no-cache',
       headers: {
@@ -79,8 +80,8 @@ class TweetFeedApiService {
     });
   }
 
-  async editTweet(id) {
-    await fetch(`${this.URL}/tweet${id}`, {
+  async editTweet(id, editText) {
+    await fetch(`${this.URL}/tweet/${id}`, {
       method: 'PUT',
       cache: 'no-cache',
       headers: {
@@ -88,6 +89,7 @@ class TweetFeedApiService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.token}`,
       },
+      body: JSON.stringify({ "text": editText }),
     });
   }
 
