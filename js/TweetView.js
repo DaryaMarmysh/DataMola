@@ -71,7 +71,7 @@ class TweetView {
         contComment.appendChild(commentClone);
       });
     }
-    if (this.getUsername === 'Гость') {
+    if (this.getUsername() === 'Гость') {
       const addNewCommentContainer = mainClone.querySelector('#addNewCommentContainer');
       addNewCommentContainer.classList.add('hidden');
     } else {

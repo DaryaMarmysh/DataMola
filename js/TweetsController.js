@@ -9,14 +9,15 @@ import TweetFeedView from './TweetFeedView.js';
 import TweetView from './TweetView.js';
 import FilterView from './FilterView.js';
 import LogView from './LogView.js';
-import UserCollection from './UserCollection.js';
+import ErrorView from './ErrorView.js';
 import RegView from './RegView.js';
 
 class TweetsController {
-  constructor(headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId, regViewId, server) {
+  constructor(headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId, regViewId, server, errorId) {
     this.server = server;
     localStorage.setItem('currentUser', 'Гость');
     // this.currentUser = ;
+    this.errorView = new ErrorView(errorId);
     this.headerView = new HeaderView(headerId);
     this.headerView.username = this.getCurrentUser;
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);
@@ -25,7 +26,9 @@ class TweetsController {
     this.tweetView = new TweetView(tweetViewId, filterViewId);
     this.tweetView.getUsername = this.getCurrentUser;
     this.filterView = new FilterView(filterViewId);
-    this.filterView.authors = '';
+    //this.allAuthors = this.getAuthors();
+    //console.log(this.allAuthors);
+    this.filterView.authors = [];
     this.logView = new LogView(logViewId);
     this.regView = new RegView(regViewId);
     this.skip = 0;
@@ -35,8 +38,20 @@ class TweetsController {
     this.tweetFeedView.skip = this.skip;
     this.headerView.display();
     this.filterView.display();
+    this.allTweets = [];
+    this.filterView.authors = this.allAuthors;
+    this.server.loadErrorPage = this.loadErrorPage.bind(this);
+    this.setAllTweets();
     this.getFeed();
+    /* this.server.getTweetsFromServer(0, 1000, {}).then((data)=>{
+      this.allTweets=data; 
+    })*/
+
   }
+
+  loadErrorPage = function (status) {
+    this.errorView.display(status);
+  };
 
   getCurrentUser = function () {
     return localStorage.getItem('currentUser');
@@ -67,7 +82,11 @@ class TweetsController {
     }
   };
 
-
+  setAllTweets = async function () {
+    await this.server.getTweetsFromServer(0, 1000, {}).then((data) => {
+      this.allTweets = data;
+    });
+  };
 
   skipTweets = function () {
     this.skip += 10;
@@ -119,53 +138,61 @@ class TweetsController {
     this.top = top;
     this.filterParams = filterParams;
     this.server.getTweetsFromServer(this.skip, this.top, this.filterParams).then((data) => {
-      this.currentTweetstoView = data;
-      console.log(this.currentTweetstoView);
-      this.tweetFeedView.display(this.currentTweetstoView);
-      this.tweetFeedView.bindControllerTweets(
-        this.removeTweet.bind(this),
-        this.editTweet.bind(this),
-        this.showTweet.bind(this),
-        this.addTweet.bind(this),
-        this.skipTweets.bind(this),
-        this.skip,
-      );
+      if (data !== undefined) {
+        this.currentTweetstoView = data;
+        // console.log(this.currentTweetstoView);
+        this.tweetFeedView.display(this.currentTweetstoView);
+        this.tweetFeedView.bindControllerTweets(
+          this.removeTweet.bind(this),
+          this.editTweet.bind(this),
+          this.showTweet.bind(this),
+          this.addTweet.bind(this),
+          this.skipTweets.bind(this),
+          this.skip,
+        );
+      }
     });
-
-    //console.log(this.server.tweets) //this.tweetCollection.getPage(this.skip, this.top, this.filterParams);
-
   };
 
   getAuthors = function () {
-    // return new Set(this.tweetCollection.tweets.map((t) => t.author));
-    return this.userCollection.users.map((u) => u.name);
+    const authors = Array.from(new Set(this.allTweets.map((t) => t.author)));
+    console.log(authors);
+    return authors;
   };
 
   addTweet = function (textNew) {
     this.server.addNewTweet(textNew).then((data) => {
-      console.log(data); this.getFeed();
+      if (data) { this.setAllTweets(); this.getFeed(); }
     });
   };
 
   editTweet = function (id, text) {
     this.server.editTweet(id, text).then((data) => {
-      console.log(data); this.getFeed();
+      if (data) { this.getFeed(); }
     });
   };
 
   removeTweet = function (id) {
     this.server.deleteTweet(id).then((data) => {
-      console.log(data); this.getFeed();
+      if (data) { this.getFeed(); }
     });
   };
 
   addComment = function (id, text) {
-    this.server.addNewComment(id, text);
-    this.showTweet(id);
+    this.server.addNewComment(id, text)
+      .then((data) => {
+        if (data) {
+          this.setAllTweets();
+          //новый коммент не добавляется
+          this.showTweet(id);
+        }
+      });//не обновляет лентукомментов;
   };
 
   showTweet = function (id) {
-    const tw = this.currentTweetstoView.find((twt) => twt.id === id);
+    this.setAllTweets();
+    console.log(this.allTweets)
+    const tw = this.allTweets.find((twt) => twt.id === id);
     if (tw) {
       this.tweetView.display(tw);
       this.tweetView.bindControllerTweets(this.getFeed.bind(this), this.addComment.bind(this));

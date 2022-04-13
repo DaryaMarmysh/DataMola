@@ -133,6 +133,7 @@ class TweetFeedView {
     }
     const openFilterBut = clone.querySelector('#filterBut');
     openFilterBut.addEventListener('click', () => {
+      
       filterContainer.classList.remove('close');
     });
     if (oldChild) { this.main.replaceChild(clone, oldChild); }
