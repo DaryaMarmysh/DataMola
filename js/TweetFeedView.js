@@ -13,7 +13,7 @@ class TweetFeedView {
   }
 
   static getDate(dateformat) {
-    const date=new Date(dateformat);
+    const date = new Date(dateformat);
     const month = [
       'Января',
       'Февраля',
@@ -39,8 +39,7 @@ class TweetFeedView {
     return text.replace(regexp, replacer);
   }
 
-  bindControllerTweets(removeFun, editFun, showFun, addFun, skipFun, skip) {
-    skip += 10;
+  bindControllerTweets(removeFun, editFun, showFun, addFun, skipFun, skip, top) {
     document.addEventListener('click', (event) => {
       if (event.target.id !== 'modalWindow' && document.getElementById('modalWindow')) {
         document.getElementById('modalWindow').remove();
@@ -83,7 +82,7 @@ class TweetFeedView {
         if (showTweet) { showFun(showTweet.dataset.id); }
       }
     };
-    if (Number(skip) + 11 >= Number(this.tweetsCount)) {
+    if (this.tweetsCount % 10 !== 0 || this.tweetsCount === 0) {
       document.getElementById('moreTweetsButton').classList.add('hidden');
     }
     moreTweetsButton.addEventListener('click', () => {
@@ -133,7 +132,6 @@ class TweetFeedView {
     }
     const openFilterBut = clone.querySelector('#filterBut');
     openFilterBut.addEventListener('click', () => {
-      
       filterContainer.classList.remove('close');
     });
     if (oldChild) { this.main.replaceChild(clone, oldChild); }

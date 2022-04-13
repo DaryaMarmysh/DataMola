@@ -8,8 +8,8 @@ class FilterView {
 
   bindControllerTweets(searchFun) {
     const form = document.querySelector('#filterForm');
-    const submitButton = document.querySelector('#submitButton');
-    submitButton.addEventListener('click', (event) => {
+    //const submitButton = document.querySelector('#submitButton');
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
       const startDate = form.querySelector('#startDate').value;
       const endDate = form.querySelector('#endDate').value;
@@ -24,14 +24,13 @@ class FilterView {
       };
       const closeFilterBut = document.querySelector('#closeFilterButton');
       closeFilterBut.click();
-      console.log('filterConfig')
-      console.log(filterConfig)
+      //console.log('filterConfig')
+      //console.log(filterConfig)
       searchFun(filterConfig);
-
     });
   }
 
-  display(authors = []) {
+  display() {
     const oldChild = document.querySelector('#filterContainer');
     const clone = this.template.content.cloneNode(true);
     const authorNameList = this.authors;
@@ -61,6 +60,10 @@ class FilterView {
     closeFilterBut.addEventListener('click', () => {
       filterContainer.classList.add('close');
     });
+    const op = document.createElement('option');
+    op.value = '';
+    op.text = '';
+    selectList.add(op);
     authorNameList.forEach((option) => {
       const op = document.createElement('option');
       op.value = option;

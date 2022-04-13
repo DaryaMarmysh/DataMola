@@ -10,7 +10,7 @@ import TweetFeedApiService from './js/TweetFeedApiService.js';
 
 const server = new TweetFeedApiService('https://jslabapi.datamola.com');
 const tweetController = new TweetsController('headerId', 'main', 'main', 'filter', 'main', 'main', server, 'main');
-tweetController.bindFunction();
+
 
 //server.setLogintUser();
 //server.addNewTweet('new tweet from vs code')

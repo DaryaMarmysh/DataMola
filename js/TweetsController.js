@@ -16,7 +16,6 @@ class TweetsController {
   constructor(headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId, regViewId, server, errorId) {
     this.server = server;
     localStorage.setItem('currentUser', 'Гость');
-    // this.currentUser = ;
     this.errorView = new ErrorView(errorId);
     this.headerView = new HeaderView(headerId);
     this.headerView.username = this.getCurrentUser;
@@ -26,9 +25,6 @@ class TweetsController {
     this.tweetView = new TweetView(tweetViewId, filterViewId);
     this.tweetView.getUsername = this.getCurrentUser;
     this.filterView = new FilterView(filterViewId);
-    //this.allAuthors = this.getAuthors();
-    //console.log(this.allAuthors);
-    this.filterView.authors = [];
     this.logView = new LogView(logViewId);
     this.regView = new RegView(regViewId);
     this.skip = 0;
@@ -37,12 +33,11 @@ class TweetsController {
     this.currentTweetstoView = [];
     this.tweetFeedView.skip = this.skip;
     this.headerView.display();
-    this.filterView.display();
     this.allTweets = [];
-    this.filterView.authors = this.allAuthors;
     this.server.loadErrorPage = this.loadErrorPage.bind(this);
-    this.setAllTweets();
+    this.setAllTweets(); 
     this.getFeed();
+    
     /* this.server.getTweetsFromServer(0, 1000, {}).then((data)=>{
       this.allTweets=data; 
     })*/
@@ -85,6 +80,9 @@ class TweetsController {
   setAllTweets = async function () {
     await this.server.getTweetsFromServer(0, 1000, {}).then((data) => {
       this.allTweets = data;
+      this.filterView.authors=Array.from(new Set(this.allTweets.map((t) => t.author)));
+      this.filterView.display();
+      this.bindFunction();
     });
   };
 
@@ -135,12 +133,12 @@ class TweetsController {
 
   getFeed = function (skip = 0, top = 10, filterParams = {}) {
     this.skip = skip;
-    this.top = top;
     this.filterParams = filterParams;
     this.server.getTweetsFromServer(this.skip, this.top, this.filterParams).then((data) => {
       if (data !== undefined) {
         this.currentTweetstoView = data;
-        // console.log(this.currentTweetstoView);
+        this.tweetFeedView.tweetsCount=this.currentTweetstoView.length;
+        console.log(this.tweetFeedView.tweetsCount);
         this.tweetFeedView.display(this.currentTweetstoView);
         this.tweetFeedView.bindControllerTweets(
           this.removeTweet.bind(this),
@@ -149,7 +147,9 @@ class TweetsController {
           this.addTweet.bind(this),
           this.skipTweets.bind(this),
           this.skip,
+          this.top,
         );
+        console.log(this.skip, this.top,this.currentTweetstoView);
       }
     });
   };
