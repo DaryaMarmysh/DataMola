@@ -182,16 +182,12 @@ class TweetsController {
     this.server.addNewComment(id, text)
       .then((data) => {
         if (data) {
-          this.setAllTweets();
-          //новый коммент не добавляется
-          this.showTweet(id);
+          this.setAllTweets().then(()=> this.showTweet(id));
         }
-      });//не обновляет лентукомментов;
+      });
   };
 
   showTweet = function (id) {
-    this.setAllTweets();
-    console.log(this.allTweets)
     const tw = this.allTweets.find((twt) => twt.id === id);
     if (tw) {
       this.tweetView.display(tw);

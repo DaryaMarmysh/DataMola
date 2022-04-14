@@ -82,9 +82,14 @@ class TweetFeedView {
         if (showTweet) { showFun(showTweet.dataset.id); }
       }
     };
-    if (this.tweetsCount % 10 !== 0 || this.tweetsCount === 0) {
+    if (this.tweetsCount % 10 !== 0) {
       document.getElementById('moreTweetsButton').classList.add('hidden');
+      
     }
+    if (this.tweetsCount === 0) {
+        document.getElementById('noTweetMessage').classList.remove('hidden');
+        document.getElementById('moreTweetsButton').classList.add('hidden');
+      }
     moreTweetsButton.addEventListener('click', () => {
       skipFun();
     });

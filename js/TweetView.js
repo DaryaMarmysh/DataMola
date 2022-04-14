@@ -67,7 +67,7 @@ class TweetView {
         const textComment = commentClone.querySelector('#textComment');
         authorCommentName.textContent = c.author;
         dateComment.textContent = TweetView.getDate(c.createdAt);
-        textComment.innerHTML = TweetView.addHashtags(c.text);
+        textComment.innerHTML = c.text; ///TweetView.addHashtags(c.text);
         contComment.appendChild(commentClone);
       });
     }
