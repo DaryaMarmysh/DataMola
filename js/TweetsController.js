@@ -17,6 +17,7 @@ class TweetsController {
     this.server = server;
     //this.currentUser='Гость';
     this.errorView = new ErrorView(errorId);
+    this.errorView.loginPLoad=this.loginPageLoad.bind(this);
     this.headerView = new HeaderView(headerId);
     this.headerView.username = this.getCurrentUser;
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);

@@ -14,6 +14,7 @@ class ErrorView {
       case 403: errorMsg = 'Ошибка авторизации'; break;
       case 405: errorMsg = 'Метод не разрешён'; break;
       case 500: errorMsg = 'Внутренняя ошибка сервера'; break;
+      case 401: this.loginPLoad(); break;
       default: errorMsg = 'Неизвестная ошибка'; break;
     }
     const errorStatus = clone.querySelector('.error-code');
