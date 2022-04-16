@@ -17,6 +17,7 @@ fetch('https://api.github.com/repos/DaryaMarmysh/DataMola/branches/master').then
 })
   .then((data) => document.querySelector('.ver').innerHTML = data.commit.commit.committer.date.slice(0, 10))
   .catch((error) => console.log(error.status));
+  //setInterval(tweetController.getAllTweets().then((data)=>console.log(data)), 2000);
 //server.setLogintUser();
 //server.addNewTweet('new tweet from vs code')
 //console.log(server.token);

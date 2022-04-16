@@ -39,8 +39,7 @@ class TweetFeedView {
     return text.replace(regexp, replacer);
   }
 
-  bindControllerTweets(removeFun, editFun, showFun, addFun, skipFun,getUserFun, skip, top) {
-    //this.getUsername=getUserFun;
+  bindControllerTweets(removeFun, editFun, showFun, addFun, skipFun) {
     document.addEventListener('click', (event) => {
       if (event.target.id !== 'modalWindow' && document.getElementById('modalWindow')) {
         document.getElementById('modalWindow').remove();
@@ -85,7 +84,6 @@ class TweetFeedView {
     };
     if (this.tweetsCount % 10 !== 0) {
       document.getElementById('moreTweetsButton').classList.add('hidden');
-
     }
     if (this.tweetsCount === 0) {
       document.getElementById('noTweetMessage').classList.remove('hidden');
@@ -101,13 +99,18 @@ class TweetFeedView {
       addFun(newTweetText);
     });
     twitList.addEventListener('click', listener, false);
+    const list = document.querySelectorAll('.fistDiv');
+    const point = list[list.length - 1];
+    if (point) {
+      point.scrollIntoView(true);
+    }
   }
 
   display(tweetsForView) {
     const clone = this.mainTemplate.content.cloneNode(true);
     const oldChild = document.querySelector('#pageContainer');
     const twitList = clone.querySelector('#twit_list');
-    if (this.currentUser() === 'Гость' ||this.currentUser() === null) {
+    if (this.currentUser() === 'Гость' || this.currentUser() === null) {
       const newTweetContainer = clone.querySelector('#newTweetContainer');
       newTweetContainer.classList.add('hidden');
     } else {
@@ -119,6 +122,7 @@ class TweetFeedView {
 
     tweetListContainer.id = 'tweetListContainer';
     if (tweetsForView !== undefined) {
+      let k = 0;
       tweetsForView.forEach((tw) => {
         const div = document.createElement('div');
         div.className = 'twit-item big-shadow border ';
@@ -133,6 +137,10 @@ class TweetFeedView {
         </img></div>`;
         if (tw.author === TweetCollection.user) { div.className += 'view'; }
         tweetListContainer.appendChild(div);
+        if (k % 10 === 0) {
+          div.className += ' fistDiv';
+        }
+        k++;
       });
       twitList.appendChild(tweetListContainer);
     }
