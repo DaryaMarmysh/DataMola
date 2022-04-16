@@ -17,7 +17,7 @@ class TweetsController {
     this.server = server;
     //this.currentUser='Гость';
     this.errorView = new ErrorView(errorId);
-    this.errorView.loginPLoad=this.loginPageLoad.bind(this);
+    this.errorView.loginPLoad = this.loginPageLoad.bind(this);
     this.headerView = new HeaderView(headerId);
     this.headerView.username = this.getCurrentUser;
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);
@@ -39,25 +39,21 @@ class TweetsController {
     this.server.loadErrorPage = this.loadErrorPage.bind(this);
     this.setAllTweets();
     this.getFeed();
-    this.getAllTweets()
-  };
-  /* this.server.getTweetsFromServer(0, 1000, {}).then((data)=>{
-    this.allTweets=data; 
-  })*/
-
-
+    this.getAllTweets();
+  }
 
   getAllTweets = async function () {
+    if (this.getCurrentUser() !== 'Гость' && this.getCurrentUser() !== null) {
+      this.loginUser(this.getCurrentUser(), localStorage.getItem('password'));
+    }
     setInterval(async () => {
       await this.server.getAllTweets().then((data) => {
         this.allTweets = data;
-        console.log(data);
         this.filterView.authors = Array.from(new Set(this.allTweets.map((t) => t.author)));
       })
         .catch((error) => console.log(error.status))
-    }, 300000)
-
-  }
+    }, 300000);
+  };
 
   loadErrorPage = function (status) {
     this.errorView.display(status);
@@ -67,10 +63,11 @@ class TweetsController {
     return localStorage.getItem('currentUser');
   };
 
-  setCurrentUser = function (userNew, token) {
+  setCurrentUser = function (userNew, token, password) {
     this.currentUser = userNew;
     localStorage.setItem('currentUser', userNew);
     localStorage.setItem('token', token);
+    localStorage.setItem('password', password);
     this.headerView.display();
   };
 
@@ -78,20 +75,11 @@ class TweetsController {
     this.headerView.display();
   };
 
-  addnewUser = function (newUserName, newUserPassword) {
-    const newUserToSet = this.userCollection.add(newUserName, newUserPassword);
-    if (newUserToSet) {
-      this.setCurrentUser(newUserToSet.name);
-      this.getFeed();
-      let users = JSON.parse(localStorage.getItem('users'));
-      users.push(newUserToSet);
-      users = JSON.stringify(users);
-      localStorage.setItem('users', users);
-      this.filterView.authors = this.getAuthors();
-      this.filterView.display();
-    } else {
-      alert('User has alredy exist');
-    }
+  addnewUser = function (login, password) {
+    this.server.registerUser(login, password).then((data) => {
+      this.server.token = data.token;
+      this.loginPageLoad();
+    });
   };
 
   setAllTweets = async function () {
@@ -104,7 +92,7 @@ class TweetsController {
   };
 
   skipTweets = function () {
-   // this.skip += 10;
+    // this.skip += 10;
     this.top += 10;
     this.getFeed(this.skip, this.top, this.filterParams);
   };
@@ -116,14 +104,14 @@ class TweetsController {
 
   regPageLoad = function () {
     this.regView.display();
-    this.regView.bindControllerTweets(this.server.loginUser.bind(this), this.addnewUser.bind(this), this.loginPageLoad.bind(this));
+    this.regView.bindControllerTweets(this.addnewUser.bind(this), this.loginPageLoad.bind(this));
   };
 
   loginUser = function (login, password) {
     this.server.loginUser(login, password).then((data) => {
       this.server.token = data.token;
       //console.log(data.token)
-      this.setCurrentUser(login, data.token);
+      this.setCurrentUser(login, data.token, password);
       this.getFeed();
     });
   };
@@ -149,7 +137,6 @@ class TweetsController {
   };
 
   getFeed = function () {
-
     this.server.getTweetsFromServer(this.skip, this.top, this.filterParams).then((data) => {
       if (data !== undefined) {
         this.currentTweetstoView = data;
