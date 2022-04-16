@@ -11,22 +11,26 @@ class HeaderView {
     const headerBut = document.getElementById('headerButton');
     headerBut.addEventListener('click', () => {
       loginPageLoad();
-      if (this.username() !== 'Гость') {
+      if (this.currentUser() !== 'Гость' && this.currentUser() !== null) {
         setUserFun('Гость');
+        this.user.innerText='Гость';
         getFeedFun();
       }
     });
   };
 
   display() {
-    const username = this.username();
-    this.user.innerText = username;
-    if (username === 'Гость') {
+    const username = this.currentUser();
+    //this.user.innerText = username;
+    if (username === 'Гость' || username === null) {
       this.button.innerText = 'Войти';
-    } else if (username === undefined) {
+      //this.user.innerText='';
+
+    }/* else if (username === undefined) {
       this.button.innerText = 'Войти';
       this.user.innerText = 'Гость';
-    } else {
+    }*/ else {
+      this.user.innerText = username;
       this.button.innerText = 'Выйти';
     }
   }

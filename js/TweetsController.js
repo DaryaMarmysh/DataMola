@@ -15,12 +15,13 @@ import RegView from './RegView.js';
 class TweetsController {
   constructor(headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId, regViewId, server, errorId) {
     this.server = server;
-    localStorage.setItem('currentUser', 'Гость');
+    //this.currentUser='Гость';
     this.errorView = new ErrorView(errorId);
     this.headerView = new HeaderView(headerId);
     this.headerView.username = this.getCurrentUser;
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);
-    this.tweetFeedView.getUsername = this.getCurrentUser;
+    this.headerView.currentUser=this.getCurrentUser;
+    this.tweetFeedView.currentUser = this.getCurrentUser;
     this.tweetFeedView.tweetsCount = 10;
     this.tweetView = new TweetView(tweetViewId, filterViewId);
     this.tweetView.getUsername = this.getCurrentUser;
@@ -49,11 +50,14 @@ class TweetsController {
   };
 
   getCurrentUser = function () {
-    return localStorage.getItem('currentUser');
+    return localStorage.getItem('currentUser');//this.currentUser;
+   // return 
   };
 
-  setCurrentUser = function (userNew) {
+  setCurrentUser = function (userNew,token) {
+    this.currentUser=userNew;
     localStorage.setItem('currentUser', userNew);
+    localStorage.setItem('token', token);
     this.headerView.display();
   };
 
@@ -106,7 +110,7 @@ class TweetsController {
     this.server.loginUser(login, password).then((data) => {
       this.server.token = data.token;
       //console.log(data.token)
-      this.setCurrentUser(login);
+      this.setCurrentUser(login,data.token);
       this.getFeed();
     });
   };
@@ -146,6 +150,7 @@ class TweetsController {
           this.showTweet.bind(this),
           this.addTweet.bind(this),
           this.skipTweets.bind(this),
+          this.getCurrentUser.bind(this),
           this.skip,
           this.top,
         );

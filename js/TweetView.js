@@ -43,6 +43,7 @@ class TweetView {
     });
     addNewCommentButton.addEventListener('click', (event) => {
       event.preventDefault();
+      addNewCommentButton.style.pointerEvents = 'none';
       addCommFun(tweetId, newCommenttextarea.value);
     });
   }
@@ -71,7 +72,7 @@ class TweetView {
         contComment.appendChild(commentClone);
       });
     }
-    if (this.getUsername() === 'Гость') {
+    if (this.getUsername() === 'Гость' || this.getUsername() === null) {
       const addNewCommentContainer = mainClone.querySelector('#addNewCommentContainer');
       addNewCommentContainer.classList.add('hidden');
     } else {

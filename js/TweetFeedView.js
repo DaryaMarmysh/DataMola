@@ -39,7 +39,8 @@ class TweetFeedView {
     return text.replace(regexp, replacer);
   }
 
-  bindControllerTweets(removeFun, editFun, showFun, addFun, skipFun, skip, top) {
+  bindControllerTweets(removeFun, editFun, showFun, addFun, skipFun,getUserFun, skip, top) {
+    //this.getUsername=getUserFun;
     document.addEventListener('click', (event) => {
       if (event.target.id !== 'modalWindow' && document.getElementById('modalWindow')) {
         document.getElementById('modalWindow').remove();
@@ -84,12 +85,12 @@ class TweetFeedView {
     };
     if (this.tweetsCount % 10 !== 0) {
       document.getElementById('moreTweetsButton').classList.add('hidden');
-      
+
     }
     if (this.tweetsCount === 0) {
-        document.getElementById('noTweetMessage').classList.remove('hidden');
-        document.getElementById('moreTweetsButton').classList.add('hidden');
-      }
+      document.getElementById('noTweetMessage').classList.remove('hidden');
+      document.getElementById('moreTweetsButton').classList.add('hidden');
+    }
     moreTweetsButton.addEventListener('click', () => {
       skipFun();
     });
@@ -106,12 +107,12 @@ class TweetFeedView {
     const clone = this.mainTemplate.content.cloneNode(true);
     const oldChild = document.querySelector('#pageContainer');
     const twitList = clone.querySelector('#twit_list');
-    if (this.getUsername() === 'Гость') {
+    if (this.currentUser() === 'Гость' ||this.currentUser() === null) {
       const newTweetContainer = clone.querySelector('#newTweetContainer');
       newTweetContainer.classList.add('hidden');
     } else {
       const newTweetAuthorName = clone.querySelector('#newTweetAuthorName');
-      newTweetAuthorName.textContent = this.getUsername();
+      newTweetAuthorName.textContent = this.currentUser();
     }
     const tweetListContainer = document.createElement('div');
     tweetListContainer.className = 'twit-list';

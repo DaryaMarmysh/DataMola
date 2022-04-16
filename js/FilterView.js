@@ -9,6 +9,10 @@ class FilterView {
   bindControllerTweets(searchFun) {
     const form = document.querySelector('#filterForm');
     //const submitButton = document.querySelector('#submitButton');
+    form.addEventListener('reset', (event) => {
+      form.querySelector('#hashtagsContainer').innerHTML = '';
+      this.hashtagsList = [];
+    });
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       const startDate = form.querySelector('#startDate').value;

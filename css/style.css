@@ -585,7 +585,7 @@ h3 {
 }
 
 .errorMessage{
-    height: 0.7rem;
+    min-height: 0.7rem;
     margin-bottom: 0.3rem;
     font-size: 0.7rem;
     color: darkslategray;
@@ -699,7 +699,8 @@ input:invalid{
     background-color: white;
     align-items: center;
     padding: 2rem 2rem;
-    width: 30vw;
+    width: min-content;
+    min-width: 30vw;
     height: max-content;
     gap:0.3rem;
 }
