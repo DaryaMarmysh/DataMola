@@ -21,13 +21,17 @@ class LogView {
     }
   }
 
-  bindControllerTweets(loginFun,regPageLoadFun) {
+  bindControllerTweets(loginFun, regPageLoadFun, mainPageLoad) {
     const regPageButton = document.getElementById('regPageButton');
     const formLogin = document.getElementById('logForm');
     const login = document.getElementById('loginInput');
     const password = document.getElementById('passwordInput');
     const loginError = document.getElementById('loginError');
     const passwordError = document.getElementById('passwordError');
+    const returnMainPage = document.getElementById('returnMainPage');
+    returnMainPage.addEventListener('click', () => {
+      mainPageLoad();
+    });
     regPageButton.addEventListener('click', () => {
       regPageLoadFun();
     });
@@ -38,7 +42,7 @@ class LogView {
         this.showError(password, passwordError);
       } else {
         loginFun(login.value, password.value);
-        
+
         /*else {
          passwordError.textContent = 'Неверный логин или пароль';
          loginError.textContent = 'Неверный логин или пароль';

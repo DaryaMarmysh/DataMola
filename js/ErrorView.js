@@ -26,6 +26,10 @@ class ErrorView {
     } else {
       this.main.appendChild(clone);
     }
+    const returnMainPage = document.getElementById('returnMainPage');
+    returnMainPage.addEventListener('click', () => {
+      this.mainPageLoad();
+    });
   }
 }
 export default ErrorView;

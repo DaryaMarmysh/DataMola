@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable class-methods-use-this */
@@ -15,9 +16,9 @@ import RegView from './RegView.js';
 class TweetsController {
   constructor(headerId, tweetFeedViewId, tweetViewId, filterViewId, logViewId, regViewId, server, errorId) {
     this.server = server;
-    //this.currentUser='Гость';
     this.errorView = new ErrorView(errorId);
     this.errorView.loginPLoad = this.loginPageLoad.bind(this);
+    this.errorView.mainPageLoad = this.getFeed.bind(this);
     this.headerView = new HeaderView(headerId);
     this.headerView.username = this.getCurrentUser;
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);
@@ -51,7 +52,7 @@ class TweetsController {
         this.allTweets = data;
         this.filterView.authors = Array.from(new Set(this.allTweets.map((t) => t.author)));
       })
-        .catch((error) => console.log(error.status))
+        .catch((error) => console.log(error.status));
     }, 300000);
   };
 
@@ -77,6 +78,7 @@ class TweetsController {
 
   addnewUser = function (login, password) {
     this.server.registerUser(login, password).then((data) => {
+      data = data.json();
       this.server.token = data.token;
       this.loginPageLoad();
     });
@@ -99,21 +101,23 @@ class TweetsController {
 
   loginPageLoad = function () {
     this.logView.display();
-    this.logView.bindControllerTweets(this.loginUser.bind(this), this.regPageLoad.bind(this));
+    this.logView.bindControllerTweets(this.loginUser.bind(this), this.regPageLoad.bind(this), this.getFeed.bind(this));
   };
 
   regPageLoad = function () {
     this.regView.display();
-    this.regView.bindControllerTweets(this.addnewUser.bind(this), this.loginPageLoad.bind(this));
+    this.regView.bindControllerTweets(this.addnewUser.bind(this), this.loginPageLoad.bind(this), this.getFeed.bind(this));
   };
 
   loginUser = function (login, password) {
     this.server.loginUser(login, password).then((data) => {
-      this.server.token = data.token;
-      //console.log(data.token)
-      this.setCurrentUser(login, data.token, password);
-      this.getFeed();
-    });
+      return data.json();
+    })
+      .then((data) => {
+        this.server.token = data.token;
+        this.setCurrentUser(login, data.token, password);
+        this.getFeed();
+      })
   };
 
   filterBlockLoad = function () {
@@ -158,14 +162,16 @@ class TweetsController {
 
   getAuthors = function () {
     const authors = Array.from(new Set(this.allTweets.map((t) => t.author)));
-    console.log(authors);
     return authors;
   };
 
   addTweet = function (textNew) {
     this.server.addNewTweet(textNew).then((data) => {
-      if (data) { this.setAllTweets(); this.getFeed(); }
-    });
+      return data.json();
+    })
+      .then((data) => {
+        if (data) { this.setAllTweets(); this.getFeed(); }
+      });
   };
 
   editTweet = function (id, text) {

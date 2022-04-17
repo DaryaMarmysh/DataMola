@@ -12,15 +12,14 @@ class TweetFeedApiService {
 
   async fetchMethod(fetchObj) {
     const {
-      url: fetchUrl = '/tweet',
+      url: fetchUrl = '',
       method: fetchMethod = 'GET',
       params: fetchParams = undefined,
-      body: fetchBody = JSON.stringify(''),
+      body: fetchBody = JSON.stringify({}),
       headers: fetchHeaders = {
         'Content-Type': 'application/json',
       },
     } = fetchObj;
-    console.log(fetchObj);
     const url = new URL(`${this.URL}/${fetchUrl}`);
     if (fetchParams) {
       url.search = new URLSearchParams(fetchParams).toString();
@@ -38,7 +37,7 @@ class TweetFeedApiService {
         } return Promise.reject(res);
       })
       .catch((error) => this.loadErrorPage(error.status));
-    return response.json();
+    return response;
   }
 
   async getAllTweets() {
@@ -56,7 +55,7 @@ class TweetFeedApiService {
   }
 
   async getTweetsFromServer(skip, top, filterConfig) {
-    const url = new URL(`${this.URL}/tweet`);
+const url = new URL(`${this.URL}/tweet`);
     const params = { from: skip, count: top };
     Object.keys(filterConfig).forEach((key) => {
       if (filterConfig[key] !== null) { params[key] = filterConfig[key]; }
@@ -73,22 +72,6 @@ class TweetFeedApiService {
   }
 
   loginUser(login, password) {
-    /*const response = await fetch(`${this.URL}/login`, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 'login': login, 'password': password }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res;
-        } return Promise.reject(res);
-      })
-      .catch((error) => this.loadErrorPage(error.status));
-    return response.json(); */
     return this.fetchMethod({
       method: 'POST',
       url: `${this.URL}/login`,
@@ -96,22 +79,7 @@ class TweetFeedApiService {
     });
   }
 
-  async registerUser(login, password) {///не работает
-    /*await fetch(`${this.URL}/registration`, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 'login': login, 'password': password }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res;
-        } return Promise.reject(res);
-      })
-      .catch((error) => this.loadErrorPage(error.status));*/
+  registerUser(login, password) {
     return this.fetchMethod({
       method: 'POST',
       url: `${this.URL}/registration`,
@@ -120,23 +88,6 @@ class TweetFeedApiService {
   }
 
   addNewTweet(newTweettext) {
-   /* const response = await fetch(`${this.URL}/tweet`, {
-      method: 'POST',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.token}`,
-      },
-      body: JSON.stringify({ 'text': newTweettext }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res;
-        } return Promise.reject(res);
-      })
-      .catch((error) => this.loadErrorPage(error.status));
-    return response;*/
     return this.fetchMethod({
       method: 'POST',
       url: `${this.URL}/tweet`,
@@ -150,23 +101,7 @@ class TweetFeedApiService {
   }
 
   async deleteTweet(id) {
-    const response = await fetch(`${this.URL}/tweet/${id}`, {
-      method: 'DELETE',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.token}`,
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res;
-        } return Promise.reject(res);
-      })
-      .catch((error) => this.loadErrorPage(error.status));
-    return response;
-    /*return this.fetchMethod({
+    return this.fetchMethod({
       method: 'DELETE',
       url: `${this.URL}/tweet/${id}`,
       headers: {
@@ -174,58 +109,32 @@ class TweetFeedApiService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.token}`,
       },
-    });*/
+    });
   }
 
   async editTweet(id, editText) {
-    const response = await fetch(`${this.URL}/tweet/${id}`, {
+    return this.fetchMethod({
       method: 'PUT',
-      cache: 'no-cache',
+      url: `${this.URL}/tweet/${id}`,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.token}`,
       },
       body: JSON.stringify({ 'text': editText }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res;
-        } return Promise.reject(res);
-      })
-      .catch((error) => this.loadErrorPage(error.status));
-    return response;
+    });
   }
 
   async addNewComment(id, newCommentText) {
-    const response = await fetch(`${this.URL}/tweet/${id}/comment`, {
+    return this.fetchMethod({
       method: 'POST',
-      cache: 'no-cache',
+      url: `${this.URL}/tweet/${id}/comment`,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.token}`,
       },
       body: JSON.stringify({ 'text': newCommentText }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res;
-        } return Promise.reject(res);
-      })
-      .catch((error) => this.loadErrorPage(error.status));
-    return response;
-  }
-
-  async deleteComment(idTweet, idComment) {
-    await fetch(`${this.URL}/tweet/${idTweet}/comment/${idComment}`, {
-      method: 'DELETE',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.token}`,
-      },
     });
   }
 }

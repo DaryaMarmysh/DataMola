@@ -50,7 +50,7 @@
 <template id="tweetPage">
     <div class="container" id="pageContainer">
     <div  id="mainContainerForTweetPages">
-        <nav><span id="returnMainPage">Главная</span><svg width="5" height="8" viewBox="0 0 5 8" fill="none"
+        <nav><span id="returnMainPage">Главная </span><svg width="5" height="8" viewBox="0 0 5 8" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 7L4 4L1 1" stroke="#212227" stroke-width="1.5" stroke-linecap="round"
                     stroke-linejoin="round" />
@@ -124,7 +124,9 @@
 </template>
 <template id="loginPage">
     <div id="pageContainer">
+        <nav class="container"><button id="returnMainPage">На&#160;главную</button></nav>
     <div class="modal big-shadow border">
+        
         <p class="madal-title">Вход</p>
         <form id="logForm" novalidate>
             <input type="text" name="login" id="loginInput" placeholder="Логин" required pattern="[0-9a-zА-я_]+\s{0,1}[0-9a-zА-я_]+" minlength="3" maxlength="20">
@@ -140,6 +142,7 @@
 </template>
 <template id="regPageTemplate">
     <div id="pageContainer">
+        <nav class="container"><button id="returnMainPage">На&#160;главную</button></nav>
         <div class="modal big-shadow border">
             <p class="madal-title">Регистрация</p>
             <form id="regForm" novalidate>
@@ -220,6 +223,7 @@
 </template>
 <template id="errorPageTemplate">
     <div id="pageContainer">
+        <nav class="container"><button id="returnMainPage">На&#160;главную</button></nav>
         <p class="error-code">uj</p>
         <p class="error-message">fjy</p>
     </div>

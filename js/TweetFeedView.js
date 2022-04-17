@@ -148,8 +148,9 @@ class TweetFeedView {
     openFilterBut.addEventListener('click', () => {
       filterContainer.classList.remove('close');
     });
-    if (oldChild) { this.main.replaceChild(clone, oldChild); }
-    else {
+    if (oldChild) {
+      this.main.replaceChild(clone, oldChild);
+    } else {
       this.main.appendChild(clone);
     }
   }

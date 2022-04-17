@@ -22,7 +22,7 @@ class RegView {
     }
   }
 
-  bindControllerTweets(addUserFun, lodinPageLoad) {
+  bindControllerTweets(addUserFun, lodinPageLoad, mainPageLoad) {
     const loginPageLoadButton = document.getElementById('loginPageLoadButton');
     loginPageLoadButton.addEventListener('click', () => lodinPageLoad());
     const formReg = document.getElementById('regForm');
@@ -32,6 +32,10 @@ class RegView {
     const loginError = document.getElementById('loginError');
     const passwordError = document.getElementById('passwordError');
     const passwordErrorConfirm = document.getElementById('passwordErrorConfirm');
+    const returnMainPage = document.getElementById('returnMainPage');
+    returnMainPage.addEventListener('click', () => {
+      mainPageLoad();
+    });
     formReg.addEventListener('submit', (event) => {
       event.preventDefault();
       if (!login.validity.valid || !password.validity.valid) {
