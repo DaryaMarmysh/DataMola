@@ -1,15 +1,16 @@
+/* eslint-disable lines-between-class-members */
 /* eslint-disable spaced-comment */
 /* eslint-disable prefer-object-spread */
 /* eslint-disable quote-props */
 /* eslint-disable no-return-assign */
 /* eslint-disable arrow-body-style */
-/* eslint-disable brace-style */
+/* eslint-disable linebreak-style */
+
 class TweetFeedApiService {
   constructor(url) {
     this.URL = url;
     this.token = '';
   }
-
   async fetchMethod(fetchObj) {
     const {
       url: fetchUrl = '',
@@ -55,7 +56,7 @@ class TweetFeedApiService {
   }
 
   async getTweetsFromServer(skip, top, filterConfig) {
-const url = new URL(`${this.URL}/tweet`);
+    const url = new URL(`${this.URL}/tweet`);
     const params = { from: skip, count: top };
     Object.keys(filterConfig).forEach((key) => {
       if (filterConfig[key] !== null) { params[key] = filterConfig[key]; }

@@ -117,7 +117,7 @@ class TweetsController {
         this.server.token = data.token;
         this.setCurrentUser(login, data.token, password);
         this.getFeed();
-      })
+      });
   };
 
   filterBlockLoad = function () {
