@@ -40,21 +40,7 @@ class TweetFeedApiService {
       .catch((error) => this.loadErrorPage(error.status));
     return response;
   }
-
-  async getAllTweets() {
-    const url = new URL(`${this.URL}/tweet`);
-    const params = { from: 0, count: Number.MAX_SAFE_INTEGER };
-    url.search = new URLSearchParams(params).toString();
-    const resp = await fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } return Promise.reject(response);
-      })
-      .catch((error) => this.loadErrorPage(error.status));
-    return resp;
-  }
-
+  
   async getTweetsFromServer(skip, top, filterConfig) {
     const url = new URL(`${this.URL}/tweet`);
     const params = { from: skip, count: top };

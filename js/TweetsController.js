@@ -20,7 +20,6 @@ class TweetsController {
     this.errorView.loginPLoad = this.loginPageLoad.bind(this);
     this.errorView.mainPageLoad = this.getFeed.bind(this);
     this.headerView = new HeaderView(headerId);
-    this.headerView.username = this.getCurrentUser;
     this.tweetFeedView = new TweetFeedView(tweetFeedViewId);
     this.headerView.currentUser = this.getCurrentUser;
     this.tweetFeedView.currentUser = this.getCurrentUser;
@@ -41,6 +40,7 @@ class TweetsController {
     this.setAllTweets();
     this.getFeed();
     this.getAllTweets();
+    this.footerVer();
   }
 
   getAllTweets = async function () {
@@ -48,7 +48,7 @@ class TweetsController {
       this.loginUser(this.getCurrentUser(), localStorage.getItem('password'));
     }
     setInterval(async () => {
-      await this.server.getAllTweets().then((data) => {
+      await this.server.getTweetsFromServer(0,Number.MAX_SAFE_INTEGER,{}).then((data) => {
         this.allTweets = data;
         this.filterView.authors = Array.from(new Set(this.allTweets.map((t) => t.author)));
       })
@@ -153,8 +153,6 @@ class TweetsController {
           this.addTweet.bind(this),
           this.skipTweets.bind(this),
           this.getCurrentUser.bind(this),
-          this.skip,
-          this.top,
         );
       }
     });
@@ -202,5 +200,15 @@ class TweetsController {
       this.tweetView.bindControllerTweets(this.getFeed.bind(this), this.addComment.bind(this));
     }
   };
+
+  footerVer = async function () {
+    await fetch('https://api.github.com/repos/DaryaMarmysh/DataMola/branches/master').then((res) => {
+      if (res.ok) {
+        return res.json();
+      } return Promise.reject(res);
+    })
+      .then((data) => document.querySelector('.ver').innerHTML = data.commit.commit.committer.date.slice(0, 10))
+      .catch ((error) => console.log(error.status));
+  }
 }
 export default TweetsController;
