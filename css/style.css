@@ -25,9 +25,13 @@
 
 #pageContainer,
 #mainContainerForTweetPages {
-    width: 100%;
+    width: 98%;
 }
-
+nav.container{
+    align-items: center;
+    justify-content: center;
+    margin-top:2rem;
+}
 img:hover {
     cursor: var(--pointer);
 }
@@ -62,7 +66,8 @@ body {
     background-image: var(--body-grid);
     background-size: 25px 25px;
     min-height: 100vh;
-
+    max-height: 99vh;
+overflow-x: hidden;
 }
 
 nav {
@@ -116,21 +121,15 @@ header {
     background-color: var(--main-color);
     flex: 0;
     z-index: 3;
-
-
 }
 
 main {
-
-
     display: flex;
     flex-direction: column;
     flex-grow: 2;
     height: 100%;
     flex-grow: 2;
-    margin-top: 2vh;
-
-
+    padding-top: 1rem;
 }
 
 .show-filter {
