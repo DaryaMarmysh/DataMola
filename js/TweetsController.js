@@ -48,7 +48,7 @@ class TweetsController {
       this.loginUser(this.getCurrentUser(), localStorage.getItem('password'));
     }
     setInterval(async () => {
-      await this.server.getTweetsFromServer(0,Number.MAX_SAFE_INTEGER,{}).then((data) => {
+      await this.server.getTweetsFromServer(0, Number.MAX_SAFE_INTEGER, {}).then((data) => {
         this.allTweets = data;
         this.filterView.authors = Array.from(new Set(this.allTweets.map((t) => t.author)));
       })
@@ -208,7 +208,7 @@ class TweetsController {
       } return Promise.reject(res);
     })
       .then((data) => document.querySelector('.ver').innerHTML = data.commit.commit.committer.date.slice(0, 10))
-      .catch ((error) => console.log(error.status));
+      .catch((error) => console.log(error.status));
   }
 }
 export default TweetsController;

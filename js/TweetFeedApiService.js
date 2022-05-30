@@ -40,7 +40,7 @@ class TweetFeedApiService {
       .catch((error) => this.loadErrorPage(error.status));
     return response;
   }
-  
+
   async getTweetsFromServer(skip, top, filterConfig) {
     const url = new URL(`${this.URL}/tweet`);
     const params = { from: skip, count: top };
