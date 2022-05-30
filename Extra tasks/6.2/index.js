@@ -1,2 +1,10 @@
 /* eslint-disable prefer-destructuring */
-let isComputer=false;
+var request = new XMLHttpRequest();
+request.open('GET','https://jslabapi.datamola.com');
+request.responseType = 'text';
+
+request.onload = function() {
+  poemDisplay.textContent = request.response;
+};
+
+request.send();

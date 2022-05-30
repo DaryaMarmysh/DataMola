@@ -8,6 +8,11 @@ class FilterView {
 
   bindControllerTweets(searchFun) {
     const form = document.querySelector('#filterForm');
+    //const submitButton = document.querySelector('#submitButton');
+    form.addEventListener('reset', (event) => {
+      form.querySelector('#hashtagsContainer').innerHTML = '';
+      this.hashtagsList = [];
+    });
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       const startDate = form.querySelector('#startDate').value;
@@ -15,16 +20,17 @@ class FilterView {
       const authorField = form.querySelector('#authorNameFilter').value;
       const filterTextField = form.querySelector('#filterTextField').value;
       const filterConfig = {
-        text: filterTextField,
-        author: authorField,
-        dateFrom: startDate === '' ? undefined : new Date(startDate),
-        dateTo: endDate === '' ? undefined : new Date(endDate),
-        hashtags: this.hashtagsList,
+        text: filterTextField === '' ? null : filterTextField,
+        author: authorField === '' ? null : authorField,
+        dateFrom: startDate === '' ? null : new Date(startDate).toISOString(),
+        dateTo: endDate === '' ? null : new Date(endDate).toISOString(),
+        hashtags: this.hashtagsList.length > 0 ? this.hashtagsList.join(',') : null,
       };
       const closeFilterBut = document.querySelector('#closeFilterButton');
       closeFilterBut.click();
-      searchFun(filterConfig);
+      //console.log('filterConfig')
       //console.log(filterConfig)
+      searchFun(filterConfig);
     });
   }
 
@@ -42,7 +48,7 @@ class FilterView {
         const hashclone = this.hashtagTemplate.content.cloneNode(true);
         const hashText = hashclone.querySelector('#hashtagText');
         hashText.textContent = `#${hashtagField.value}`;
-        hashtagsContainer.appendChild(hashclone); 
+        hashtagsContainer.appendChild(hashclone);
         //console.log(this.hashtagsList);
       }
     });
@@ -58,6 +64,10 @@ class FilterView {
     closeFilterBut.addEventListener('click', () => {
       filterContainer.classList.add('close');
     });
+    const op = document.createElement('option');
+    op.value = '';
+    op.text = '';
+    selectList.add(op);
     authorNameList.forEach((option) => {
       const op = document.createElement('option');
       op.value = option;

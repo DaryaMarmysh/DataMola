@@ -43,6 +43,7 @@ class TweetView {
     });
     addNewCommentButton.addEventListener('click', (event) => {
       event.preventDefault();
+      addNewCommentButton.style.pointerEvents = 'none';
       addCommFun(tweetId, newCommenttextarea.value);
     });
   }
@@ -67,11 +68,11 @@ class TweetView {
         const textComment = commentClone.querySelector('#textComment');
         authorCommentName.textContent = c.author;
         dateComment.textContent = TweetView.getDate(c.createdAt);
-        textComment.innerHTML = TweetView.addHashtags(c.text);
+        textComment.innerHTML = c.text; ///TweetView.addHashtags(c.text);
         contComment.appendChild(commentClone);
       });
     }
-    if (this.getUsername() === 'Гость') {
+    if (this.getUsername() === 'Гость' || this.getUsername() === null) {
       const addNewCommentContainer = mainClone.querySelector('#addNewCommentContainer');
       addNewCommentContainer.classList.add('hidden');
     } else {

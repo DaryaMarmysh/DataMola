@@ -15,8 +15,7 @@ import Comment from './Comment.js';
 
 class TweetCollection {
   constructor() {
-    this._tweets = [];
-    this.restore();
+   
   }
 
   _tweetsFilter = function (tweetsToFilter, filterParams = {}) {
@@ -137,13 +136,5 @@ class TweetCollection {
     return false;
   }
 
-  restore() {
-    const parseTweets = JSON.parse(localStorage.getItem('tweets'));
-    this._tweets = parseTweets.map((t) => { t.createdAt = new Date(t.createdAt); return t; });
-  }
-
-  save() {
-    localStorage.setItem('tweets', JSON.stringify(this.tweets));
-  }
 }
 export default TweetCollection;
