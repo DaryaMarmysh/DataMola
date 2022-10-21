@@ -272,7 +272,7 @@ const users = [
     password: '333',
   },
 ];
-/*function AddToLocalStorage(tweets, usrs) {
+function AddToLocalStorage(tweets, usrs) {
   if (localStorage.length === 0) {
     tweets = JSON.stringify(tweets);
     usrs = JSON.stringify(usrs);
@@ -288,7 +288,7 @@ tweetController.getFeed();
 tweetController.displayHeader();
 tweetController.bindFunction();
 
-*/
+
 /*const response = fetch('https://jslabapi.datamola.com/tweet', {
   mode: 'no-cors',
   method: 'GET',
@@ -309,9 +309,9 @@ if (response.ok) { // если HTTP-статус в диапазоне 200-299
   let json = await response.json();
 } else {
   alert("Ошибка HTTP: " + response.status);
-}*/
+}
 const server = new TweetFeedApiService('https://jslabapi.datamola.com');
-
+*/
 
 //let text = await response.text(); // прочитать тело ответа как текст
 
